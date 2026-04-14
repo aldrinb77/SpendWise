@@ -68,7 +68,7 @@ function extractInfo(text: string): ParsedTransaction[] {
     const dateStr = dateMatch[1];
     
     // Amount usually at the end e.g. "- Rs.300", "+ Rs.1,000", "+ Rs.116", "- Rs.30"
-    const amountMatch = trimmed.match(/([-+])\s*(?:Rs\.|₹)?\s*([\d,]+(?:\.\d{2})?)/);
+    const amountMatch = trimmed.match(/([-+])\s*(?:Rs\.?|INR|₹)\s*([\d,]+(?:\.\d{2})?)/i);
     if (!amountMatch) continue;
 
     const sign = amountMatch[1];
@@ -107,7 +107,7 @@ function extractInfo(text: string): ParsedTransaction[] {
       if (!dateMatch) continue;
 
       const dateStr = dateMatch[0];
-      const amountMatch = line.match(/(?:[-+₹Rs.\s])*([\d,]+\.\d{2})/);
+      const amountMatch = line.match(/(?:Rs\.?|INR|₹)?\s*([\d,]+\.\d{2})\s*(CR|DR|\+|-)?/i);
       if (!amountMatch) continue;
 
       const amountStr = amountMatch[1].replace(/,/g, '');
