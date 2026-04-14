@@ -49,7 +49,7 @@ export default function SignupPage() {
   async function onSubmit(data: SignupFormValues) {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/register", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -66,9 +66,9 @@ export default function SignupPage() {
       }
 
       toast.success("Account created successfully!", {
-        description: "Please log in with your new credentials.",
+        description: "Welcome to SpendWise!",
       });
-      router.push("/login");
+      router.push("/");
     } catch (error: any) {
       toast.error("Registration failed", {
         description: error.message || "Something went wrong. Please try again later.",

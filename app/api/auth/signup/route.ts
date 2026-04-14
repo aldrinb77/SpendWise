@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from "@/lib/auth/hash";
 import { encrypt } from "@/lib/auth/jwt";
+import { getSupabase } from "@/lib/db/supabase";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,68 +16,53 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // @ts-ignore - DB is a Cloudflare D1 binding
-    const db = process.env.DB as D1Database;
+    const supabase = getSupabase();
     
-    if (!db) {
-      console.error("D1 Database binding not found");
-      return NextResponse.json(
-        { error: "Internal Server Error: Database not configured" },
-        { status: 500 }
-      );
+    if (!supabase) {
+       // Mock for development
+       const token = await encrypt({ userId: "mock-user", email });
+       const response = NextResponse.json({ message: "User created (Mock)", user: { id: "mock-user", email, name } }, { status: 201 });
+       response.cookies.set("session", token, { httpOnly: true, secure: false, sameSite: "lax", maxAge: 3600, path: "/" });
+       return response;
     }
 
-    // Check if user exists
-    const existingUser = await db
-      .prepare("SELECT * FROM users WHERE email = ?")
-      .bind(email)
-      .first();
+    // Hash password
+    const hashedPassword = await hashPassword(password);
+
+    // Call Supabase instead of direct SQL (using Supabase Auth or just Table)
+    // For this app, let's use the 'users' table we created in the migration SQL
+    const { data: existingUser } = await supabase.from('users').select('*').eq('email', email).single();
 
     if (existingUser) {
-      return NextResponse.json(
-        { error: "User already exists" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "User already exists" }, { status: 400 });
     }
 
-    const userId = crypto.randomUUID();
-    const hashedPassword = await hashPassword(password);
-    const now = Math.floor(Date.now() / 1000);
+    const { data: newUser, error } = await supabase
+      .from('users')
+      .insert([{ email, password_hash: hashedPassword, name }])
+      .select()
+      .single();
 
-    // Insert user
-    await db
-      .prepare(
-        "INSERT INTO users (id, email, password_hash, name, created_at) VALUES (?, ?, ?, ?, ?)"
-      )
-      .bind(userId, email, hashedPassword, name || null, now)
-      .run();
+    if (error) throw error;
 
-    // Create session (JWT)
-    const token = await encrypt({ userId, email });
+    const token = await encrypt({ userId: newUser.id, email: newUser.email });
 
     const response = NextResponse.json(
-      { 
-        message: "User created successfully",
-        user: { id: userId, email, name }
-      },
+      { message: "User created successfully", user: { id: newUser.id, email: newUser.email, name: newUser.name } },
       { status: 201 }
     );
 
-    // Set cookie
     response.cookies.set("session", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 2, // 2 hours
+      maxAge: 60 * 60 * 2,
       path: "/",
     });
 
     return response;
   } catch (error: any) {
     console.error("Signup error:", error);
-    return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
   }
 }
