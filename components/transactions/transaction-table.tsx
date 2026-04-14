@@ -24,14 +24,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const mockTransactions = [
-  { id: "1", date: "2024-04-12", description: "Zomato", category: "Food & Dining", amount: -450, method: "UPI", status: "Completed" },
-  { id: "2", date: "2024-04-12", description: "Uber", category: "Transportation", amount: -280, method: "Card", status: "Completed" },
-  { id: "3", date: "2024-04-11", description: "HDFC Salary", category: "Salary", amount: 85000, method: "Transfer", status: "Completed" },
-  { id: "4", date: "2024-04-11", description: "Netflix Subscription", category: "Entertainment", amount: -199, method: "Card", status: "Completed" },
-  { id: "5", date: "2024-04-10", description: "Amazon Shopping", category: "Shopping", amount: -1250, method: "UPI", status: "Completed" },
-];
+import { motion } from "framer-motion";
 
 export default function TransactionTable() {
   const [transactions, setTransactions] = React.useState<any[]>([]);
@@ -48,92 +41,68 @@ export default function TransactionTable() {
   }, []);
 
   if (loading) return (
-    <div className="rounded-2xl border bg-card shadow-sm overflow-hidden p-8 space-y-4">
+    <div className="rounded-3xl border border-white/20 glass-card p-12 space-y-4">
       {[1, 2, 3, 4, 5].map(i => (
-        <div key={i} className="h-12 bg-slate-100 dark:bg-slate-800 rounded animate-pulse" />
+        <div key={i} className="h-14 bg-slate-100 dark:bg-slate-800/50 rounded-2xl animate-pulse" />
       ))}
     </div>
   );
 
   return (
-    <div className="rounded-2xl border bg-card shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+    <div className="rounded-3xl border border-white/20 glass-card overflow-hidden shadow-2xl transition-all duration-500">
       <Table>
         <TableHeader>
-          <TableRow className="bg-muted/50 hover:bg-muted/50">
-            <TableHead className="w-[100px]">Date</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-            <TableHead className="w-[50px]"></TableHead>
+          <TableRow className="border-b border-white/10 hover:bg-transparent">
+            <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground pl-6">Timeline</TableHead>
+            <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Entity</TableHead>
+            <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Category</TableHead>
+            <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground text-right pr-6">Value</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {transactions.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={6} className="h-32 text-center text-muted-foreground">
-                No transactions found. Add one to get started!
+              <TableCell colSpan={4} className="h-48 text-center text-muted-foreground font-medium">
+                No history recorded. Upload a statement to begin.
               </TableCell>
             </TableRow>
           ) : (
-            transactions.map((t) => (
-              <TableRow key={t.id} className="group hover:bg-muted/30 transition-colors">
-                <TableCell className="text-muted-foreground text-xs leading-none">
-                  {new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}
+            transactions.map((t, idx) => (
+              <motion.tr 
+                key={t.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.05 }}
+                className="group border-b border-white/5 last:border-0 hover:bg-white/5 dark:hover:bg-white/5 transition-colors cursor-default"
+              >
+                <TableCell className="pl-6">
+                  <span className="text-xs font-black text-muted-foreground tabular-nums">
+                    {new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })}
+                  </span>
                 </TableCell>
                 <TableCell>
                   <div className="flex flex-col">
-                    <span className="font-semibold text-sm">{t.description || "No description"}</span>
-                    <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-medium">#{t.id?.slice(0, 8)}</span>
+                    <span className="font-bold text-sm tracking-tight">{t.description || "Vendor"}</span>
+                    <span className="text-[10px] text-muted-foreground/60 font-black uppercase tracking-widest">{t.payment_method || "UPI"}</span>
                   </div>
                 </TableCell>
                 <TableCell>
                   <Badge 
-                    variant="secondary" 
-                    className="font-medium text-[10px] px-2 py-0 border-opacity-20"
+                    className="font-black text-[9px] uppercase tracking-wider px-2.5 py-0.5 rounded-full border-0"
                     style={{ 
-                      backgroundColor: `${t.category_color}1a`, 
+                      backgroundColor: `${t.category_color}22`, 
                       color: t.category_color,
-                      borderColor: `${t.category_color}4d`
                     }}
                   >
                     {t.category_name}
                   </Badge>
                 </TableCell>
-                <TableCell className="text-xs text-muted-foreground font-medium">
-                  {t.payment_method || "N/A"}
-                </TableCell>
-                <TableCell className="text-right">
-                  <span className={`font-bold ${t.type === 'income' ? "text-emerald-500" : "text-foreground"}`}>
-                    {t.type === 'income' ? "+" : ""}{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(t.amount)}
+                <TableCell className="text-right pr-6">
+                  <span className={`text-sm font-black tracking-tight ${t.type === 'income' ? "text-emerald-500" : "text-foreground"}`}>
+                    {t.type === 'income' ? "+" : ""}{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(t.amount)}
                   </span>
                 </TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    {(DropdownMenuTrigger as any) && (
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <LucideMoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                    )}
-                    <DropdownMenuContent align="end" className="w-40">
-                      <DropdownMenuItem className="cursor-pointer">
-                        <LucidePencil className="mr-2 h-4 w-4" /> Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer">
-                        <LucideCopy className="mr-2 h-4 w-4" /> Duplicate
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer">
-                        <LucideReceipt className="mr-2 h-4 w-4" /> Receipt
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive focus:text-destructive cursor-pointer">
-                        <LucideTrash2 className="mr-2 h-4 w-4" /> Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
-              </TableRow>
+              </motion.tr>
             ))
           )}
         </TableBody>
