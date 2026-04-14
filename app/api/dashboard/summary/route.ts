@@ -6,15 +6,7 @@ export async function GET(req: NextRequest) {
     const supabase = getSupabase();
     
     if (!supabase) {
-      return NextResponse.json({
-        balance: 1450,
-        monthlyIncome: 1116,
-        incomeTrend: 12.5,
-        monthlyExpense: 704,
-        expenseTrend: -5.2,
-        savings: 412,
-        savingsRate: 36.9
-      });
+      return NextResponse.json({ fallbackToLocal: true });
     }
 
     // Supabase logic (keep for when user configures project)

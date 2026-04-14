@@ -70,6 +70,28 @@ export default function ImportPage() {
       });
 
       if (!response.ok) throw new Error("Failed to save");
+      
+      const payload = await response.json() as any;
+      
+      // Fallback: If no database is connected, persist to local browser storage
+      if (payload.mock) {
+        const transformedData = data.map((t, idx) => ({
+           id: crypto.randomUUID(),
+           date: Math.floor(new Date(t.date).getTime() / 1000),
+           amount: t.amount,
+           type: t.type,
+           category_id: t.category_id,
+           category_name: t.category_id,
+           category_color: "#60A5FA", 
+           description: t.description,
+           payment_method: "UPI"
+        }));
+        
+        // Merge with existing local storage if any
+        const existing = localStorage.getItem("spendwise_transactions");
+        const existingArray = existing ? JSON.parse(existing) : [];
+        localStorage.setItem("spendwise_transactions", JSON.stringify([...existingArray, ...transformedData]));
+      }
 
       toast.success("Success!", {
         description: `${data.length} transactions imported successfully.`,

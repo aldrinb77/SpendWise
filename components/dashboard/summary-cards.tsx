@@ -13,7 +13,30 @@ export default function SummaryCards() {
     fetch("/api/dashboard/summary")
       .then(res => res.json())
       .then(json => {
-        setData(json);
+        const payload = json as any;
+        if (payload.fallbackToLocal) {
+          const localData = localStorage.getItem("spendwise_transactions");
+          if (localData) {
+            const txns = JSON.parse(localData);
+            const income = txns.filter((t: any) => t.type === 'income').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
+            const expense = txns.filter((t: any) => t.type === 'expense').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
+            setData({
+              balance: income - expense,
+              monthlyIncome: income,
+              incomeTrend: 0,
+              monthlyExpense: expense,
+              expenseTrend: 0,
+              savings: income - expense,
+              savingsRate: income === 0 ? 0 : ((income - expense) / income) * 100
+            });
+          } else {
+            setData({
+              balance: 0, monthlyIncome: 0, incomeTrend: 0, monthlyExpense: 0, expenseTrend: 0, savings: 0, savingsRate: 0
+            });
+          }
+        } else {
+          setData(payload);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));

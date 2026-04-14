@@ -30,7 +30,39 @@ export default function SpendingChart() {
     fetch("/api/dashboard/chart")
       .then(res => res.json())
       .then(json => {
-        setChartData(json as any[]);
+        const payload = json as any;
+        if (payload.fallbackToLocal) {
+          const localData = localStorage.getItem("spendwise_transactions");
+          if (localData) {
+             const txns = JSON.parse(localData);
+             const now = new Date();
+             const fourteenDaysAgo = new Date(now.getTime() - 14 * 24 * 60 * 60 * 1000).getTime() / 1000;
+             const chartDataMap: Record<string, any> = {};
+             
+             txns.filter((t: any) => t.date >= fourteenDaysAgo)
+                 .sort((a: any, b: any) => a.date - b.date)
+                 .forEach((row: any) => {
+                   const dateStr = new Date(row.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+                   if (!chartDataMap[dateStr]) chartDataMap[dateStr] = { date: dateStr, income: 0, expense: 0 };
+                   if (row.type === 'income') {
+                     chartDataMap[dateStr].income += Number(row.amount);
+                   } else {
+                     chartDataMap[dateStr].expense += Number(row.amount);
+                   }
+                 });
+             const finalized = Object.values(chartDataMap);
+             if (finalized.length === 0) {
+               // Give some placeholder timeline if no data
+               for(let i=13; i>=0; i--) {
+                  const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+                  finalized.push({ date: d, income: 0, expense: 0 });
+               }
+             }
+             setChartData(finalized as any[]);
+          }
+        } else {
+          setChartData(payload as any[]);
+        }
         setLoading(false);
       })
       .catch(() => setLoading(false));

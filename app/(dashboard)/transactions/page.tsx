@@ -32,10 +32,7 @@ export default function TransactionsPage() {
         <TransactionTable />
       </div>
 
-      {/* Pagination or Infinite Scroll would go here */}
-      <div className="flex items-center justify-center py-8">
-        <p className="text-sm text-muted-foreground">Showing 1-10 of 124 transactions</p>
-      </div>
+      {/* Pagination will be handled inside the table component */}
     </div>
   );
 }

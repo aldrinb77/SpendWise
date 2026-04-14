@@ -8,41 +8,8 @@ export async function GET(req: NextRequest) {
   try {
     const supabase = getSupabase();
     if (!supabase) {
-       // High quality mock data for dev
-       const now = Math.floor(Date.now() / 1000);
-       return NextResponse.json([
-         // ... (keep current mock data)
-         { 
-           id: "1", 
-           date: now - 3600, 
-           description: "Hans Filling Station (Fuel)", 
-           amount: 300, 
-           type: "expense", 
-           category_name: "Transportation", 
-           category_color: "#60A5FA", 
-           payment_method: "UPI" 
-         },
-         { 
-           id: "2", 
-           date: now - 86400, 
-           description: "Swiggy (Food)", 
-           amount: 205, 
-           type: "expense", 
-           category_name: "Food & Dining", 
-           category_color: "#F87171", 
-           payment_method: "UPI" 
-         },
-         { 
-           id: "3", 
-           date: now - 172800, 
-           description: "Philip Michael (Salary)", 
-           amount: 1000, 
-           type: "income", 
-           category_name: "Income", 
-           category_color: "#10B981", 
-           payment_method: "Transfer" 
-         }
-       ]);
+       // Instruct client to fall back to LocalStorage
+       return NextResponse.json({ fallbackToLocal: true, transactions: [] });
     }
 
     let query = supabase
