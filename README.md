@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Advanced Free Expense Tracker (Cloudflare Edition)
 
-## Getting Started
+A premium, high-performance expense tracking web application built exclusively for the Cloudflare ecosystem.
 
-First, run the development server:
+## ✨ Features
+- **Cloudflare Native**: Uses D1 (Database), KV (Sessions), and R2 (Receipts).
+- **Rule-Based Learning**: Auto-categorizes transactions using a learned merchant mapping system (no AI costs).
+- **Premium Glassmorphism**: Modern, sleek UI with Framer Motion animations.
+- **Bank Statement Import**: PDF parsing specifically optimized for Paytm and Indian Banks.
+- **Secure Custom Auth**: JWT-based authentication at the Edge.
 
+## 🛠️ Getting Started
+
+### 1. Prerequisites
+- Node.js 18+
+- Cloudflare Wrangler CLI (`npm i -g wrangler`)
+
+### 2. Installation
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Navigate to the project
+cd expense-tracker
+
+# Install dependencies
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Database Initialization (Local)
+Create and seed your local D1 database:
+```bash
+# Apply schema
+# npx wrangler d1 execute expense-tracker-db --local --file=lib/db/schema.sql
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Running Locally
+To enjoy Cloudflare bindings (D1/KV) locally:
+```bash
+# Build the project
+npm run build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Run with Wrangler
+npx wrangler pages dev .next --compatibility-flag=nodejs_compat --d1=DB
+```
 
-## Learn More
+Open [http://localhost:8788](http://localhost:8788) to view the app.
 
-To learn more about Next.js, take a look at the following resources:
+### 5. Seeding Categories
+Once the app is running, visit:
+`http://localhost:8788/api/admin/seed`
+to populate the default Indian categories.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
+- `app/`: Next.js App Router routes.
+- `components/`: UI and Dashboard components.
+- `lib/categorization/`: Rule-based learning engine.
+- `lib/parsers/`: PDF/Bank statement logic.
+- `lib/db/`: SQL schema and D1 utilities.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Deployment
+Deploy to Cloudflare Pages:
+```bash
+npm run build
+npx wrangler pages deploy .next
+```

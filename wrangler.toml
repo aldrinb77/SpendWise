@@ -1,0 +1,19 @@
+name = "expense-tracker"
+pages_build_output_dir = ".next"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "expense-tracker-db"
+database_id = "your-d1-id-here"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "expense-tracker-assets"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "your-kv-id-here"
+
+[vars]
+NEXT_PUBLIC_APP_URL = "http://localhost:3000"
+JWT_SECRET = "your-jwt-secret-here"
