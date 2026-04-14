@@ -61,10 +61,47 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
 
   const categories = Object.keys(CATEGORY_KEYWORDS);
 
-  const onSubmit = (data: TransactionFormValues) => {
-    console.log("Submitted:", data);
-    onOpenChange(false);
-    form.reset();
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  
+  const onSubmit = async (data: TransactionFormValues) => {
+    setIsSubmitting(true);
+    try {
+      const formattedData = {
+        date: Math.floor(data.date.getTime() / 1000),
+        amount: parseFloat(data.amount),
+        type: data.type,
+        category_id: data.category,
+        category_name: data.category,
+        description: data.description,
+        payment_method: data.paymentMethod,
+        category_color: "#60A5FA" // default fallback
+      };
+
+      const response = await fetch("/api/transactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formattedData)
+      });
+
+      if (!response.ok) throw new Error("Failed to save transaction");
+      
+      const payload = await response.json() as any;
+      
+      if (payload.fallbackToLocal) {
+        const existing = localStorage.getItem("spendwise_transactions");
+        const existingArray = existing ? JSON.parse(existing) : [];
+        localStorage.setItem("spendwise_transactions", JSON.stringify([payload.mockData, ...existingArray]));
+      }
+      
+      onOpenChange(false);
+      form.reset();
+      // Reload perfectly ensures all charts and tables independently pull the fresh values from source
+      window.location.reload(); 
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
