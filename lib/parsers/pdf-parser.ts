@@ -55,7 +55,13 @@ function extractInfo(text: string): ParsedTransaction[] {
 
   // Modern Paytm PDF Parsing (splits by Date pattern which is usually glued together on one line)
   const paytmParts = text.split(/(?=\d{2}\s+[A-Z][a-z]{2}\s+\d{1,2}:\d{2}\s+[AP]M)/);
-  const currentYear = new Date().getFullYear();
+  
+  // Paytm usually lists in reverse chronological order (Newest first).
+  // But they omit the year on individual transactions!
+  // E.g. 15 Jan, 02 Jan, 31 Dec, 25 Dec...
+  // When we go from Jan (Month 0) to Dec (Month 11) while reading top-to-bottom, we crossed a year boundary backward!
+  let currentEstimatedYear = new Date().getFullYear();
+  let lastSeenMonth = -1;
 
   for (const part of paytmParts) {
     const trimmed = part.trim();
@@ -88,8 +94,18 @@ function extractInfo(text: string): ParsedTransaction[] {
       .replace(/Gift Card - /ig, '')
       .trim();
 
+    // Smart Year Tracking
+    const tempDate = new Date(`${dateStr} 2000`); // Dummy year to safely extract month
+    const currentMonth = tempDate.getMonth();
+    
+    // If the month jumps up significantly (e.g. 0 to 11), we transitioned backward over a year line
+    if (lastSeenMonth !== -1 && currentMonth > lastSeenMonth + 1) {
+       currentEstimatedYear--;
+    }
+    lastSeenMonth = currentMonth;
+
     txns.push({
-      date: new Date(`${dateStr} ${currentYear}`).toISOString(),
+      date: new Date(`${dateStr} ${currentEstimatedYear}`).toISOString(),
       description: desc || "Transaction",
       amount,
       type,
