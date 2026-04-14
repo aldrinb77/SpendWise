@@ -10,7 +10,8 @@ import CategoryDonut from "@/components/dashboard/category-donut";
 import AddTransactionButton from "@/components/shared/add-transaction-button";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LucideDownload, LucideCalendar, LucidePlus } from "lucide-react";
+import { LucideDownload, LucideCalendar, LucidePlus, LucideUpload } from "lucide-react";
+import Link from "next/link";
 
 const InsightsSection = () => {
   const [insights, setInsights] = React.useState<any[]>([]);
@@ -84,10 +85,12 @@ export default function DashboardPage() {
             <LucideCalendar className="mr-2 h-4 w-4" />
             Last 30 Days
           </Button>
-          <Button variant="outline" size="sm" className="hidden sm:flex rounded-xl glass">
-            <LucideDownload className="mr-2 h-4 w-4" />
-            Export
-          </Button>
+          <Link href="/import">
+            <Button variant="outline" size="sm" className="hidden sm:flex rounded-xl glass hover:bg-primary/10 transition-colors">
+              <LucideDownload className="mr-2 h-4 w-4" />
+              Import Statement
+            </Button>
+          </Link>
           <AddTransactionButton size="sm" className="bg-primary hover:bg-primary/90 rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95">
             <LucidePlus className="mr-2 h-4 w-4" />
             Add Transaction
