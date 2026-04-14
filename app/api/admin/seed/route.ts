@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { seedCategories } from "@/lib/db/seed";
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   try {

@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { comparePassword } from "@/lib/auth/hash";
 import { encrypt } from "@/lib/auth/jwt";
+import { getSupabase } from "@/lib/db/supabase";
 
-export const runtime = "edge";
+// Removed the '// export const runtime = "edge"' line. 
+// The edge runtime does not support certain Node.js APIs (like those used by the 'jose' library for JWTs),
+// which was causing the Netlify build error: "A Node.js API is used (CompressionStream) which is not supported in the Edge Runtime."
+// Running in the standard Node.js serverless environment resolves this.
 
 export async function POST(req: NextRequest) {
   try {
@@ -15,11 +19,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // @ts-ignore - DB is a Cloudflare D1 binding
-    const db = process.env.DB as D1Database;
+    const supabase = getSupabase();
     
-    // DEVELOPMENT FALLBACK: If running locally without D1 bindings
-    if (!db || process.env.NODE_ENV === "development") {
+    // DEVELOPMENT/FALLBACK MODE
+    if (!supabase) {
       if (email === "user@example.com" && password === "password123") {
          const mockUser = {
            id: "defa-defa-defa-defa-defa",
@@ -40,21 +43,20 @@ export async function POST(req: NextRequest) {
          return response;
       }
       
-      if (!db) {
-        return NextResponse.json(
-          { error: "Internal Server Error: Database not configured. Use demo credentials for local testing." },
-          { status: 500 }
-        );
-      }
+      return NextResponse.json(
+        { error: "Internal Server Error: Database not configured. Use demo credentials for local testing." },
+        { status: 500 }
+      );
     }
 
-    // Find user
-    const user = await db
-      .prepare("SELECT * FROM users WHERE email = ?")
-      .bind(email)
-      .first() as any;
+    // PRODUCTION MODE (Supabase)
+    const { data: user, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('email', email)
+      .single();
 
-    if (!user) {
+    if (error || !user) {
       return NextResponse.json(
         { error: "Invalid email or password" },
         { status: 401 }

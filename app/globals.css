@@ -9,11 +9,21 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-heading: var(--font-outfit);
+  
+  /* Core Colors Mapping */
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-error: var(--error);
+  
+  /* Shadcn Requirements */
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--primary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) * 1.5);
   --radius-2xl: calc(var(--radius) * 2);
@@ -24,11 +34,11 @@
   --foreground: oklch(0.12 0.02 240);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.12 0.02 240);
-  --primary: oklch(0.6 0.18 250); /* Royal Blue */
-  --secondary: oklch(0.65 0.2 300); /* Purple */
-  --success: oklch(0.65 0.22 150); /* Emerald */
-  --warning: oklch(0.7 0.18 70); /* Amber */
-  --error: oklch(0.6 0.18 20); /* Rose */
+  --primary: oklch(0.6 0.18 250);
+  --secondary: oklch(0.65 0.2 300);
+  --success: oklch(0.65 0.22 150);
+  --warning: oklch(0.7 0.18 70);
+  --error: oklch(0.6 0.18 20);
   --muted: oklch(0.96 0.01 240);
   --muted-foreground: oklch(0.45 0.02 240);
   --border: oklch(0.92 0.01 240);
@@ -47,7 +57,9 @@
 
 @layer base {
   * {
-    @apply border-border outline-primary/50;
+    /* Use the variable directly to avoid build-time utility resolving issues */
+    border-color: var(--border);
+    outline-color: color-mix(in oklch, var(--primary), transparent 50%);
   }
   body {
     @apply bg-background text-foreground font-sans;
@@ -59,14 +71,9 @@
 
 @layer utilities {
   .glass-card {
-    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
+    background-color: color-mix(in oklch, var(--card), transparent 30%);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--border);
+    box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.15);
   }
-  .animate-in {
-    animation: fadeIn 0.5s ease-out;
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }

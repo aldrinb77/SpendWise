@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSupabase } from "@/lib/db/supabase";
 
 // Remove edge runtime for Netlify compatibility
-// export const runtime = "edge";
+// // export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   try {

@@ -3,7 +3,7 @@ import { hashPassword } from "@/lib/auth/hash";
 import { encrypt } from "@/lib/auth/jwt";
 import { getSupabase } from "@/lib/db/supabase";
 
-// export const runtime = "edge";
+// // export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
   try {
