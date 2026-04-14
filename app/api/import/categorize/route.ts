@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "@/lib/auth/jwt";
 import { autoCategorize } from "@/lib/categorization/engine";
-
-// export const runtime = "edge";
+import { getSupabase } from "@/lib/db/supabase";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,13 +12,16 @@ export async function POST(req: NextRequest) {
     const userId = payload.userId;
 
     const { transactions } = await req.json() as any;
-    
-    // @ts-ignore
-    const db = process.env.DB as D1Database;
+    const supabase = getSupabase();
 
     const enrichedTransactions = await Promise.all(
       transactions.map(async (txn: any) => {
-        const categoryId = await autoCategorize(txn.description, userId, db);
+        let categoryId = txn.category_id;
+        
+        if (supabase) {
+           categoryId = await autoCategorize(txn.description, userId, supabase) || categoryId;
+        }
+
         return { ...txn, category_id: categoryId || undefined };
       })
     );

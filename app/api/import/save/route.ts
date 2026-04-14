@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "@/lib/auth/jwt";
-
-// export const runtime = "edge";
+import { getSupabase } from "@/lib/db/supabase";
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,35 +12,30 @@ export async function POST(req: NextRequest) {
 
     const { transactions } = await req.json() as any;
     
-    // @ts-ignore
-    const db = process.env.DB as D1Database;
+    const supabase = getSupabase();
+    if (!supabase) {
+      // Simulate successful save in mock dev environment
+      return NextResponse.json({ success: true, count: transactions.length, mock: true });
+    }
 
     const now = Math.floor(Date.now() / 1000);
     
     // Prepare batch statements
-    const statements = transactions.map((txn: any) => {
-      const id = crypto.randomUUID();
-      const txnDate = Math.floor(new Date(txn.date).getTime() / 1000);
-      
-      return db
-        .prepare(
-          "INSERT INTO transactions (id, user_id, date, amount, type, category_id, description, created_at, updated_at) " +
-          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        )
-        .bind(
-          id,
-          userId,
-          txnDate,
-          txn.amount,
-          txn.type,
-          txn.category_id,
-          txn.description || null,
-          now,
-          now
-        );
-    });
+    const rowsToInsert = transactions.map((txn: any) => ({
+      id: crypto.randomUUID(),
+      user_id: userId,
+      date: Math.floor(new Date(txn.date).getTime() / 1000),
+      amount: txn.amount,
+      type: txn.type,
+      category_id: txn.category_id || null,
+      description: txn.description || null,
+      created_at: now,
+      updated_at: now
+    }));
 
-    await db.batch(statements);
+    const { error } = await supabase.from('transactions').insert(rowsToInsert);
+
+    if (error) throw error;
 
     return NextResponse.json({ success: true, count: transactions.length });
   } catch (error: any) {
