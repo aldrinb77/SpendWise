@@ -25,10 +25,13 @@ export async function middleware(request: NextRequest) {
 
   // Protect all other pages
   if (!session) {
-    if (isApiRoute) {
+    if (isApiRoute && !request.nextUrl.pathname.startsWith("/api/auth")) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    return NextResponse.redirect(new URL("/login", request.url));
+    if (!isApiRoute && !isAuthPage) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+    return NextResponse.next();
   }
 
   try {

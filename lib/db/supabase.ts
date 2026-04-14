@@ -1,10 +1,26 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+let supabaseInstance: SupabaseClient | null = null;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase credentials missing. App will run in demo/fallback mode.');
-}
+export const getSupabase = () => {
+  // Return existing instance if already created
+  if (supabaseInstance) return supabaseInstance;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Validate URL format (Must start with http or https)
+  const isValidUrl = supabaseUrl && /^https?:\/\//i.test(supabaseUrl);
+
+  if (isValidUrl && supabaseAnonKey) {
+    supabaseInstance = createClient(supabaseUrl, supabaseAnonKey);
+    return supabaseInstance;
+  }
+
+  // Return null if not configured (API routes will handle the fallback)
+  return null;
+};
+
+// Also export a dummy for backward compatibility if needed, 
+// but getSupabase() is the preferred way now.
+export const supabase = getSupabase();

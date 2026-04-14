@@ -1,20 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/db/supabase";
+import { getSupabase } from "@/lib/db/supabase";
 
 // Remove edge runtime for Netlify compatibility
 // export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   try {
-    // For Netlify/Supabase, we usually get the user from the headers or token
-    // For now, I'll allow a mock user if Supabase isn't configured for easy testing
-    const { searchParams } = new URL(req.url);
-    const categoryId = searchParams.get("categoryId");
-
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-       // Mock data for dev if no Supabase
+    const supabase = getSupabase();
+    if (!supabase) {
+       // High quality mock data for dev
+       const now = Math.floor(Date.now() / 1000);
        return NextResponse.json([
-         { id: "1", date: new Date().toISOString(), description: "Netlify Demo Txn", amount: 100, type: "expense", category_name: "Other" }
+         // ... (keep current mock data)
+         { 
+           id: "1", 
+           date: now - 3600, 
+           description: "Hans Filling Station (Fuel)", 
+           amount: 300, 
+           type: "expense", 
+           category_name: "Transportation", 
+           category_color: "#60A5FA", 
+           payment_method: "UPI" 
+         },
+         { 
+           id: "2", 
+           date: now - 86400, 
+           description: "Swiggy (Food)", 
+           amount: 205, 
+           type: "expense", 
+           category_name: "Food & Dining", 
+           category_color: "#F87171", 
+           payment_method: "UPI" 
+         },
+         { 
+           id: "3", 
+           date: now - 172800, 
+           description: "Philip Michael (Salary)", 
+           amount: 1000, 
+           type: "income", 
+           category_name: "Income", 
+           category_color: "#10B981", 
+           payment_method: "Transfer" 
+         }
        ]);
     }
 
@@ -30,23 +57,15 @@ export async function GET(req: NextRequest) {
       `)
       .order('date', { ascending: false });
 
-    if (categoryId) {
-      query = query.eq('category_id', categoryId);
-    }
-
     const { data, error } = await query;
-
     if (error) throw error;
 
-    // Flatten the categories relationship
-    const results = data.map((t: any) => ({
+    return NextResponse.json(data.map((t: any) => ({
       ...t,
       category_name: t.categories?.name,
       category_icon: t.categories?.icon,
       category_color: t.categories?.color,
-    }));
-
-    return NextResponse.json(results);
+    })));
   } catch (error: any) {
     console.error("Supabase GET error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -56,22 +75,16 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
+    const supabase = getSupabase();
     
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-      return NextResponse.json({ id: "mock-id", ...data }, { status: 201 });
+    if (!supabase) {
+      return NextResponse.json({ id: crypto.randomUUID(), ...(data as Record<string, any>) }, { status: 201 });
     }
 
-    const { data: result, error } = await supabase
-      .from('transactions')
-      .insert([data])
-      .select()
-      .single();
-
+    const { data: result, error } = await supabase.from('transactions').insert([data]).select().single();
     if (error) throw error;
-
     return NextResponse.json(result, { status: 201 });
   } catch (error: any) {
-    console.error("Supabase POST error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

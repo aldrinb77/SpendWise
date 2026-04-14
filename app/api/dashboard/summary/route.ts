@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/db/supabase";
+import { getSupabase } from "@/lib/db/supabase";
 
 export async function GET(req: NextRequest) {
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    const supabase = getSupabase();
+    
+    if (!supabase) {
       return NextResponse.json({
         balance: 1450,
         monthlyIncome: 1116,
@@ -15,32 +17,23 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    // Get basic stats from Supabase
-    const { data: txns, error } = await supabase
-      .from('transactions')
-      .select('amount, type, date');
-
+    // Supabase logic (keep for when user configures project)
+    const { data: txns, error } = await supabase.from('transactions').select('amount, type');
     if (error) throw error;
 
-    const totalIncome = txns
-      .filter(t => t.type === 'income')
-      .reduce((sum, t) => sum + Number(t.amount), 0);
-    
-    const totalExpense = txns
-      .filter(t => t.type === 'expense')
-      .reduce((sum, t) => sum + Number(t.amount), 0);
+    const income = txns.filter((t: any) => t.type === 'income').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
+    const expense = txns.filter((t: any) => t.type === 'expense').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
 
     return NextResponse.json({
-      balance: totalIncome - totalExpense,
-      monthlyIncome: totalIncome, // Simple mock for total instead of monthly for now
+      balance: income - expense,
+      monthlyIncome: income,
       incomeTrend: 0,
-      monthlyExpense: totalExpense,
+      monthlyExpense: expense,
       expenseTrend: 0,
-      savings: totalIncome - totalExpense,
-      savingsRate: totalIncome === 0 ? 0 : ((totalIncome - totalExpense) / totalIncome) * 100
+      savings: income - expense,
+      savingsRate: income === 0 ? 0 : ((income - expense) / income) * 100
     });
   } catch (error: any) {
-    console.error("Summary error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
