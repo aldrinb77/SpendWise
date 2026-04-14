@@ -44,20 +44,43 @@ type TransactionFormValues = z.infer<typeof transactionSchema>;
 interface TransactionFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  initialData?: any;
 }
 
-export default function TransactionForm({ open, onOpenChange }: TransactionFormProps) {
+export default function TransactionForm({ open, onOpenChange, initialData }: TransactionFormProps) {
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      amount: "",
-      description: "",
-      category: "",
-      date: new Date(),
-      type: "expense",
-      paymentMethod: "UPI",
+      amount: initialData ? initialData.amount.toString() : "",
+      description: initialData ? initialData.description : "",
+      category: initialData ? initialData.category_id : "",
+      date: initialData ? new Date(initialData.date * 1000) : new Date(),
+      type: initialData ? initialData.type : "expense",
+      paymentMethod: initialData ? initialData.payment_method : "UPI",
     },
   });
+
+  React.useEffect(() => {
+    if (initialData) {
+      form.reset({
+        amount: initialData.amount.toString(),
+        description: initialData.description,
+        category: initialData.category_id,
+        date: new Date(initialData.date * 1000),
+        type: initialData.type,
+        paymentMethod: initialData.payment_method,
+      });
+    } else {
+      form.reset({
+        amount: "",
+        description: "",
+        category: "",
+        date: new Date(),
+        type: "expense",
+        paymentMethod: "UPI",
+      });
+    }
+  }, [initialData, open, form]);
 
   const categories = Object.keys(CATEGORY_KEYWORDS);
 
@@ -77,8 +100,11 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
         category_color: "#60A5FA" // default fallback
       };
 
-      const response = await fetch("/api/transactions", {
-        method: "POST",
+      const url = initialData?.id ? `/api/transactions/${initialData.id}` : "/api/transactions";
+      const method = initialData?.id ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formattedData)
       });
@@ -90,7 +116,13 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
       if (payload.fallbackToLocal) {
         const existing = localStorage.getItem("spendwise_transactions");
         const existingArray = existing ? JSON.parse(existing) : [];
-        localStorage.setItem("spendwise_transactions", JSON.stringify([payload.mockData, ...existingArray]));
+        
+        if (initialData?.id) {
+          const filtered = existingArray.filter((t: any) => t.id !== initialData.id);
+          localStorage.setItem("spendwise_transactions", JSON.stringify([{...payload.mockData, id: initialData.id}, ...filtered]));
+        } else {
+          localStorage.setItem("spendwise_transactions", JSON.stringify([payload.mockData, ...existingArray]));
+        }
       }
       
       onOpenChange(false);
@@ -108,9 +140,9 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="sm:max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-l-0">
         <SheetHeader>
-          <SheetTitle>Add Transaction</SheetTitle>
+          <SheetTitle>{initialData ? "Edit Transaction" : "Add Transaction"}</SheetTitle>
           <SheetDescription>
-            Record a new income or expense manually.
+            {initialData ? "Update your transaction details below." : "Record a new income or expense manually."}
           </SheetDescription>
         </SheetHeader>
         
@@ -120,7 +152,7 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
               <Button
                 type="button"
                 variant={form.watch("type") === "expense" ? "default" : "ghost"}
-                className="flex-1 rounded-lg h-9"
+                className="flex-1 rounded-lg h-9 font-bold"
                 onClick={() => form.setValue("type", "expense")}
               >
                 Expense
@@ -128,7 +160,7 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
               <Button
                 type="button"
                 variant={form.watch("type") === "income" ? "default" : "ghost"}
-                className="flex-1 rounded-lg h-9"
+                className="flex-1 rounded-lg h-9 font-bold"
                 onClick={() => form.setValue("type", "income")}
               >
                 Income
@@ -140,9 +172,9 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
               name="amount"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Amount (₹)</FormLabel>
+                  <FormLabel className="font-bold text-[11px] uppercase tracking-widest text-muted-foreground">Amount (₹)</FormLabel>
                   <FormControl>
-                    <Input placeholder="0.00" {...field} className="text-2xl font-bold h-14" type="number" step="0.01" />
+                    <Input placeholder="0.00" {...field} className="text-2xl font-black h-16 rounded-2xl bg-white dark:bg-slate-800 border-white/5 shadow-inner" type="number" step="0.01" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -154,9 +186,9 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="font-bold text-[11px] uppercase tracking-widest text-muted-foreground">Description</FormLabel>
                   <FormControl>
-                    <Input placeholder="What was this for?" {...field} />
+                    <Input placeholder="What was this for?" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-800 border-white/5 font-bold" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -169,16 +201,16 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormLabel className="font-bold text-[11px] uppercase tracking-widest text-muted-foreground">Category</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-11 rounded-xl bg-white dark:bg-slate-800 border-white/5 font-bold">
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="rounded-2xl border-white/10 shadow-2xl">
                         {categories.map((cat) => (
-                          <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                          <SelectItem key={cat} value={cat} className="font-bold rounded-xl">{cat}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -192,18 +224,18 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
                 name="paymentMethod"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Payment Method</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormLabel className="font-bold text-[11px] uppercase tracking-widest text-muted-foreground">Payment Method</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-11 rounded-xl bg-white dark:bg-slate-800 border-white/5 font-bold">
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value="UPI">UPI (Paytm/GPay)</SelectItem>
-                        <SelectItem value="Cash">Cash</SelectItem>
-                        <SelectItem value="Card">Credit/Debit Card</SelectItem>
-                        <SelectItem value="Transfer">Net Banking</SelectItem>
+                      <SelectContent className="rounded-2xl border-white/10 shadow-2xl">
+                        <SelectItem value="UPI" className="font-bold rounded-xl">UPI (Paytm/GPay)</SelectItem>
+                        <SelectItem value="Cash" className="font-bold rounded-xl">Cash</SelectItem>
+                        <SelectItem value="Card" className="font-bold rounded-xl">Credit/Debit Card</SelectItem>
+                        <SelectItem value="Transfer" className="font-bold rounded-xl">Net Banking</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -217,14 +249,13 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Date</FormLabel>
+                  <FormLabel className="font-bold text-[11px] uppercase tracking-widest text-muted-foreground">Date</FormLabel>
                   <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
+                    <PopoverTrigger render={
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-full pl-3 text-left font-normal",
+                            "w-full h-11 pl-3 text-left font-bold rounded-xl bg-white dark:bg-slate-800 border-white/5",
                             !field.value && "text-muted-foreground"
                           )}
                         >
@@ -235,8 +266,7 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
                           )}
                           <LucideCalendar className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
-                      </FormControl>
-                    </PopoverTrigger>
+                    } />
                     <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
                         mode="single"
@@ -254,12 +284,16 @@ export default function TransactionForm({ open, onOpenChange }: TransactionFormP
               )}
             />
 
-            <SheetFooter className="absolute bottom-0 left-0 right-0 p-6 bg-white dark:bg-slate-900 border-t">
-              <Button type="submit" className="w-full h-12 text-lg shadow-lg shadow-primary/20">
-                <LucideCheckCircle2 className="mr-2 h-5 w-5" />
-                Save Transaction
+            <div className="pt-4">
+              <Button type="submit" disabled={isSubmitting} className="w-full h-14 text-lg font-black uppercase tracking-widest shadow-2xl shadow-primary/40 rounded-2xl bg-gradient-to-r from-primary to-blue-600 hover:scale-[1.02] transition-transform active:scale-95">
+                {isSubmitting ? "Saving..." : (
+                  <>
+                    <LucideCheckCircle2 className="mr-2 h-5 w-5" />
+                    {initialData ? "Update Record" : "Save Record"}
+                  </>
+                )}
               </Button>
-            </SheetFooter>
+            </div>
           </form>
         </Form>
       </SheetContent>

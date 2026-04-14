@@ -19,29 +19,31 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navItems = [
-    { name: "Dashboard", href: "/" },
+    { name: "Dashboard", href: "/dashboard" },
     { name: "Transactions", href: "/transactions" },
     { name: "Import", href: "/import" },
     { name: "Insights", href: "/insights" },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-xl">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-md shadow-primary/20">
-            <LucideWallet className="h-5 w-5" />
+    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-white/50 dark:bg-slate-950/50 backdrop-blur-2xl">
+      <div className="container mx-auto flex h-16 items-center justify-between px-6">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-xl shadow-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+            <LucideWallet className="h-6 w-6 font-black" />
           </div>
-          <span className="text-xl font-bold tracking-tight hidden sm:block">SpendWise</span>
-        </div>
+          <span className="text-2xl font-black tracking-tighter hidden sm:block bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">SpendWise</span>
+        </Link>
 
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-1 bg-muted/20 p-1 rounded-2xl border border-white/5 shadow-inner">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                pathname === item.href ? "text-primary border-b-2 border-primary pb-1" : "text-muted-foreground"
+              className={`text-[11px] font-black uppercase tracking-widest px-5 py-2 rounded-xl transition-all ${
+                pathname === item.href 
+                  ? "bg-white dark:bg-slate-800 text-primary shadow-sm scale-105" 
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {item.name}
@@ -49,21 +51,21 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="relative">
-            <LucideBell className="h-5 w-5 text-muted-foreground" />
-            <span className="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-destructive" />
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" className="relative h-10 w-10 rounded-full hover:bg-primary/5">
+            <LucideBell className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="absolute top-2.5 right-2.5 flex h-2 w-2 rounded-full bg-rose-500 ring-2 ring-background shadow-pulse" />
           </Button>
 
           <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 overflow-hidden">
-                <Avatar className="h-9 w-9 border-2 border-muted hover:border-primary transition-colors">
+            <DropdownMenuTrigger render={
+              <Button variant="ghost" className="relative h-12 w-12 rounded-full p-0 overflow-hidden hover:scale-105 active:scale-95 transition-all">
+                <Avatar className="h-10 w-10 border-2 border-white/10 shadow-lg">
                   <AvatarImage src="" alt="User" />
-                  <AvatarFallback className="bg-primary/10 text-primary">JD</AvatarFallback>
+                  <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-white font-black text-xs">JD</AvatarFallback>
                 </Avatar>
               </Button>
-            </DropdownMenuTrigger>
+            } />
             <DropdownMenuContent className="w-56" align="end">
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
