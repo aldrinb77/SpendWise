@@ -194,7 +194,7 @@ export default function TransactionTable() {
                     <TableCell className="pr-6">
                       <DropdownMenu>
                         <DropdownMenuTrigger render={
-                          <Button variant="ghost" size="icon" className="group-hover:opacity-100 transition-opacity h-8 w-8 rounded-full">
+                          <Button aria-label="Transaction options" variant="ghost" size="icon" className="group-hover:opacity-100 transition-opacity h-8 w-8 rounded-full">
                             <LucideMoreHorizontal className="h-4 w-4" />
                           </Button>
                         } />
