@@ -130,8 +130,9 @@ export default function FileUpload({ onFileSelect, isLoading = false }: FileUplo
                 </div>
               ) : (
                 <button
+                  aria-label="Clear selected file"
                   onClick={() => setSelectedFile(null)}
-                  className="p-2 hover:bg-muted rounded-full transition-colors"
+                  className="p-2 hover:bg-muted rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                 >
                   <LucideX className="h-5 w-5 text-muted-foreground" />
                 </button>
