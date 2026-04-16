@@ -31,7 +31,10 @@ export default function MobileNav() {
           </Link>
         ))}
 
-        <button className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 -translate-y-4 hover:scale-110 transition-transform active:scale-95">
+        <button
+          aria-label="Add transaction"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 -translate-y-4 hover:scale-110 transition-transform active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        >
           <LucidePlus className="h-6 w-6" />
         </button>
 
