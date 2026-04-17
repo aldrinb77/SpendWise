@@ -109,7 +109,7 @@ export default function ImportPage() {
   return (
     <div className="container mx-auto p-4 md:p-8 max-w-5xl space-y-8 pb-32">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => router.back()}>
+        <Button aria-label="Go back" variant="ghost" size="icon" onClick={() => router.back()}>
           <LucideArrowLeft className="h-5 w-5" />
         </Button>
         <div>

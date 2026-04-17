@@ -52,7 +52,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="relative h-10 w-10 rounded-full hover:bg-primary/5">
+          <Button aria-label="Notifications" variant="ghost" size="icon" className="relative h-10 w-10 rounded-full hover:bg-primary/5">
             <LucideBell className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
             <span className="absolute top-2.5 right-2.5 flex h-2 w-2 rounded-full bg-rose-500 ring-2 ring-background shadow-pulse" />
           </Button>

@@ -130,6 +130,7 @@ export default function FileUpload({ onFileSelect, isLoading = false }: FileUplo
                 </div>
               ) : (
                 <button
+                  aria-label="Remove selected file"
                   onClick={() => setSelectedFile(null)}
                   className="p-2 hover:bg-muted rounded-full transition-colors"
                 >
