@@ -28,11 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${outfit.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans bg-slate-50/50 dark:bg-slate-950/50">
-        <Navbar />
-        <main className="flex-1 pb-24 md:pb-0">
+        <main className="flex-1">
           {children}
         </main>
-        <MobileNav />
         <Toaster position="top-center" richColors closeButton expand={false} />
       </body>
     </html>
