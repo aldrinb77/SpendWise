@@ -3,9 +3,6 @@ pages_build_output_dir = ".next"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-[build]
-command = "npm run build"
-
 [[d1_databases]]
 binding = "DB"
 database_name = "expense-tracker-db"
@@ -20,5 +17,5 @@ binding = "KV"
 id = "a1a29e181da541d89af6c34bfafa79a0"
 
 [vars]
-NEXT_PUBLIC_APP_URL = "http://localhost:3000"
+NEXT_PUBLIC_APP_URL = "https://expense-tracker.pages.dev"
 JWT_SECRET = "spendwise_super_secure_jwt_key_2026_xyz"
