@@ -1,6 +1,7 @@
 name = "expense-tracker"
-pages_build_output_dir = ".vercel/output/static"compatibility_date = "2024-09-23"
-compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat", "nodejs_compat_populate_process_env"]
 
 [[d1_databases]]
 binding = "DB"
@@ -14,3 +15,4 @@ id = "a1a29e181da541d89af6c34bfafa79a0"
 [vars]
 NEXT_PUBLIC_APP_URL = "https://spendwise-b3u.pages.dev"
 JWT_SECRET = "spendwise_super_secure_jwt_key_2026_xyz"
+
