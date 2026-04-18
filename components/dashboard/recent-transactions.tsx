@@ -19,7 +19,16 @@ export default function RecentTransactions({ limit = 8 }: RecentTransactionsProp
           setTxns(json.slice(0, limit));
         } else if (json.fallbackToLocal) {
             const local = localStorage.getItem("spendwise_transactions");
-            if (local) setTxns(JSON.parse(local).sort((a: any, b: any) => b.date - a.date).slice(0, limit));
+            if (local) {
+              try {
+                const parsed = JSON.parse(local);
+                if (Array.isArray(parsed)) {
+                  setTxns(parsed.sort((a: any, b: any) => b.date - a.date).slice(0, limit));
+                }
+              } catch (e) {
+                console.error("Transaction ledger corruption", e);
+              }
+            }
         }
         setLoading(false);
       })

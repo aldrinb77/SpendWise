@@ -22,24 +22,30 @@ export default function SpendingChart() {
         if (json.fallbackToLocal) {
           const localData = localStorage.getItem("spendwise_transactions");
           if (localData) {
-            const txns = JSON.parse(localData);
-            const now = new Date();
-            const daysMap: Record<string, any> = {};
-            
-            // Build 14-day timeline
-            for(let i=13; i>=0; i--) {
-              const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
-              daysMap[d] = { date: d, income: 0, expense: 0 };
-            }
-            
-            txns.forEach((t: any) => {
-              const d = new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
-              if (daysMap[d]) {
-                if (t.type === 'income') daysMap[d].income += Number(t.amount);
-                else daysMap[d].expense += Number(t.amount);
+            try {
+              const txns = JSON.parse(localData);
+              if (Array.isArray(txns)) {
+                const now = new Date();
+                const daysMap: Record<string, any> = {};
+                
+                // Build 14-day timeline
+                for(let i=13; i>=0; i--) {
+                  const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+                  daysMap[d] = { date: d, income: 0, expense: 0 };
+                }
+                
+                txns.forEach((t: any) => {
+                  const d = new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+                  if (daysMap[d]) {
+                    if (t.type === 'income') daysMap[d].income += Number(t.amount);
+                    else daysMap[d].expense += Number(t.amount);
+                  }
+                });
+                setChartData(Object.values(daysMap));
               }
-            });
-            setChartData(Object.values(daysMap));
+            } catch (e) {
+              console.error("Chart data corruption", e);
+            }
           }
         } else {
           setChartData(Array.isArray(json) ? json : []);
