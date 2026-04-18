@@ -51,11 +51,12 @@ export default function TransactionTable() {
             setTransactions(JSON.parse(localData).sort((a: any, b: any) => b.date - a.date));
           }
         } else {
-          setTransactions(payload as any[]);
+          setTransactions(Array.isArray(payload) ? payload : []);
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Transactions fetch fail:", err);
         const localData = localStorage.getItem("spendwise_transactions");
         if (localData) setTransactions(JSON.parse(localData).sort((a: any, b: any) => b.date - a.date));
         setLoading(false);
