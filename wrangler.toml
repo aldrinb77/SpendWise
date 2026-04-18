@@ -14,4 +14,6 @@ id = "a1a29e181da541d89af6c34bfafa79a0"
 
 [vars]
 NEXT_PUBLIC_APP_URL = "https://spendwise-b3u.pages.dev"
+NEXT_PUBLIC_SUPABASE_URL = "https://ltxerejwklqpzprlkvlf.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx0eGVyZWp3a2xxcHpwcmxrdmxmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxMzI3MDcsImV4cCI6MjA5MTcwODcwN30.wW5KMrLXcGpE7UxczApL5XSY6vyWNPlVcul5TMfRbWw"
 JWT_SECRET = "spendwise_super_secure_jwt_key_2026_xyz"
