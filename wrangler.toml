@@ -13,5 +13,5 @@ binding = "KV"
 id = "a1a29e181da541d89af6c34bfafa79a0"
 
 [vars]
-NEXT_PUBLIC_APP_URL = "https://expense-tracker.pages.dev"
+NEXT_PUBLIC_APP_URL = "https://spendwise-b3u.pages.dev"
 JWT_SECRET = "spendwise_super_secure_jwt_key_2026_xyz"
