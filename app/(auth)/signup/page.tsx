@@ -35,7 +35,7 @@ export default function SignupPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: 'https://spendwise-b3u.pages.dev/auth/callback',
         },
       });
 
