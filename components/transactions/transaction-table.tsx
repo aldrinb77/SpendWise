@@ -118,7 +118,7 @@ export default function TransactionTable() {
         <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
           <DropdownMenu>
             <DropdownMenuTrigger render={
-              <Button variant="outline" className="rounded-2xl h-10 gap-2 whitespace-nowrap bg-white dark:bg-slate-800 border-0 shadow-sm font-bold tracking-tight">
+              <Button variant="outline" aria-label={`Filter by category, currently selected: ${categoryFilter === "All" ? "All Categories" : categoryFilter}`} className="rounded-2xl h-10 gap-2 whitespace-nowrap bg-white dark:bg-slate-800 border-0 shadow-sm font-bold tracking-tight">
                 <div className="h-2 w-2 rounded-full bg-primary" />
                 {categoryFilter === "All" ? "All Categories" : categoryFilter}
                 <LucideChevronDown className="h-4 w-4 text-muted-foreground" />
@@ -194,7 +194,7 @@ export default function TransactionTable() {
                     <TableCell className="pr-6">
                       <DropdownMenu>
                         <DropdownMenuTrigger render={
-                          <Button variant="ghost" size="icon" className="group-hover:opacity-100 transition-opacity h-8 w-8 rounded-full">
+                          <Button variant="ghost" size="icon" aria-label="Transaction options" className="group-hover:opacity-100 transition-opacity h-8 w-8 rounded-full">
                             <LucideMoreHorizontal className="h-4 w-4" />
                           </Button>
                         } />
