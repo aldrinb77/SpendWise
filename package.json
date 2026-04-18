@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && rm -rf .next/cache",
+    "build": "next build && npx @cloudflare/next-on-pages"
     "pages:build": "npx @cloudflare/next-on-pages",
     "pages:dev": "npx @cloudflare/next-on-pages --watch & wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat --d1=DB --kv=KV --r2=expense-tracker-assets",
     "start": "next start",
