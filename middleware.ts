@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
     if (session) {
       try {
         await decrypt(session);
-        return NextResponse.redirect(new URL("/", request.url));
+        return NextResponse.redirect(new URL("/dashboard", request.url));
       } catch (err) {
         // Invalid session, let user stay on login page
       }
