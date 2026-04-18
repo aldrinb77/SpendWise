@@ -57,10 +57,80 @@ export default function LandingPage() {
                     <div className="h-3 w-3 rounded-full bg-amber-500" />
                     <div className="h-3 w-3 rounded-full bg-emerald-500" />
                 </div>
-                <div className="flex items-center justify-center h-full text-slate-700 font-black text-2xl uppercase tracking-[0.2em]">
-                    Interactive Interface Preview
+                <div className="pt-12 p-8 h-full flex flex-col gap-6 bg-slate-950 relative z-0">
+                  {/* Top Nav Mock */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="h-10 w-10 bg-primary/20 rounded-xl" />
+                      <div className="space-y-2">
+                        <div className="h-4 w-32 bg-white/10 rounded" />
+                        <div className="h-3 w-20 bg-white/5 rounded" />
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                       <div className="h-8 w-8 bg-white/5 rounded-full" />
+                       <div className="h-8 w-8 bg-white/5 rounded-full" />
+                    </div>
+                  </div>
+                  {/* Body Mock */}
+                  <div className="flex-1 grid grid-cols-3 gap-6">
+                    {/* Left Column */}
+                    <div className="col-span-2 space-y-6 flex flex-col">
+                      {/* Chart Area */}
+                      <div className="flex-1 bg-white/5 rounded-2xl border border-white/5 p-6 relative overflow-hidden flex flex-col">
+                        <div className="h-4 w-1/4 bg-white/10 rounded mb-4" />
+                        <div className="flex-1 relative">
+                          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                             <defs>
+                               <linearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
+                                 <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.5" />
+                                 <stop offset="100%" stopColor="#4F46E5" stopOpacity="0" />
+                               </linearGradient>
+                             </defs>
+                             <motion.path 
+                               d="M0,100 L0,60 Q20,30 40,70 T80,40 T100,20 L100,100 Z" 
+                               fill="url(#grad)" 
+                               initial={{ opacity: 0, y: 50 }}
+                               animate={{ opacity: 1, y: 0 }}
+                               transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                             />
+                             <motion.path 
+                               d="M0,60 Q20,30 40,70 T80,40 T100,20" 
+                               fill="none"
+                               stroke="#4F46E5"
+                               strokeWidth="2"
+                               initial={{ pathLength: 0, opacity: 0 }}
+                               animate={{ pathLength: 1, opacity: 1 }}
+                               transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+                             />
+                          </svg>
+                        </div>
+                      </div>
+                      {/* Sub Cards */}
+                      <div className="h-32 grid grid-cols-3 gap-4">
+                        {[1,2,3].map(i => (
+                           <div key={i} className="bg-white/5 rounded-2xl border border-white/5 p-4 flex flex-col justify-end gap-2">
+                             <div className="h-2 w-1/2 bg-white/10 rounded" />
+                             <div className="h-4 w-3/4 bg-white/20 rounded" />
+                           </div>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Right Column */}
+                    <div className="col-span-1 bg-white/5 rounded-2xl border border-white/5 p-6 flex flex-col gap-4">
+                      <div className="h-4 w-1/2 bg-white/10 rounded mb-6" />
+                      {[1,2,3,4,5].map(i => (
+                         <div key={i} className="flex items-center gap-3">
+                           <div className="h-10 w-10 bg-white/5 rounded-xl shrink-0" />
+                           <div className="flex-1 space-y-2">
+                             <div className="h-3 w-full bg-white/10 rounded" />
+                             <div className="h-2 w-2/3 bg-white/5 rounded" />
+                           </div>
+                         </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-            </div>
           </motion.div>
         </div>
       </section>
