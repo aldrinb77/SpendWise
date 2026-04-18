@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && npx @cloudflare/next-on-pages"
+    "build": "next build && npx @cloudflare/next-on-pages",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:dev": "npx @cloudflare/next-on-pages --watch & wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat --d1=DB --kv=KV --r2=expense-tracker-assets",
+    "pages:dev": "npx @cloudflare/next-on-pages --watch & wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat --d1=DB --kv=KV",
     "start": "next start",
     "lint": "eslint"
   },
