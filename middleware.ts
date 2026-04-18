@@ -7,7 +7,8 @@ export async function middleware(request: NextRequest) {
 
   // Paths that don't require authentication
   const isAuthPage = request.nextUrl.pathname.startsWith("/login") || 
-                     request.nextUrl.pathname.startsWith("/signup");
+                     request.nextUrl.pathname.startsWith("/signup") ||
+                     request.nextUrl.pathname.startsWith("/auth/callback");
   
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
 
