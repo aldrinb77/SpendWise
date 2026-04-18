@@ -8,10 +8,6 @@ binding = "DB"
 database_name = "expense-tracker-db"
 database_id = "03b54dc6-b590-42c3-bbfd-f15e7f59171d"
 
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "expense-tracker-assets"
-
 [[kv_namespaces]]
 binding = "KV"
 id = "a1a29e181da541d89af6c34bfafa79a0"
