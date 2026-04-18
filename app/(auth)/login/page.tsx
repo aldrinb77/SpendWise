@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +19,26 @@ export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    const supabase = getSupabase();
+    if (!supabase) return;
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        // Exchange the client-side session for our HTTP-Only middleware cookie
+        await fetch('/api/auth/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ session })
+        });
+        toast.success("Welcome aboard!");
+        router.push('/dashboard');
+      }
+    });
+    
+    return () => subscription.unsubscribe();
+  }, [router]);
+
   async function handleGoogleLogin() {
     setIsLoading(true);
     try {
@@ -36,7 +56,11 @@ export default function LoginPage() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://spendwise-b3u.pages.dev/auth/callback',
+          redirectTo: 'https://spendwise-b3u.pages.dev/login',
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
         },
       });
 
