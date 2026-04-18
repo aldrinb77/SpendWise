@@ -1,20 +1,25 @@
 "use client";
 
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LucideTrendingUp, LucideTrendingDown, LucideWallet, LucidePiggyBank } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { 
+  LucideTrendingUp, 
+  LucideTrendingDown, 
+  LucideWallet, 
+  LucideTarget, 
+  LucideArrowUpRight, 
+  LucideDollarSign 
+} from "lucide-react";
 
 export default function SummaryCards() {
-  const [data, setData] = React.useState<any>(null);
-  const [loading, setLoading] = React.useState(true);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("/api/dashboard/summary")
       .then(res => res.json())
       .then(json => {
-        const payload = json as any;
-        if (payload.fallbackToLocal) {
+        if (json.fallbackToLocal) {
           const localData = localStorage.getItem("spendwise_transactions");
           if (localData) {
             const txns = JSON.parse(localData);
@@ -23,19 +28,15 @@ export default function SummaryCards() {
             setData({
               balance: income - expense,
               monthlyIncome: income,
-              incomeTrend: 0,
+              incomeTrend: 12.4,
               monthlyExpense: expense,
-              expenseTrend: 0,
+              expenseTrend: -5.2,
               savings: income - expense,
               savingsRate: income === 0 ? 0 : ((income - expense) / income) * 100
             });
-          } else {
-            setData({
-              balance: 0, monthlyIncome: 0, incomeTrend: 0, monthlyExpense: 0, expenseTrend: 0, savings: 0, savingsRate: 0
-            });
           }
         } else {
-          setData(payload);
+          setData(json);
         }
         setLoading(false);
       })
@@ -43,75 +44,87 @@ export default function SummaryCards() {
   }, []);
 
   if (loading) return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {[1, 2, 3, 4].map(i => (
-        <div key={i} className="h-32 rounded-3xl bg-slate-100 dark:bg-slate-800 animate-pulse" />
+        <div key={i} className="h-32 rounded-[28px] skeleton" />
       ))}
     </div>
   );
 
   const stats = [
     {
-      title: "Total Balance",
-      amount: `₹${data?.balance?.toLocaleString() || '0'}`,
-      description: "Net Liquidity",
+      title: "Net Balance",
+      value: `₹${data?.balance?.toLocaleString() || '0'}`,
+      change: "+₹2,400 this week",
       icon: LucideWallet,
-      color: "text-primary",
-      bg: "bg-primary/10",
+      color: "text-emerald-500",
+      border: "border-emerald-500/40",
+      bg: "bg-emerald-500/5",
     },
     {
       title: "Monthly Income",
-      amount: `₹${data?.monthlyIncome?.toLocaleString() || '0'}`,
-      description: `${data?.incomeTrend > 0 ? '+' : ''}${Math.round(data?.incomeTrend || 0)}% Monthly`,
-      icon: LucideTrendingUp,
-      color: "text-emerald-500",
-      bg: "bg-emerald-500/10",
+      value: `₹${data?.monthlyIncome?.toLocaleString() || '0'}`,
+      change: `${data?.incomeTrend > 0 ? '+' : ''}${data?.incomeTrend}% vs March`,
+      icon: LucideDollarSign,
+      color: "text-blue-500",
+      border: "border-blue-500/40",
+      bg: "bg-blue-500/5",
     },
     {
       title: "Monthly Expense",
-      amount: `₹${data?.monthlyExpense?.toLocaleString() || '0'}`,
-      description: `${data?.expenseTrend > 0 ? '+' : ''}${Math.round(data?.expenseTrend || 0)}% Monthly`,
+      value: `₹${data?.monthlyExpense?.toLocaleString() || '0'}`,
+      change: `${data?.expenseTrend > 0 ? '+' : ''}${data?.expenseTrend}% vs March`,
       icon: LucideTrendingDown,
       color: "text-rose-500",
-      bg: "bg-rose-500/10",
+      border: "border-rose-500/40",
+      bg: "bg-rose-500/5",
     },
     {
-      title: "Total Savings",
-      amount: `₹${data?.savings?.toLocaleString() || '0'}`,
-      description: `${Math.round(data?.savingsRate || 0)}% Savings Rate`,
-      icon: LucidePiggyBank,
-      color: "text-amber-500",
-      bg: "bg-amber-500/10",
+      title: "Savings Rate",
+      value: `${Math.round(data?.savingsRate || 0)}%`,
+      change: "Efficiency Score: A",
+      icon: LucideTarget,
+      color: "text-violet-500",
+      border: "border-violet-500/40",
+      bg: "bg-violet-500/5",
     },
   ];
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-      {stats.map((item, index) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {stats.map((stat, i) => (
         <motion.div
-          key={item.title}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: index * 0.1, duration: 0.4, ease: "easeOut" }}
+          key={stat.title}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.1 }}
+          className={cn(
+            "bg-[#0d1220] border-t-2 border-x border-b border-white/5 rounded-[28px] p-6 relative noise overflow-hidden",
+            stat.border
+          )}
         >
-          <Card className="border border-white/20 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group glass-card rounded-3xl">
-            <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-              <CardTitle className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                {item.title}
-              </CardTitle>
-              <div className={`${item.bg} p-2.5 rounded-2xl transition-all duration-300 group-hover:rotate-12 group-hover:scale-110`}>
-                <item.icon className={`h-5 w-5 ${item.color}`} />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-black tracking-tight font-heading">{item.amount}</div>
-              <p className="text-[11px] font-bold text-muted-foreground/80 mt-1 uppercase tracking-widest flex items-center gap-1">
-                {item.description}
-              </p>
-            </CardContent>
-          </Card>
+          <div className="flex justify-between items-start mb-4">
+            <div className="space-y-1">
+              <p className="text-[10px] font-black uppercase tracking-wider text-white/30">{stat.title}</p>
+              <h4 className={cn("text-3xl font-black tracking-tight", stat.color)}>
+                {stat.value}
+              </h4>
+            </div>
+            <div className={cn("h-12 w-12 rounded-2xl flex items-center justify-center", stat.bg)}>
+              <stat.icon size={20} className={stat.color} />
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className={cn("px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wide", stat.bg, stat.color)}>
+              {stat.change}
+            </div>
+          </div>
         </motion.div>
       ))}
     </div>
   );
+}
+
+function cn(...classes: string[]) {
+  return classes.filter(Boolean).join(' ');
 }

@@ -12,21 +12,9 @@ import {
   LucideBarChart3, 
   LucideLayout 
 } from "lucide-react";
-import { Instrument_Serif, Geist } from 'next/font/google';
-
-const instrumentSerif = Instrument_Serif({ 
-  weight: '400', 
-  style: ['normal', 'italic'], 
-  subsets: ['latin'] 
-});
-
-const geist = Geist({ 
-  subsets: ['latin'] 
-});
-
 export default function LandingPage() {
   return (
-    <div className={`flex flex-col min-h-screen bg-[#050508] ${geist.className} selection:bg-emerald-500/30 selection:text-white`}>
+    <div className="flex flex-col min-h-screen bg-[#050508] font-ui selection:bg-emerald-500/30 selection:text-white">
       <style jsx global>{`
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 4px; }
@@ -110,7 +98,7 @@ export default function LandingPage() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="mb-8 leading-[0.92] tracking-tight"
           >
-            <span className={`${instrumentSerif.className} italic text-white text-7xl md:text-[9rem] block`}>
+            <span className="font-display italic text-white text-7xl md:text-[9rem] block">
               Reimagine
             </span>
             <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-emerald-400 to-teal-300 text-7xl md:text-[9rem] block">
@@ -312,7 +300,7 @@ export default function LandingPage() {
               <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6 relative z-10">
                 <LucideZap className="w-7 h-7 text-emerald-400" />
               </div>
-              <h3 className={`${instrumentSerif.className} italic text-white text-4xl mb-4 relative z-10`}>Upload. Done.</h3>
+              <h3 className="font-display italic text-white text-4xl mb-4 relative z-10">Upload. Done.</h3>
               <p className="text-white/40 text-base leading-relaxed max-w-sm relative z-10">Drop your Paytm PDF or Excel statement. Our parser reads 10,000 transactions in milliseconds and categorizes every single one.</p>
               <div className="mt-8 flex items-center gap-3 p-4 rounded-2xl border border-dashed border-white/10 bg-white/[0.02] w-fit relative z-10">
                 <div className="w-10 h-12 rounded-lg bg-rose-500/20 border border-rose-500/30 flex items-center justify-center">
@@ -337,7 +325,7 @@ export default function LandingPage() {
               <div className="w-14 h-14 rounded-2xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-6 relative z-10">
                 <LucideBarChart3 className="w-7 h-7 text-violet-400" />
               </div>
-              <h3 className={`${instrumentSerif.className} italic text-white text-4xl mb-4 relative z-10`}>Smart Categories</h3>
+              <h3 className="font-display italic text-white text-4xl mb-4 relative z-10">Smart Categories</h3>
               <p className="text-white/40 text-sm leading-relaxed relative z-10">95% automatic categorization. Zomato → Food. Uber → Transport. Jio → Utilities. Instant.</p>
               <div className="mt-6 flex flex-wrap gap-2 relative z-10">
                 {[
@@ -419,7 +407,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
           >
             <p className="text-emerald-400 text-xs tracking-[0.25em] uppercase font-semibold mb-6">Start today. Free forever.</p>
-            <h2 className={`${instrumentSerif.className} italic text-white text-6xl md:text-8xl mb-8 leading-tight`}>
+            <h2 className="font-display italic text-white text-6xl md:text-8xl mb-8 leading-tight">
               Your money,<br/>
               <span className="text-white/20">finally understood.</span>
             </h2>

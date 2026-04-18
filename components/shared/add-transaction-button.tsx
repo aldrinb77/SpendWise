@@ -1,28 +1,35 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, ButtonProps } from "@/components/ui/button";
 import TransactionForm from "@/components/transactions/transaction-form";
 import { LucidePlus } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-interface AddTransactionButtonProps extends React.ComponentProps<typeof Button> {
+interface AddTransactionButtonProps {
+  className?: string;
   showIcon?: boolean;
   children?: React.ReactNode;
 }
 
 export default function AddTransactionButton({ 
+  className,
   children, 
-  showIcon = true,
-  ...props 
+  showIcon = true
 }: AddTransactionButtonProps) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setOpen(true)} {...props}>
-        {showIcon && <LucidePlus className="mr-2 h-4 w-4" />}
+      <button 
+        onClick={() => setOpen(true)}
+        className={cn(
+          "h-12 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#04050a] font-black uppercase tracking-widest text-[11px] transition-all flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-[1.05] active:scale-95",
+          className
+        )}
+      >
+        {showIcon && <LucidePlus size={16} />}
         {children || "Add Transaction"}
-      </Button>
+      </button>
       <TransactionForm open={open} onOpenChange={setOpen} />
     </>
   );

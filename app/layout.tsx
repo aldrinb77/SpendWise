@@ -15,9 +15,12 @@ const outfit = Outfit({
   variable: "--font-outfit" 
 });
 
+import { ToastProvider } from "@/components/ui/toast-provider";
+import { CustomCursor } from "@/components/ui/cursor";
+
 export const metadata: Metadata = {
-  title: "SpendWise | Premium Expense Tracker",
-  description: "Advanced AI-powered financial tracking for the Indian market.",
+  title: "SpendWise | Premium Intelligence Terminal",
+  description: "Advanced AI-powered financial surveillance for the elite.",
 };
 
 export default function RootLayout({
@@ -26,12 +29,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${outfit.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans bg-slate-50/50 dark:bg-slate-950/50">
-        <main className="flex-1">
-          {children}
-        </main>
-        <Toaster position="top-center" richColors closeButton expand={false} />
+    <html lang="en" className="h-full scroll-smooth">
+      <body className="min-h-full bg-[#04050a] text-[#f1f5f9] antialiased selection:bg-emerald-500/20">
+        <ToastProvider>
+           <CustomCursor />
+           {children}
+        </ToastProvider>
       </body>
     </html>
   );

@@ -1,247 +1,294 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+import React, { useState, useMemo, useEffect } from "react";
 import { 
+  LucideSearch, 
+  LucideChevronDown, 
   LucideMoreHorizontal, 
   LucidePencil, 
   LucideTrash2, 
-  LucideSearch,
+  LucideArrowUpRight, 
+  LucideArrowDownLeft,
   LucideFilter,
-  LucideChevronDown
+  LucideX
 } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { motion, AnimatePresence } from "framer-motion";
-import { CATEGORY_KEYWORDS } from "@/lib/categorization/keywords";
+import { useToast } from "@/components/ui/toast-provider";
 import TransactionForm from "./transaction-form";
-import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+
+const CATEGORIES = ["Food & Dining", "Transport", "Shopping", "Entertainment", "Utilities & Bills", "Health", "Education", "Transfers", "Cash", "Income", "Other"];
+const PAYMENT_MODES = ["UPI (Paytm/GPay)", "Cash", "Credit/Debit Card", "Net Banking", "NEFT/IMPS", "Auto Debit"];
 
 export default function TransactionTable() {
-  const [transactions, setTransactions] = React.useState<any[]>([]);
-  const [loading, setLoading] = React.useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("All");
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(true);
+  const [allTransactions, setAllTransactions] = useState<any[]>([]);
   
+  // FILTER STATES
+  const [search, setSearch] = useState("");
+  const [filterCat, setFilterCat] = useState("all");
+  const [filterType, setFilterType] = useState("all");
+  const [filterMode, setFilterMode] = useState("all");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [sortBy, setSortBy] = useState("date-desc");
+
   const [editItem, setEditItem] = useState<any>(null);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("/api/transactions")
       .then(res => res.json())
       .then(json => {
-        const payload = json as any;
-        if (payload.fallbackToLocal) {
-          const localData = localStorage.getItem("spendwise_transactions");
-          if (localData) {
-            setTransactions(JSON.parse(localData).sort((a: any, b: any) => b.date - a.date));
-          }
-        } else {
-          setTransactions(Array.isArray(payload) ? payload : []);
+        if (Array.isArray(json)) setAllTransactions(json);
+        else if (json.fallbackToLocal) {
+          const local = localStorage.getItem("spendwise_transactions");
+          if (local) setAllTransactions(JSON.parse(local));
         }
         setLoading(false);
       })
-      .catch((err) => {
-        console.error("Transactions fetch fail:", err);
-        const localData = localStorage.getItem("spendwise_transactions");
-        if (localData) setTransactions(JSON.parse(localData).sort((a: any, b: any) => b.date - a.date));
-        setLoading(false);
-      });
+      .catch(() => setLoading(false));
   }, []);
 
-  const handleDelete = (id: string) => {
-    toast.promise(
-      new Promise(async (resolve, reject) => {
-        try {
-          await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
-          const filtered = transactions.filter(t => t.id !== id);
-          setTransactions(filtered);
-          localStorage.setItem("spendwise_transactions", JSON.stringify(filtered));
-          resolve(true);
-        } catch (e) {
-          reject(e);
-        }
-      }),
-      {
-        loading: 'Deleting transaction...',
-        success: 'Transaction erased permanently.',
-        error: 'Deletion failed. System error.',
+  const filtered = useMemo(() => {
+    let result = [...allTransactions];
+    
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(t => 
+        (t.description || "").toLowerCase().includes(q) || 
+        (t.category_name || "").toLowerCase().includes(q) ||
+        (t.amount || "").toString().includes(q)
+      );
+    }
+    
+    if (filterCat !== 'all') result = result.filter(t => t.category_name === filterCat);
+    if (filterType !== 'all') result = result.filter(t => t.type === filterType);
+    if (filterMode !== 'all') result = result.filter(t => t.payment_method === filterMode);
+    
+    if (dateFrom) result = result.filter(t => t.date * 1000 >= new Date(dateFrom).getTime());
+    if (dateTo) result = result.filter(t => t.date * 1000 <= new Date(dateTo).getTime());
+    
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case 'date-desc':   return b.date - a.date;
+        case 'date-asc':    return a.date - b.date;
+        case 'amount-desc': return Number(b.amount) - Number(a.amount);
+        case 'amount-asc':  return Number(a.amount) - Number(b.amount);
+        default:            return 0;
       }
-    );
+    });
+
+    return result;
+  }, [allTransactions, search, filterCat, filterType, filterMode, dateFrom, dateTo, sortBy]);
+
+  const activeFiltersCount = [
+    filterCat !== 'all',
+    filterType !== 'all',
+    filterMode !== 'all',
+    !!dateFrom,
+    !!dateTo,
+    sortBy !== 'date-desc'
+  ].filter(Boolean).length;
+
+  const clearFilters = () => {
+    setSearch("");
+    setFilterCat("all");
+    setFilterType("all");
+    setFilterMode("all");
+    setDateFrom("");
+    setDateTo("");
+    setSortBy("date-desc");
   };
 
-  const categories = ["All", ...Object.keys(CATEGORY_KEYWORDS), "Uncategorized"];
+  const handleDelete = async (id: string | number) => {
+    const toastId = toast({ type: 'loading', title: 'Erasing Record', description: 'Zeroing transmission log...' });
+    try {
+      const response = await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error("Deletion failed");
+      
+      const updated = allTransactions.filter(t => t.id !== id);
+      setAllTransactions(updated);
+      localStorage.setItem("spendwise_transactions", JSON.stringify(updated));
+      toast({ type: 'success', title: 'Record Expunged', description: 'Transaction permanently removed from terminal.' });
+    } catch (err: any) {
+      toast({ type: 'error', title: 'Deletion Error', description: err.message });
+    }
+  };
 
-  const filteredTransactions = useMemo(() => {
-    return transactions.filter(t => {
-      const matchesSearch = (t.description || "").toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = categoryFilter === "All" || t.category_name === categoryFilter;
-      return matchesSearch && matchesCategory;
-    });
-  }, [transactions, searchTerm, categoryFilter]);
-
-  if (loading) return (
-    <div className="rounded-3xl border border-white/20 glass-card p-12 space-y-4">
-      {[1, 2, 3, 4, 5].map(i => (
-        <div key={i} className="h-14 bg-slate-100 dark:bg-slate-800/50 rounded-2xl animate-pulse" />
-      ))}
-    </div>
-  );
+  if (loading) return <div className="h-[600px] w-full skeleton rounded-[40px]" />;
 
   return (
-    <div className="space-y-6">
-      {/* Integrated Filters */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/5 dark:bg-slate-900/50 p-4 rounded-3xl border border-white/10 backdrop-blur-md shadow-xl">
-        <div className="relative w-full md:max-w-md">
-          <LucideSearch className="absolute left-4 top-3 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search transactions..." 
-            className="pl-12 h-10 rounded-2xl bg-white dark:bg-slate-800 border-0 shadow-inner"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        
-        <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-          <DropdownMenu>
-            <DropdownMenuTrigger render={
-              <Button variant="outline" className="rounded-2xl h-10 gap-2 whitespace-nowrap bg-white dark:bg-slate-800 border-0 shadow-sm font-bold tracking-tight">
-                <div className="h-2 w-2 rounded-full bg-primary" />
-                {categoryFilter === "All" ? "All Categories" : categoryFilter}
-                <LucideChevronDown className="h-4 w-4 text-muted-foreground" />
-              </Button>
-            } />
-            <DropdownMenuContent className="rounded-2xl border-white/10 shadow-2xl p-2 max-h-[300px] overflow-y-auto">
-              {categories.map(cat => (
-                <DropdownMenuItem key={cat} onClick={() => setCategoryFilter(cat)} className="rounded-xl font-bold tracking-tight cursor-pointer">
-                  {cat}
-                </DropdownMenuItem>
+    <div className="space-y-8">
+      
+      {/* FILTER TERMINAL */}
+      <div className="bg-[#0d1220] border border-white/5 rounded-[32px] overflow-hidden noise shadow-2xl">
+        <div className="p-6 md:p-8 space-y-6">
+          {/* Row 1: Search & Type */}
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="relative flex-1 group">
+              <LucideSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 h-4 w-4 transition-colors" />
+              <input 
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Surveillance by entity, category or value..."
+                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl pl-12 pr-6 py-4 text-sm font-bold text-white focus:border-white/20 transition-all outline-none"
+              />
+            </div>
+            
+            <div className="flex bg-white/[0.03] border border-white/5 p-1 rounded-2xl w-full lg:w-auto">
+              {['all', 'expense', 'income'].map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setFilterType(type)}
+                  className={`flex-1 lg:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                    filterType === type ? 'bg-white/10 text-white shadow-inner' : 'text-white/20 hover:text-white/40'
+                  }`}
+                >
+                  {type}
+                </button>
               ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </div>
+          </div>
+
+          {/* Row 2: Selects */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="space-y-1.5">
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Category</label>
+               <select value={filterCat} onChange={(e) => setFilterCat(e.target.value)} className="w-full">
+                  <option value="all">ANY CLASSIFICATION</option>
+                  {CATEGORIES.map(c => <option key={c} value={c}>{c.toUpperCase()}</option>)}
+               </select>
+            </div>
+            <div className="space-y-1.5">
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Mode</label>
+               <select value={filterMode} onChange={(e) => setFilterMode(e.target.value)} className="w-full">
+                  <option value="all">ANY TERMINAL</option>
+                  {PAYMENT_MODES.map(m => <option key={m} value={m}>{m.toUpperCase()}</option>)}
+               </select>
+            </div>
+            <div className="space-y-1.5">
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Start</label>
+               <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="w-full" />
+            </div>
+            <div className="space-y-1.5">
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">End</label>
+               <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="w-full" />
+            </div>
+            <div className="space-y-1.5">
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Sort</label>
+               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full">
+                  <option value="date-desc">LATEST RECORDS</option>
+                  <option value="date-asc">OLDEST RECORDS</option>
+                  <option value="amount-desc">LARGEST VALUE</option>
+                  <option value="amount-asc">SMALLEST VALUE</option>
+               </select>
+            </div>
+          </div>
+
+          {/* Active Filter Pills */}
+          {activeFiltersCount > 0 && (
+            <div className="flex items-center justify-between pt-4 border-t border-white/5">
+              <div className="flex items-center gap-2">
+                 <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[9px] font-black uppercase tracking-[0.1em] text-blue-500">
+                    {activeFiltersCount} Active Filters Engaged
+                 </div>
+              </div>
+              <button 
+                onClick={clearFilters}
+                className="text-[9px] font-black uppercase tracking-widest text-white/20 hover:text-white transition-colors flex items-center gap-1.5"
+              >
+                Clear Terminal <LucideX size={10} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="rounded-3xl border border-white/20 glass-card overflow-hidden shadow-2xl transition-all duration-500 bg-gradient-to-b from-white/40 to-white/10 dark:from-slate-900/40 dark:to-slate-900/10">
-        <Table>
-          <TableHeader>
-            <TableRow className="border-b border-white/10 hover:bg-transparent">
-              <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground pl-6">Timeline</TableHead>
-              <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Entity</TableHead>
-              <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Category</TableHead>
-              <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground text-right">Value</TableHead>
-              <TableHead className="font-bold text-[11px] uppercase tracking-[0.2em] text-muted-foreground w-[50px] pr-6"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {filteredTransactions.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={5} className="h-64 text-center text-muted-foreground font-medium">
-                  {transactions.length === 0 ? "No history recorded. Upload a statement to begin." : "No matching transactions found."}
-                </TableCell>
-              </TableRow>
-            ) : (
-              <AnimatePresence>
-                {filteredTransactions.map((t, idx) => (
+      {/* DATA LEDGER */}
+      <div className="bg-[#0d1220] border border-white/5 rounded-[40px] overflow-hidden noise shadow-2xl">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-white/5 bg-white/[0.01]">
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Timeline</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Entity</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Classification</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 text-right">Value</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 text-right w-[100px]">Node</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="py-24 text-center">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/10">No Transmissions Match Query</p>
+                  </td>
+                </tr>
+              ) : (
+                filtered.map((t, i) => (
                   <motion.tr 
-                    key={t.id || idx}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, backgroundColor: "rgba(239, 68, 68, 0.1)" }}
-                    transition={{ delay: Math.min(idx * 0.02, 0.2) }}
-                    className="group border-b border-white/5 last:border-0 hover:bg-white/40 dark:hover:bg-slate-800/40 transition-colors cursor-default"
+                    key={t.id || i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: Math.min(i * 0.02, 0.2) }}
+                    className="group border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors"
                   >
-                    <TableCell className="pl-6 py-4">
-                      <span className="text-xs font-black text-slate-500 dark:text-slate-400 tabular-nums tracking-widest">
-                        {new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }).toUpperCase()}
+                    <td className="px-8 py-6">
+                      <span className="text-xs font-black text-white/40 tabular-nums uppercase tracking-widest">
+                        {new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
                       </span>
-                    </TableCell>
-                    <TableCell>
+                    </td>
+                    <td className="px-8 py-6">
                       <div className="flex flex-col">
-                        <span className="font-extrabold text-[15px] tracking-tight">{t.description || "Vendor"}</span>
-                        <span className="text-[10px] text-muted-foreground/60 font-black uppercase tracking-widest">{t.payment_method || "UPI"}</span>
+                         <span className="text-sm font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
+                           {t.description || "Vendor"}
+                         </span>
+                         <span className="text-[10px] text-white/20 font-black uppercase tracking-[0.2em] mt-1">
+                           Channel: {t.payment_method || "UPI"}
+                         </span>
                       </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge 
-                        className="font-black text-[9px] uppercase tracking-widest px-3 py-1 rounded-full border border-white/20 shadow-sm"
-                        style={{ 
-                          backgroundColor: `${t.category_color}15`, 
-                          color: t.category_color,
-                        }}
-                      >
+                    </td>
+                    <td className="px-8 py-6">
+                      <Badge className="bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-wider text-white/50 px-3 py-1 rounded-full">
                         {t.category_name}
                       </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <span className={`text-[15px] font-black tracking-tighter ${t.type === 'income' ? "text-emerald-500" : "text-slate-800 dark:text-slate-200"}`}>
-                        {t.type === 'income' ? "+" : ""}{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(t.amount)}
-                      </span>
-                    </TableCell>
-                    <TableCell className="pr-6">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger render={
-                          <Button variant="ghost" size="icon" className="group-hover:opacity-100 transition-opacity h-8 w-8 rounded-full">
-                            <LucideMoreHorizontal className="h-4 w-4" />
-                          </Button>
-                        } />
-                        <DropdownMenuContent align="end" className="rounded-2xl border-white/10 shadow-2xl p-2 min-w-[150px]">
-                          <DropdownMenuItem 
+                    </td>
+                    <td className="px-8 py-6 text-right">
+                       <span className={`text-md font-black tabular-nums tracking-tighter ${t.type === 'income' ? 'text-emerald-500' : 'text-white'}`}>
+                         {t.type === 'income' ? <LucideArrowDownLeft className="inline mr-1 h-3 w-3" /> : <LucideArrowUpRight className="inline mr-1 h-3 w-3" />}
+                         {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(t.amount)}
+                       </span>
+                    </td>
+                    <td className="px-8 py-6 text-right">
+                       <div className="flex items-center justify-end gap-2">
+                          <button 
                             onClick={() => {
                               setEditItem(t);
                               setIsEditOpen(true);
                             }}
-                            className="rounded-xl font-bold tracking-tight cursor-pointer focus:bg-primary/10 focus:text-primary"
+                            className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-blue-400 hover:border-blue-500/30 transition-all"
                           >
-                            <LucidePencil className="mr-2 h-4 w-4" /> Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleDelete(t.id)} className="rounded-xl font-bold tracking-tight cursor-pointer focus:bg-rose-500/10 focus:text-rose-500 text-rose-500">
-                            <LucideTrash2 className="mr-2 h-4 w-4" /> Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
+                             <LucidePencil size={12} />
+                          </button>
+                          <button 
+                            onClick={() => handleDelete(t.id)}
+                            className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:border-rose-500/30 transition-all"
+                          >
+                             <LucideTrash2 size={12} />
+                          </button>
+                       </div>
+                    </td>
                   </motion.tr>
-                ))}
-              </AnimatePresence>
-            )}
-          </TableBody>
-        </Table>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      {filteredTransactions.length > 0 && (
-        <div className="flex items-center justify-between px-6 py-4 bg-muted/30 rounded-3xl border border-white/10 glass-card">
-          <p className="text-sm font-bold text-muted-foreground tracking-tight">
-            Showing {filteredTransactions.length} transaction{filteredTransactions.length !== 1 && 's'}
-          </p>
-          {transactions.length > 100 && (
-            <Badge variant="outline" className="text-[10px] uppercase font-black tracking-widest text-primary border-primary/20 bg-primary/5 rounded-full px-3">
-              Local Memory Engaged
-            </Badge>
-          )}
-        </div>
-      )}
-
-      {/* Manual Edit Modal */}
-      <TransactionForm 
-        open={isEditOpen} 
-        onOpenChange={setIsEditOpen} 
-        initialData={editItem} 
-      />
+      <TransactionForm open={isEditOpen} onOpenChange={setIsEditOpen} initialData={editItem} />
     </div>
   );
 }
