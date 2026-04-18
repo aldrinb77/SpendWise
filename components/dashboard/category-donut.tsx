@@ -19,14 +19,21 @@ export default function CategoryDonut() {
     // We'll mock for now based on local storage to show design
     const localData = localStorage.getItem("spendwise_transactions");
     if (localData) {
-      const txns = JSON.parse(localData).filter((t: any) => t.type === 'expense');
-      const catMap: Record<string, any> = {};
-      txns.forEach((t: any) => {
-        const cat = t.category_name || "Other";
-        catMap[cat] = (catMap[cat] || 0) + Number(t.amount);
-      });
-      const finalized = Object.entries(catMap).map(([name, value]) => ({ name, value }));
-      setData(finalized.sort((a, b) => b.value - a.value).slice(0, 5));
+      try {
+        const parsed = JSON.parse(localData);
+        if (Array.isArray(parsed)) {
+          const txns = parsed.filter((t: any) => t.type === 'expense');
+          const catMap: Record<string, any> = {};
+          txns.forEach((t: any) => {
+            const cat = t.category_name || "Other";
+            catMap[cat] = (catMap[cat] || 0) + Number(t.amount);
+          });
+          const finalized = Object.entries(catMap).map(([name, value]) => ({ name, value }));
+          setData(finalized.sort((a, b) => b.value - a.value).slice(0, 5));
+        }
+      } catch (e) {
+        console.error("Local data corruption", e);
+      }
     } else {
         setData([
           { name: 'Food', value: 4000 },
@@ -89,7 +96,7 @@ export default function CategoryDonut() {
 
       <div className="w-full space-y-3">
         {data.map((item, index) => {
-          const percent = ((item.value / total) * 100).toFixed(0);
+          const percent = total > 0 ? ((item.value / total) * 100).toFixed(0) : "0";
           return (
             <div key={item.name} className="flex flex-col gap-1.5 group cursor-default">
               <div className="flex items-center justify-between">

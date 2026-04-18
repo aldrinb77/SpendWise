@@ -64,7 +64,7 @@ export default function SummaryCards() {
     {
       title: "Monthly Income",
       value: `₹${data?.monthlyIncome?.toLocaleString() || '0'}`,
-      change: `${data?.incomeTrend > 0 ? '+' : ''}${data?.incomeTrend}% vs March`,
+      change: `${(data?.incomeTrend ?? 0) > 0 ? '+' : ''}${data?.incomeTrend ?? 0}% vs March`,
       icon: LucideDollarSign,
       color: "text-blue-500",
       border: "border-blue-500/40",
@@ -73,7 +73,7 @@ export default function SummaryCards() {
     {
       title: "Monthly Expense",
       value: `₹${data?.monthlyExpense?.toLocaleString() || '0'}`,
-      change: `${data?.expenseTrend > 0 ? '+' : ''}${data?.expenseTrend}% vs March`,
+      change: `${(data?.expenseTrend ?? 0) > 0 ? '+' : ''}${data?.expenseTrend ?? 0}% vs March`,
       icon: LucideTrendingDown,
       color: "text-rose-500",
       border: "border-rose-500/40",

@@ -3,11 +3,13 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 export function CustomCursor() {
+  const [mounted, setMounted] = useState(false)
   const [pos, setPos] = useState({ x: -100, y: -100 })
   const [hovered, setHovered] = useState(false)
   const [clicked, setClicked] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const onMove = (e: MouseEvent) => setPos({ x: e.clientX, y: e.clientY })
     const onOver = (e: MouseEvent) => {
       const el = e.target as HTMLElement
@@ -26,6 +28,8 @@ export function CustomCursor() {
       window.removeEventListener('mouseup', onUp)
     }
   }, [])
+
+  if (!mounted) return null;
 
   return (
     <div className="hidden md:block">
