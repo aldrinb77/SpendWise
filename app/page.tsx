@@ -25,33 +25,16 @@ const geist = Geist({
 });
 
 export default function LandingPage() {
-  const [cursor, setCursor] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const move = (e: MouseEvent) => setCursor({ x: e.clientX, y: e.clientY });
-    window.addEventListener('mousemove', move);
-    return () => window.removeEventListener('mousemove', move);
-  }, []);
-
   return (
     <div className={`flex flex-col min-h-screen bg-[#050508] ${geist.className} selection:bg-emerald-500/30 selection:text-white`}>
       <style jsx global>{`
-        * { cursor: none !important; }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #050508; }
         ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 2px; }
-        @media (max-width: 768px) {
-          * { cursor: auto !important; }
-        }
       `}</style>
 
-      {/* CUSTOM CURSOR */}
-      <motion.div
-        className="fixed top-0 left-0 w-4 h-4 rounded-full bg-emerald-400 pointer-events-none z-[9999] mix-blend-difference hidden md:block"
-        animate={{ x: cursor.x - 8, y: cursor.y - 8 }}
-        transition={{ type: "spring", stiffness: 500, damping: 40 }}
-      />
+
 
       {/* FLOAT NAVBAR */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-8 px-6 py-3 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-2xl shadow-[0_0_80px_rgba(0,0,0,0.5)] w-fit">
