@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LucideWallet, LucideBell, LucideUser, LucideLogOut, LucideSettings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,6 +17,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      localStorage.removeItem("user");
+      router.push('/login');
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   const navItems = [
     { name: "Dashboard", href: "/dashboard" },
@@ -87,7 +98,10 @@ export default function Navbar() {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive focus:text-destructive cursor-pointer group">
+              <DropdownMenuItem 
+                className="text-destructive focus:text-destructive cursor-pointer group"
+                onClick={handleLogout}
+              >
                 <LucideLogOut className="mr-2 h-4 w-4" />
                 <span>Log out</span>
               </DropdownMenuItem>
