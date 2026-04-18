@@ -4,7 +4,7 @@ pages_build_output_dir = ".next"
 [[d1_databases]]
 binding = "DB"
 database_name = "expense-tracker-db"
-database_id = "your-d1-id-here"
+database_id = "03b54dc6-b590-42c3-bbfd-f15e7f59171d"
 
 [[r2_buckets]]
 binding = "R2"
@@ -12,8 +12,8 @@ bucket_name = "expense-tracker-assets"
 
 [[kv_namespaces]]
 binding = "KV"
-id = "your-kv-id-here"
+id = "a1a29e181da541d89af6c34bfafa79a0"
 
 [vars]
 NEXT_PUBLIC_APP_URL = "http://localhost:3000"
-JWT_SECRET = "your-jwt-secret-here"
+JWT_SECRET = "spendwise_super_secure_jwt_key_2026_xyz"
