@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { NextRequest, NextResponse } from "next/server";
 import { hashPassword } from "@/lib/auth/hash";
 import { encrypt } from "@/lib/auth/jwt";

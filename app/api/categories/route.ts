@@ -1,3 +1,4 @@
+export const runtime = 'edge';
 import { NextRequest, NextResponse } from "next/server";
 import { decrypt } from "@/lib/auth/jwt";
 import { getSupabase } from "@/lib/db/supabase";
