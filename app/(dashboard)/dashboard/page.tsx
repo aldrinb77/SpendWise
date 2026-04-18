@@ -60,7 +60,7 @@ const InsightsSection = () => {
         <Badge className="bg-primary text-white border-none font-black text-[9px] uppercase tracking-widest px-3 py-1">Live</Badge>
       </div>
       
-      {insights.length === 0 ? (
+      {!Array.isArray(insights) || insights.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center text-center gap-6 opacity-30 px-6">
           <LucideZap className="h-16 w-16" />
           <p className="text-sm font-bold leading-relaxed">System awaiting data. Once you upload more transactions, our engine will generate optimization strategies.</p>

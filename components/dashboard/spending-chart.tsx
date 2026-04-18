@@ -61,7 +61,7 @@ export default function SpendingChart() {
              setChartData(finalized as any[]);
           }
         } else {
-          setChartData(payload as any[]);
+          setChartData(Array.isArray(payload) ? payload : []);
         }
         setLoading(false);
       })
