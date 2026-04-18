@@ -288,7 +288,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-6">
           <div className="mb-16 max-w-2xl text-left">
             <p className="text-emerald-400 text-xs tracking-[0.25em] uppercase font-semibold mb-4">Why SpendWise</p>
-            <h2 className={`${instrumentSerif.className} italic text-white text-5xl md:text-7xl leading-tight`}>
+            <h2 className="font-display italic text-white text-5xl md:text-7xl leading-tight">
               Built different.<br/>
               <span className="not-italic text-white/20">By design.</span>
             </h2>
