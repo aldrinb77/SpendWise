@@ -63,14 +63,14 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="relative h-10 w-10 rounded-full hover:bg-primary/5">
+          <Button variant="ghost" size="icon" aria-label="Notifications" title="Notifications" className="relative h-10 w-10 rounded-full hover:bg-primary/5">
             <LucideBell className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
             <span className="absolute top-2.5 right-2.5 flex h-2 w-2 rounded-full bg-rose-500 ring-2 ring-background shadow-pulse" />
           </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger render={
-              <Button variant="ghost" className="relative h-12 w-12 rounded-full p-0 overflow-hidden hover:scale-105 active:scale-95 transition-all">
+              <Button variant="ghost" aria-label="User profile menu" title="User profile" className="relative h-12 w-12 rounded-full p-0 overflow-hidden hover:scale-105 active:scale-95 transition-all">
                 <Avatar className="h-10 w-10 border-2 border-white/10 shadow-lg">
                   <AvatarImage src="" alt="User" />
                   <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-white font-black text-xs">JD</AvatarFallback>

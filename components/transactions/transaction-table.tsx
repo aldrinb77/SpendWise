@@ -268,12 +268,16 @@ export default function TransactionTable() {
                               setEditItem(t);
                               setIsEditOpen(true);
                             }}
+                            aria-label="Edit transaction"
+                            title="Edit transaction"
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-blue-400 hover:border-blue-500/30 transition-all"
                           >
                              <LucidePencil size={12} />
                           </button>
                           <button 
                             onClick={() => handleDelete(t.id)}
+                            aria-label="Delete transaction"
+                            title="Delete transaction"
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:border-rose-500/30 transition-all"
                           >
                              <LucideTrash2 size={12} />

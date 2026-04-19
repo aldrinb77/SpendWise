@@ -109,6 +109,8 @@ export default function ImportPreview({ data: initialData, onCancel }: ImportPre
                   <td className="px-8 py-4 text-center">
                     <button 
                       onClick={() => handleRemove(i)}
+                      aria-label="Remove imported transaction"
+                      title="Remove transaction"
                       className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:bg-rose-500/10 transition-all"
                     >
                       <LucideTrash2 size={12} />
