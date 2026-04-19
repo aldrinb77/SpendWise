@@ -36,13 +36,7 @@ export default function CategoryDonut() {
         console.error("Local data corruption", e);
       }
     } else {
-        setData([
-          { name: 'Food', value: 4000 },
-          { name: 'Shopping', value: 3000 },
-          { name: 'Transport', value: 2000 },
-          { name: 'Rent', value: 15000 },
-          { name: 'Other', value: 1000 },
-        ]);
+        setData([]);
     }
     setLoading(false);
   }, []);

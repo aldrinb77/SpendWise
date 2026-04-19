@@ -17,10 +17,10 @@ export default function AIInsightBanner() {
           </div>
           <div className="space-y-3">
              <h3 className="text-2xl md:text-3xl font-display italic text-white tracking-tight">
-               "You've spent <span className="text-emerald-400">34% more</span> on Food & Dining this month compared to March."
+               "Intelligence terminal active. Add transactions to generate financial <span className="text-emerald-400">surveillance reports</span>."
              </h3>
              <p className="text-white/40 font-medium leading-relaxed max-w-2xl text-sm md:text-base">
-               At this rate, you'll reach your monthly limit by Apr 24. We recommend optimizing your delivery frequency to save ₹4,200 by the end of the quarter.
+               Our AI engine is scanning for patterns. As you populate your ledger, we'll provide surgical insights on your liquidity and burn rate.
              </p>
           </div>
         </div>

@@ -7,12 +7,7 @@ interface AutoDebitsListProps {
   hideTitle?: boolean;
 }
 
-const MOCK_DEBITS = [
-  { id: 1, name: "Netflix Premium", amount: 649, date: "Apr 21", category: "Entertainment", dueSoon: true },
-  { id: 2, name: "Amazon Prime", amount: 149, date: "Apr 24", category: "Entertainment", dueSoon: false },
-  { id: 3, name: "Reliance Jio Fiber", amount: 849, date: "Apr 28", category: "Utilities", dueSoon: false },
-  { id: 4, name: "HDFC Life Insurance", amount: 24500, date: "May 02", category: "Finance", dueSoon: false },
-];
+const MOCK_DEBITS: any[] = [];
 
 export default function AutoDebitsList({ hideTitle }: AutoDebitsListProps) {
   return (

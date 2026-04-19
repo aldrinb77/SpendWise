@@ -61,7 +61,7 @@ export default function SummaryCards() {
     {
       title: "Net Balance",
       value: `₹${data?.balance?.toLocaleString() || '0'}`,
-      change: "+₹2,400 this week",
+      change: data?.balance ? "Dynamic liquidity tracking active" : "Waiting for initial transmission",
       icon: Wallet,
       color: "text-emerald-500",
       border: "border-emerald-500/40",
