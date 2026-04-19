@@ -1,0 +1,3 @@
+## 2024-04-19 - Accessibility for Icon-only buttons
+**Learning:** Found several icon-only buttons (`LucideBell`, `Avatar`, `LucideX`, `LucidePencil`, `LucideTrash2`) across multiple components (navbar, file upload, transaction table, import preview) that lacked accessible names (`aria-label` or `title`). This makes them completely invisible or confusing to screen reader users and also deprives sighted users of native tooltips.
+**Action:** Added `aria-label` and `title` to these buttons to ensure screen readers can announce their purpose correctly, and so that standard hover tooltips appear for mouse users, improving the overall accessible and intuitive experience of the app's standard icon-based UI elements.

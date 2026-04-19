@@ -131,6 +131,8 @@ export default function FileUpload({ onFileSelect, isLoading = false }: FileUplo
               ) : (
                 <button
                   onClick={() => setSelectedFile(null)}
+                  aria-label="Remove uploaded file"
+                  title="Remove file"
                   className="p-2 hover:bg-muted rounded-full transition-colors"
                 >
                   <LucideX className="h-5 w-5 text-muted-foreground" />
