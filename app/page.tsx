@@ -4,13 +4,13 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { 
-  LucideArrowRight, 
-  LucideWallet, 
-  LucideZap, 
-  LucideShield, 
-  LucideGlobe, 
-  LucideBarChart3, 
-  LucideLayout 
+  ArrowRight, 
+  Wallet, 
+  Zap, 
+  Shield, 
+  Globe, 
+  BarChart3, 
+  Layout 
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -27,7 +27,7 @@ export default function LandingPage() {
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between gap-12 px-8 py-3.5 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-3xl shadow-[0_0_80px_rgba(0,0,0,0.5)] min-w-[320px] md:min-w-[600px]">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-            <LucideWallet className="w-4 h-4 text-black" />
+            <Wallet className="w-4 h-4 text-black" />
           </div>
           <span className="text-white font-black text-sm tracking-tight hidden sm:block">SpendWise</span>
         </div>
@@ -45,7 +45,6 @@ export default function LandingPage() {
 
       {/* HERO SECTION */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#050508] pt-20">
-        {/* Noise grain texture overlay */}
         <div className="absolute inset-0 opacity-[0.035] pointer-events-none"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
@@ -54,7 +53,6 @@ export default function LandingPage() {
           }}
         />
 
-        {/* Animated mesh gradient blobs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <motion.div
             className="absolute w-[800px] h-[800px] rounded-full opacity-[0.07]"
@@ -70,11 +68,9 @@ export default function LandingPage() {
           />
         </div>
 
-        {/* Thin horizontal line accent */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
 
         <div className="relative z-10 container mx-auto px-6 pt-24 pb-20 text-center space-y-12">
-          {/* Eyebrow badge */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -85,7 +81,6 @@ export default function LandingPage() {
             <div className="h-px w-10 bg-emerald-500/20" />
           </motion.div>
 
-          {/* Main headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -117,7 +112,7 @@ export default function LandingPage() {
             className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
             <Link href="/login" className="group relative flex items-center gap-3 px-10 py-5 rounded-2xl bg-emerald-500 text-[#04050a] font-black uppercase tracking-widest text-[11px] overflow-hidden transition-all hover:bg-emerald-400 hover:scale-[1.05] hover:shadow-[0_0_50px_rgba(16,185,129,0.4)]">
-              Start Tracking Free <LucideArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              Start Tracking Free <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <button className="flex items-center gap-3 px-10 py-5 rounded-2xl border border-white/10 text-white/40 font-black uppercase tracking-widest text-[11px] hover:border-white/30 hover:text-white transition-all bg-white/[0.02]">
@@ -251,7 +246,7 @@ export default function LandingPage() {
             <div className="max-w-xs text-left space-y-6">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center">
-                  <LucideWallet className="w-5 h-5 text-black" />
+                  <Wallet className="w-5 h-5 text-black" />
                 </div>
                 <span className="text-white font-black text-xl tracking-tight">SpendWise</span>
               </div>

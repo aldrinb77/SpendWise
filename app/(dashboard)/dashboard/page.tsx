@@ -9,7 +9,7 @@ import CategoryDonut from "@/components/dashboard/category-donut";
 import AutoDebitsList from "@/components/dashboard/auto-debits-list";
 import AIInsightBanner from "@/components/dashboard/ai-insight-banner";
 import AddTransactionButton from "@/components/shared/add-transaction-button";
-import { LucideCalendar, LucidePlus, LucideZap } from "lucide-react";
+import { Calendar, Plus, Zap } from "lucide-react";
 import TransactionForm from "@/components/transactions/transaction-form";
 
 export default function DashboardPage() {
@@ -18,7 +18,13 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
-    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        console.error("User profile corruption", e);
+      }
+    }
   }, []);
 
   return (
@@ -53,10 +59,9 @@ export default function DashboardPage() {
           </div>
           <button 
             onClick={() => setIsAddOpen(true)}
-            className="h-12 px-6 rounded-22 bg-emerald-500 hover:bg-emerald-400 text-[#04050a] font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-[1.05] active:scale-95"
-            style={{ borderRadius: 'var(--r-xl)' }}
+            className="h-12 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-[#04050a] font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-[1.05] active:scale-95"
           >
-            <LucidePlus size={16} /> Add Transaction
+            <Plus size={16} /> Add Transaction
           </button>
         </div>
       </header>

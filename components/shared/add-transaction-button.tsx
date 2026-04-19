@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import TransactionForm from "@/components/transactions/transaction-form";
-import { LucidePlus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AddTransactionButtonProps {
@@ -27,7 +27,7 @@ export default function AddTransactionButton({
           className
         )}
       >
-        {showIcon && <LucidePlus size={16} />}
+        {showIcon && <Plus size={16} />}
         {children || "Add Transaction"}
       </button>
       <TransactionForm open={open} onOpenChange={setOpen} />

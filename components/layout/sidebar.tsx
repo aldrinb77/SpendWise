@@ -4,25 +4,25 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { 
-  LucideLayoutDashboard, 
-  LucideArrowLeftRight, 
-  LucideUpload, 
-  LucideSparkles, 
-  LucideTarget, 
-  LucideRepeat, 
-  LucideSettings, 
-  LucideLogOut,
-  LucideWallet
+  LayoutDashboard, 
+  ArrowLeftRight, 
+  Upload, 
+  Sparkles, 
+  Target, 
+  Repeat, 
+  Settings, 
+  LogOut,
+  Wallet
 } from 'lucide-react'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LucideLayoutDashboard },
-  { name: 'Transactions', href: '/transactions', icon: LucideArrowLeftRight },
-  { name: 'Import Data', href: '/import', icon: LucideUpload },
-  { name: 'AI Insights', href: '/insights', icon: LucideSparkles },
-  { name: 'Budgets', href: '/budgets', icon: LucideTarget },
-  { name: 'Auto-Debits', href: '/auto-debits', icon: LucideRepeat },
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Transactions', href: '/transactions', icon: ArrowLeftRight },
+  { name: 'Import Data', href: '/import', icon: Upload },
+  { name: 'AI Insights', href: '/insights', icon: Sparkles },
+  { name: 'Budgets', href: '/budgets', icon: Target },
+  { name: 'Auto-Debits', href: '/auto-debits', icon: Repeat },
 ]
 
 export function Sidebar() {
@@ -52,7 +52,7 @@ export function Sidebar() {
       {/* Brand */}
       <div className="p-8 flex items-center gap-3">
         <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-          <LucideWallet className="text-white h-6 w-6" />
+          <Wallet className="text-white h-6 w-6" />
         </div>
         <div className="flex flex-col">
           <span className="text-white font-black text-xl tracking-tighter leading-none">SpendWise</span>
@@ -106,13 +106,13 @@ export function Sidebar() {
             href="/settings"
             className="flex items-center justify-center h-10 rounded-xl bg-white/[0.03] border border-white/5 text-white/40 hover:text-white hover:bg-white/[0.06] transition-all"
           >
-            <LucideSettings className="h-4 w-4" />
+            <Settings className="h-4 w-4" />
           </Link>
           <button 
             onClick={handleLogout}
             className="flex items-center justify-center h-10 rounded-xl bg-white/[0.03] border border-white/5 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 transition-all"
           >
-            <LucideLogOut className="h-4 w-4" />
+            <LogOut className="h-4 w-4" />
           </button>
         </div>
       </div>

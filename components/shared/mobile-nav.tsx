@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
-  LucideLayoutDashboard, 
-  LucideArrowLeftRight, 
-  LucidePlus, 
-  LucideSparkles, 
-  LucideSettings 
+  LayoutDashboard, 
+  ArrowLeftRight, 
+  Plus, 
+  Sparkles, 
+  Settings 
 } from "lucide-react";
 import TransactionForm from "@/components/transactions/transaction-form";
 import { cn } from "@/lib/utils";
@@ -18,10 +18,10 @@ export default function MobileNav() {
   const [isAddOpen, setIsAddOpen] = useState(false);
 
   const navItems = [
-    { name: "Terminal", href: "/dashboard", icon: LucideLayoutDashboard },
-    { name: "Ledger", href: "/transactions", icon: LucideArrowLeftRight },
-    { name: "AI", href: "/insights", icon: LucideSparkles },
-    { name: "Config", href: "/settings", icon: LucideSettings },
+    { name: "Terminal", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Ledger", href: "/transactions", icon: ArrowLeftRight },
+    { name: "AI", href: "/insights", icon: Sparkles },
+    { name: "Config", href: "/settings", icon: Settings },
   ];
 
   return (
@@ -54,7 +54,7 @@ export default function MobileNav() {
               onClick={() => setIsAddOpen(true)}
               className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500 text-[#04050a] shadow-[0_0_30px_rgba(16,185,129,0.4)] -translate-y-6 hover:scale-110 transition-transform active:scale-95 border-4 border-[#080c14]"
             >
-              <LucidePlus className="h-7 w-7" />
+              <Plus className="h-7 w-7" />
             </button>
           </div>
 

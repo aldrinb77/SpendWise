@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { 
-  LucideTrendingUp, 
-  LucideTrendingDown, 
-  LucideWallet, 
-  LucideTarget, 
-  LucideArrowUpRight, 
-  LucideDollarSign 
+  TrendingUp, 
+  TrendingDown, 
+  Wallet, 
+  Target, 
+  ArrowUpRight, 
+  DollarSign 
 } from "lucide-react";
 
 export default function SummaryCards() {
@@ -22,18 +22,24 @@ export default function SummaryCards() {
         if (json.fallbackToLocal) {
           const localData = localStorage.getItem("spendwise_transactions");
           if (localData) {
-            const txns = JSON.parse(localData);
-            const income = txns.filter((t: any) => t.type === 'income').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
-            const expense = txns.filter((t: any) => t.type === 'expense').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
-            setData({
-              balance: income - expense,
-              monthlyIncome: income,
-              incomeTrend: 12.4,
-              monthlyExpense: expense,
-              expenseTrend: -5.2,
-              savings: income - expense,
-              savingsRate: income === 0 ? 0 : ((income - expense) / income) * 100
-            });
+            try {
+              const txns = JSON.parse(localData);
+              if (Array.isArray(txns)) {
+                const income = txns.filter((t: any) => t.type === 'income').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
+                const expense = txns.filter((t: any) => t.type === 'expense').reduce((sum: number, t: any) => sum + Number(t.amount), 0);
+                setData({
+                  balance: income - expense,
+                  monthlyIncome: income,
+                  incomeTrend: 12.4,
+                  monthlyExpense: expense,
+                  expenseTrend: -5.2,
+                  savings: income - expense,
+                  savingsRate: income === 0 ? 0 : ((income - expense) / income) * 100
+                });
+              }
+            } catch (e) {
+              console.error("Summary data corruption", e);
+            }
           }
         } else {
           setData(json);
@@ -56,7 +62,7 @@ export default function SummaryCards() {
       title: "Net Balance",
       value: `₹${data?.balance?.toLocaleString() || '0'}`,
       change: "+₹2,400 this week",
-      icon: LucideWallet,
+      icon: Wallet,
       color: "text-emerald-500",
       border: "border-emerald-500/40",
       bg: "bg-emerald-500/5",
@@ -65,7 +71,7 @@ export default function SummaryCards() {
       title: "Monthly Income",
       value: `₹${data?.monthlyIncome?.toLocaleString() || '0'}`,
       change: `${(data?.incomeTrend ?? 0) > 0 ? '+' : ''}${data?.incomeTrend ?? 0}% vs March`,
-      icon: LucideDollarSign,
+      icon: DollarSign,
       color: "text-blue-500",
       border: "border-blue-500/40",
       bg: "bg-blue-500/5",
@@ -74,7 +80,7 @@ export default function SummaryCards() {
       title: "Monthly Expense",
       value: `₹${data?.monthlyExpense?.toLocaleString() || '0'}`,
       change: `${(data?.expenseTrend ?? 0) > 0 ? '+' : ''}${data?.expenseTrend ?? 0}% vs March`,
-      icon: LucideTrendingDown,
+      icon: TrendingDown,
       color: "text-rose-500",
       border: "border-rose-500/40",
       bg: "bg-rose-500/5",
@@ -83,7 +89,7 @@ export default function SummaryCards() {
       title: "Savings Rate",
       value: `${Math.round(data?.savingsRate || 0)}%`,
       change: "Efficiency Score: A",
-      icon: LucideTarget,
+      icon: Target,
       color: "text-violet-500",
       border: "border-violet-500/40",
       bg: "bg-violet-500/5",

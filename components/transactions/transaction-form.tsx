@@ -6,12 +6,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  LucideX, 
-  LucideCheck, 
-  LucideCalendar, 
-  LucideCreditCard, 
-  LucideChevronDown, 
-  LucideInfo 
+  X, 
+  Check, 
+  Calendar, 
+  CreditCard, 
+  ChevronDown, 
+  Info 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -173,7 +173,7 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
                 onClick={() => onOpenChange(false)}
                 className="h-10 w-10 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/40 hover:text-white transition-colors"
               >
-                <LucideX size={20} />
+                <X size={20} />
               </button>
             </div>
 
@@ -269,7 +269,7 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
                       Timeline <span className="h-1 w-1 rounded-full bg-white/10" />
                     </label>
                     <div className="relative group">
-                      <LucideCalendar className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 h-4 w-4" />
+                      <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 h-4 w-4" />
                       <input 
                         type="date"
                         value={format(form.watch("date"), "yyyy-MM-dd")}
@@ -300,7 +300,7 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
                     onClick={() => setShowNotes(!showNotes)}
                     className="text-[10px] font-black uppercase tracking-widest text-white/20 hover:text-white/40 flex items-center gap-2 transition-colors"
                   >
-                    <LucideInfo size={12} /> {showNotes ? "Hide Notes" : "Add Supplemental Notes (Optional)"}
+                    <Info size={12} /> {showNotes ? "Hide Notes" : "Add Supplemental Notes (Optional)"}
                   </button>
                   <AnimatePresence>
                     {showNotes && (
@@ -336,7 +336,7 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
               >
                 {isSubmitting ? <span className="animate-spin h-5 w-5 border-2 border-white/20 border-t-white rounded-full" /> : (
                   <>
-                    <LucideCheck size={20} />
+                    <Check size={20} />
                     {initialData ? "Verify Changes" : `Commit ${type}`}
                   </>
                 )}
