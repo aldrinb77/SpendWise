@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { LucideSparkles, LucideArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export default function AIInsightBanner() {
@@ -13,7 +13,7 @@ export default function AIInsightBanner() {
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
         <div className="space-y-6 flex-1 text-center lg:text-left">
           <div className="h-14 w-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto lg:mx-0 shadow-[0_0_30px_rgba(16,185,129,0.1)]">
-            <LucideSparkles className="text-emerald-500 h-6 w-6" />
+            <Sparkles className="text-emerald-500 h-6 w-6" />
           </div>
           <div className="space-y-3">
              <h3 className="text-2xl md:text-3xl font-display italic text-white tracking-tight">
@@ -27,7 +27,7 @@ export default function AIInsightBanner() {
 
         <Link href="/insights" className="flex-shrink-0">
           <button className="px-10 py-5 rounded-2xl bg-white text-[#04050a] font-black uppercase tracking-widest text-[11px] flex items-center gap-3 hover:scale-[1.05] hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] transition-all active:scale-95 group">
-            Deep Analysis <LucideArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            Deep Analysis <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </Link>
       </div>

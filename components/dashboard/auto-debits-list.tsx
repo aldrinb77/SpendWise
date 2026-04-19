@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { LucideRepeat, LucideAlertCircle, LucideCalendar } from "lucide-react";
+import { Repeat, AlertCircle, Calendar } from "lucide-react";
 
 interface AutoDebitsListProps {
   hideTitle?: boolean;
@@ -32,7 +32,7 @@ export default function AutoDebitsList({ hideTitle }: AutoDebitsListProps) {
           >
             <div className="flex items-center gap-4">
               <div className={`h-10 w-10 rounded-xl flex items-center justify-center bg-white/5 transition-colors ${debit.dueSoon ? 'text-amber-500' : 'text-white/20'}`}>
-                <LucideRepeat size={18} />
+                <Repeat size={18} />
               </div>
               <div className="flex flex-col">
                 <span className="text-sm font-bold text-white tracking-tight leading-none mb-1">{debit.name}</span>
@@ -40,7 +40,7 @@ export default function AutoDebitsList({ hideTitle }: AutoDebitsListProps) {
                    <span className="text-[10px] text-white/20 font-black uppercase tracking-widest leading-none">{debit.category}</span>
                    {debit.dueSoon && (
                      <span className="text-[9px] bg-amber-500/10 text-amber-500 px-2 py-0.5 rounded-full font-black uppercase tracking-[0.1em] flex items-center gap-1">
-                        <LucideAlertCircle size={8} /> Due Soon
+                        <AlertCircle size={8} /> Due Soon
                      </span>
                    )}
                 </div>
@@ -50,7 +50,7 @@ export default function AutoDebitsList({ hideTitle }: AutoDebitsListProps) {
             <div className="text-right">
               <p className="text-sm font-black text-amber-500/80 tabular-nums">₹{debit.amount.toLocaleString()}</p>
               <p className="text-[10px] text-white/20 font-black flex items-center gap-1 justify-end uppercase tracking-widest mt-1">
-                 <LucideCalendar size={10} /> {debit.date}
+                 <Calendar size={10} /> {debit.date}
               </p>
             </div>
           </div>
