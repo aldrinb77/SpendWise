@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import TransactionTable from "@/components/transactions/transaction-table";
-import { LucidePlus, LucideUpload, LucideHistory, LucideFileText } from "lucide-react";
+import { Plus, Upload, History, FileText } from "lucide-react";
 import Link from "next/link";
 import TransactionForm from "@/components/transactions/transaction-form";
 
@@ -32,16 +32,15 @@ export default function TransactionsPage() {
         
         <div className="flex items-center gap-3">
           <Link href="/import">
-            <button className="h-12 px-6 rounded-22 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 hover:scale-[1.05] active:scale-95" style={{ borderRadius: 'var(--r-xl)' }}>
-              <LucideUpload size={16} /> Import Data
+            <button className="h-12 px-6 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 hover:scale-[1.05] active:scale-95">
+              <Upload size={16} /> Import Data
             </button>
           </Link>
           <button 
              onClick={() => setIsAddOpen(true)}
-             className="h-12 px-6 rounded-22 bg-blue-500 hover:bg-blue-400 text-[#04050a] font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:scale-[1.05] active:scale-95"
-             style={{ borderRadius: 'var(--r-xl)' }}
+             className="h-12 px-6 rounded-xl bg-blue-500 hover:bg-blue-400 text-[#04050a] font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:scale-[1.05] active:scale-95"
           >
-            <LucidePlus size={16} /> Manual Record
+            <Plus size={16} /> Manual Record
           </button>
         </div>
       </header>
@@ -58,10 +57,10 @@ export default function TransactionsPage() {
         </div>
         <div className="flex items-center gap-8">
           <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:text-white transition-colors">
-            <LucideFileText size={12} /> Export CSV
+            <FileText size={12} /> Export CSV
           </button>
           <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:text-white transition-colors">
-            <LucideFileText size={12} /> Export PDF
+            <FileText size={12} /> Export PDF
           </button>
         </div>
       </footer>

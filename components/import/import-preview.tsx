@@ -2,11 +2,11 @@
 
 import React, { useState } from "react";
 import { 
-  LucideCheck, 
-  LucideX, 
-  LucideTrash2, 
-  LucideArrowUpRight, 
-  LucideArrowDownLeft 
+  Check, 
+  X, 
+  Trash2, 
+  ArrowUpRight, 
+  ArrowDownLeft 
 } from "lucide-react";
 import { useToast } from "@/components/ui/toast-provider";
 import { useRouter } from "next/navigation";
@@ -36,7 +36,6 @@ export default function ImportPreview({ data: initialData, onCancel }: ImportPre
 
   const handleCommit = async () => {
     setIsSyncing(true);
-    const toastId = toast({ type: 'loading', title: 'Syncing Ledger', description: 'Transmitting encrypted blocks...' });
     
     try {
       // In a real app, this would be a bulk API call
@@ -53,10 +52,14 @@ export default function ImportPreview({ data: initialData, onCancel }: ImportPre
       localStorage.setItem("spendwise_transactions", JSON.stringify([...newTxns, ...existingArray]));
       
       toast({ type: 'success', title: 'Ledger Synchronized', description: `${items.length} records successfully committed to terminal.` });
-      setTimeout(() => router.push('/dashboard'), 1000);
+      
+      // Delay redirect to allow toast visibility
+      setTimeout(() => {
+        router.push('/transactions');
+      }, 1500);
+      
     } catch (err) {
       toast({ type: 'error', title: 'Sync Failed', description: 'Network transmission interrupted.' });
-    } finally {
       setIsSyncing(false);
     }
   };
@@ -111,7 +114,7 @@ export default function ImportPreview({ data: initialData, onCancel }: ImportPre
                       onClick={() => handleRemove(i)}
                       className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:bg-rose-500/10 transition-all"
                     >
-                      <LucideTrash2 size={12} />
+                      <Trash2 size={12} />
                     </button>
                   </td>
                 </tr>
@@ -133,7 +136,7 @@ export default function ImportPreview({ data: initialData, onCancel }: ImportPre
            disabled={isSyncing || items.length === 0}
            className="px-12 py-4 rounded-xl bg-emerald-500 text-[#04050a] font-black uppercase tracking-widest text-[11px] flex items-center gap-3 shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:scale-[1.05] transition-all active:scale-95 disabled:opacity-50"
          >
-           {isSyncing ? "Syncing..." : <>Commit to Terminal <LucideCheck size={14} /></>}
+           {isSyncing ? "Syncing..." : <>Commit to Terminal <Check size={14} /></>}
          </button>
       </div>
     </div>

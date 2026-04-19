@@ -2,15 +2,15 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import { 
-  LucideSearch, 
-  LucideChevronDown, 
-  LucideMoreHorizontal, 
-  LucidePencil, 
-  LucideTrash2, 
-  LucideArrowUpRight, 
-  LucideArrowDownLeft,
-  LucideFilter,
-  LucideX
+  Search, 
+  ChevronDown, 
+  MoreHorizontal, 
+  Pencil, 
+  Trash2, 
+  ArrowUpRight, 
+  ArrowDownLeft,
+  Filter,
+  X
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/components/ui/toast-provider";
@@ -38,17 +38,50 @@ export default function TransactionTable() {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/api/transactions")
-      .then(res => res.json())
-      .then(json => {
-        if (Array.isArray(json)) setAllTransactions(json);
-        else if (json.fallbackToLocal) {
-          const local = localStorage.getItem("spendwise_transactions");
-          if (local) setAllTransactions(JSON.parse(local));
+    const loadData = async () => {
+      try {
+        const res = await fetch("/api/transactions");
+        const json = await res.json();
+        
+        let apiTxns = [];
+        if (Array.isArray(json)) {
+            apiTxns = json;
+        } else if (json.fallbackToLocal && Array.isArray(json.transactions)) {
+            apiTxns = json.transactions;
         }
+
+        // Always check local storage for imported data
+        const local = localStorage.getItem("spendwise_transactions");
+        let localTxns = [];
+        if (local) {
+          try {
+            const parsed = JSON.parse(local);
+            if (Array.isArray(parsed)) localTxns = parsed;
+          } catch (e) {
+            console.error("Local parity error", e);
+          }
+        }
+
+        // Merge and deduplicate (by ID)
+        const combined = [...apiTxns];
+        const apiIds = new Set(apiTxns.map((t: any) => t.id));
+        
+        localTxns.forEach((lt: any) => {
+          if (!apiIds.has(lt.id)) combined.push(lt);
+        });
+
+        setAllTransactions(combined);
+      } catch (err) {
+        console.error("Ledger sync failure", err);
+        // Fallback to local only on total network failure
+        const local = localStorage.getItem("spendwise_transactions");
+        if (local) setAllTransactions(JSON.parse(local));
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+    };
+
+    loadData();
   }, []);
 
   const filtered = useMemo(() => {
@@ -105,13 +138,22 @@ export default function TransactionTable() {
   const handleDelete = async (id: string | number) => {
     const toastId = toast({ type: 'loading', title: 'Erasing Record', description: 'Zeroing transmission log...' });
     try {
+      if (id.toString().startsWith('import-')) {
+          // Local only delete
+          const updated = allTransactions.filter(t => t.id !== id);
+          setAllTransactions(updated);
+          localStorage.setItem("spendwise_transactions", JSON.stringify(updated));
+          toast({ type: 'success', title: 'Record Expunged', description: 'Transaction permanently removed from local terminal.' });
+          return;
+      }
+
       const response = await fetch(`/api/transactions/${id}`, { method: 'DELETE' });
       if (!response.ok) throw new Error("Deletion failed");
       
       const updated = allTransactions.filter(t => t.id !== id);
       setAllTransactions(updated);
       localStorage.setItem("spendwise_transactions", JSON.stringify(updated));
-      toast({ type: 'success', title: 'Record Expunged', description: 'Transaction permanently removed from terminal.' });
+      toast({ type: 'success', title: 'Record Expunged', description: 'Transaction permanently removed from cloud terminal.' });
     } catch (err: any) {
       toast({ type: 'error', title: 'Deletion Error', description: err.message });
     }
@@ -128,7 +170,7 @@ export default function TransactionTable() {
           {/* Row 1: Search & Type */}
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="relative flex-1 group">
-              <LucideSearch className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 h-4 w-4 transition-colors" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 h-4 w-4 transition-colors" />
               <input 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -199,7 +241,7 @@ export default function TransactionTable() {
                 onClick={clearFilters}
                 className="text-[9px] font-black uppercase tracking-widest text-white/20 hover:text-white transition-colors flex items-center gap-1.5"
               >
-                Clear Terminal <LucideX size={10} />
+                Clear Terminal <X size={10} />
               </button>
             </div>
           )}
@@ -257,7 +299,7 @@ export default function TransactionTable() {
                     </td>
                     <td className="px-8 py-6 text-right">
                        <span className={`text-md font-black tabular-nums tracking-tighter ${t.type === 'income' ? 'text-emerald-500' : 'text-white'}`}>
-                         {t.type === 'income' ? <LucideArrowDownLeft className="inline mr-1 h-3 w-3" /> : <LucideArrowUpRight className="inline mr-1 h-3 w-3" />}
+                         {t.type === 'income' ? <ArrowDownLeft className="inline mr-1 h-3 w-3" /> : <ArrowUpRight className="inline mr-1 h-3 w-3" />}
                          {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(t.amount)}
                        </span>
                     </td>
@@ -270,13 +312,13 @@ export default function TransactionTable() {
                             }}
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-blue-400 hover:border-blue-500/30 transition-all"
                           >
-                             <LucidePencil size={12} />
+                             <Pencil size={12} />
                           </button>
                           <button 
                             onClick={() => handleDelete(t.id)}
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:border-rose-500/30 transition-all"
                           >
-                             <LucideTrash2 size={12} />
+                             <Trash2 size={12} />
                           </button>
                        </div>
                     </td>

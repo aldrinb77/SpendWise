@@ -12,27 +12,48 @@ export default function RecentTransactions({ limit = 8 }: RecentTransactionsProp
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/transactions")
-      .then(res => res.json())
-      .then(json => {
+    const loadTransactions = async () => {
+      try {
+        const res = await fetch("/api/transactions");
+        const json = await res.json();
+        
+        let apiTxns = [];
         if (Array.isArray(json)) {
-          setTxns(json.slice(0, limit));
-        } else if (json.fallbackToLocal) {
-            const local = localStorage.getItem("spendwise_transactions");
-            if (local) {
-              try {
-                const parsed = JSON.parse(local);
-                if (Array.isArray(parsed)) {
-                  setTxns(parsed.sort((a: any, b: any) => b.date - a.date).slice(0, limit));
-                }
-              } catch (e) {
-                console.error("Transaction ledger corruption", e);
-              }
-            }
+            apiTxns = json;
+        } else if (json.fallbackToLocal && Array.isArray(json.transactions)) {
+            apiTxns = json.transactions;
         }
+
+        // Merge with local storage
+        const local = localStorage.getItem("spendwise_transactions");
+        let localTxns = [];
+        if (local) {
+          try {
+            const parsed = JSON.parse(local);
+            if (Array.isArray(parsed)) localTxns = parsed;
+          } catch (e) {
+            console.error("Dashboard parity failure", e);
+          }
+        }
+
+        const combined = [...apiTxns];
+        const apiIds = new Set(apiTxns.map((t: any) => t.id));
+        localTxns.forEach((lt: any) => {
+          if (!apiIds.has(lt.id)) combined.push(lt);
+        });
+
+        const sorted = combined.sort((a, b) => b.date - a.date);
+        setTxns(sorted.slice(0, limit));
+      } catch (err) {
+        console.error("Dashboard trans retrieval error", err);
+        const local = localStorage.getItem("spendwise_transactions");
+        if (local) setTxns(JSON.parse(local).sort((a:any,b:any)=>b.date-a.date).slice(0, limit));
+      } finally {
         setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      }
+    };
+
+    loadTransactions();
   }, [limit]);
 
   if (loading) return (
