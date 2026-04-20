@@ -1,0 +1,3 @@
+## 2026-04-20 - Missing ARIA Labels on Icon-Only Buttons
+**Learning:** Found a recurring pattern in the design system where icon-only buttons (like edit, delete, notifications, and add transaction) are missing `aria-label`s. This makes them inaccessible to screen readers, as the purpose of the button is only conveyed visually.
+**Action:** Always ensure that any button that relies solely on an icon to convey its meaning has an appropriate `aria-label` set. In future components, I will proactively check for and add these labels.
