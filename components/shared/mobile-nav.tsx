@@ -51,6 +51,7 @@ export default function MobileNav() {
 
           <div className="relative">
             <button 
+              aria-label="Add transaction"
               onClick={() => setIsAddOpen(true)}
               className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500 text-[#04050a] shadow-[0_0_30px_rgba(16,185,129,0.4)] -translate-y-6 hover:scale-110 transition-transform active:scale-95 border-4 border-[#080c14]"
             >
