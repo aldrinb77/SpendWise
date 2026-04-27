@@ -1,0 +1,79 @@
+
+> expense-tracker@0.1.0 dev /app
+> next dev
+
+   ▲ Next.js 15.5.15
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.2:3000
+
+ ✓ Starting...
+ ✓ Ready in 2s
+ ○ Compiling /middleware ...
+ ✓ Compiled /middleware in 1130ms (169 modules)
+ ○ Compiling /login ...
+ ✓ Compiled /login in 10.9s (1578 modules)
+ GET /login 200 in 12381ms
+ GET /login 200 in 156ms
+ GET /login 200 in 155ms
+ GET /login 200 in 154ms
+ GET /login 200 in 130ms
+ GET /login 200 in 119ms
+ GET /login 200 in 143ms
+ GET /login 200 in 109ms
+ GET /login 200 in 156ms
+ GET /login 200 in 157ms
+ GET /login 200 in 146ms
+ GET /login 200 in 133ms
+ GET /login 200 in 163ms
+ GET /login 200 in 150ms
+ GET /login 200 in 161ms
+ GET /login 200 in 165ms
+ GET /login 200 in 255ms
+ ○ Compiling /transactions ...
+ ✓ Compiled /transactions in 4.7s (1958 modules)
+ GET /transactions 200 in 6180ms
+ ○ Compiling /api/transactions ...
+ ✓ Compiled /api/transactions in 2.9s (1305 modules)
+Supabase Error: {
+  code: 'PGRST200',
+  details: 'Searched for a foreign key relationship between \'transactions\' and \'categories\' in the schema \'public\', but no matches were found.',
+  hint: null,
+  message: 'Could not find a relationship between \'transactions\' and \'categories\' in the schema cache'
+}
+ GET /api/transactions 200 in 3897ms
+ GET /login 200 in 598ms
+ GET /transactions 200 in 458ms
+Supabase Error: {
+  code: 'PGRST200',
+  details: 'Searched for a foreign key relationship between \'transactions\' and \'categories\' in the schema \'public\', but no matches were found.',
+  hint: null,
+  message: 'Could not find a relationship between \'transactions\' and \'categories\' in the schema cache'
+}
+ GET /api/transactions 200 in 679ms
+ GET /login 200 in 180ms
+ GET /transactions 200 in 202ms
+Supabase Error: {
+  code: 'PGRST200',
+  details: 'Searched for a foreign key relationship between \'transactions\' and \'categories\' in the schema \'public\', but no matches were found.',
+  hint: null,
+  message: 'Could not find a relationship between \'transactions\' and \'categories\' in the schema cache'
+}
+ GET /api/transactions 200 in 502ms
+ POST /api/transactions 500 in 273ms
+ GET /login 200 in 171ms
+ GET /transactions 200 in 236ms
+Supabase Error: {
+  code: 'PGRST200',
+  details: 'Searched for a foreign key relationship between \'transactions\' and \'categories\' in the schema \'public\', but no matches were found.',
+  hint: null,
+  message: 'Could not find a relationship between \'transactions\' and \'categories\' in the schema cache'
+}
+ GET /api/transactions 200 in 708ms
+ GET /transactions 200 in 197ms
+Supabase Error: {
+  code: 'PGRST200',
+  details: 'Searched for a foreign key relationship between \'transactions\' and \'categories\' in the schema \'public\', but no matches were found.',
+  hint: null,
+  message: 'Could not find a relationship between \'transactions\' and \'categories\' in the schema cache'
+}
+ GET /api/transactions 200 in 249ms
