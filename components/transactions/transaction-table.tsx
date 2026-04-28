@@ -306,19 +306,21 @@ export default function TransactionTable() {
                     <td className="px-8 py-6 text-right">
                        <div className="flex items-center justify-end gap-2">
                           <button 
+                            aria-label={`Edit transaction: ${t.description || "Vendor"}`}
                             onClick={() => {
                               setEditItem(t);
                               setIsEditOpen(true);
                             }}
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-blue-400 hover:border-blue-500/30 transition-all"
                           >
-                             <Pencil size={12} />
+                             <Pencil size={12} aria-hidden="true" />
                           </button>
                           <button 
+                            aria-label={`Delete transaction: ${t.description || "Vendor"}`}
                             onClick={() => handleDelete(t.id)}
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:border-rose-500/30 transition-all"
                           >
-                             <Trash2 size={12} />
+                             <Trash2 size={12} aria-hidden="true" />
                           </button>
                        </div>
                     </td>
