@@ -82,10 +82,10 @@ function extractInfo(text: string): ParsedTransaction[] {
     const amount = parseFloat(amountStr);
     if (isNaN(amount) || amount === 0) continue;
 
-    let type: "income" | "expense" = sign === '+' ? 'income' : 'expense';
+    const type: "income" | "expense" = sign === '+' ? 'income' : 'expense';
 
     // Extract Description (Strip Date and UPI metadata)
-    let desc = trimmed
+    const desc = trimmed
       .replace(dateStr, '')
       .split(/UPI ID:|UPI Ref No:|Order ID:|Tag:/i)[0]
       .replace(/Paid to/ig, '')
@@ -130,8 +130,8 @@ function extractInfo(text: string): ParsedTransaction[] {
       const amount = parseFloat(amountStr);
       if (isNaN(amount) || amount === 0) continue;
 
-      let desc = line.replace(dateStr, '').replace(/[\d]{10,}/g, '').replace(/\s+/g, ' ').trim();
-      let type: "income" | "expense" = line.includes('CR') || line.includes('+') ? 'income' : 'expense';
+      const desc = line.replace(dateStr, '').replace(/[\d]{10,}/g, '').replace(/\s+/g, ' ').trim();
+      const type: "income" | "expense" = line.includes('CR') || line.includes('+') ? 'income' : 'expense';
 
       txns.push({
         date: new Date(dateStr).toISOString(),
