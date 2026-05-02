@@ -1,0 +1,174 @@
+
+ ⛅️ wrangler 4.87.0
+───────────────────
+Attaching additional modules:
+┌─────────────────────────────────────────────────────────────────────┬──────┬─────────────┐
+│ Name                                                                │ Type │ Size        │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/cache/adaptor.js                             │ esm  │ 2.29 KiB    │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/cache/cache-api.js                           │ esm  │ 0.43 KiB    │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/cache/kv.js                                  │ esm  │ 0.35 KiB    │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/admin/seed.func.js             │ esm  │ 31.40 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/auth/login.func.js             │ esm  │ 32.66 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/auth/logout.func.js            │ esm  │ 30.51 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/auth/session.func.js           │ esm  │ 31.34 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/auth/signup.func.js            │ esm  │ 32.54 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/categories.func.js             │ esm  │ 32.50 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/dashboard/chart.func.js        │ esm  │ 31.38 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/dashboard/insights.func.js     │ esm  │ 33.79 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/dashboard/summary.func.js      │ esm  │ 31.39 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/import/categorize.func.js      │ esm  │ 32.90 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/import/save.func.js            │ esm  │ 31.92 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/transactions/[id].func.js      │ esm  │ 31.38 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/api/transactions.func.js           │ esm  │ 31.51 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/auth/callback.func.js              │ esm  │ 31.63 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/functions/middleware.func.js                 │ esm  │ 126.54 KiB  │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/manifest/88a389dd6c068190adb2efc795e4063c.js │ esm  │ 0.62 KiB    │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/webpack/0a7d75b33c28d5a00d21b622053627ab.js  │ esm  │ 19.45 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/webpack/203f8b9b6c3c4eabdaff90f0aa00c9ac.js  │ esm  │ 193.13 KiB  │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/webpack/6391d82185575ce642b4e181f1db2311.js  │ esm  │ 273.34 KiB  │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/webpack/ce37a8b69584aece6b88e61e57f37e1f.js  │ esm  │ 1.58 KiB    │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ __next-on-pages-dist__/webpack/ddfc1bb37d576969efa362d59a6125c5.js  │ esm  │ 23.88 KiB   │
+├─────────────────────────────────────────────────────────────────────┼──────┼─────────────┤
+│ Total (24 modules)                                                  │      │ 1088.46 KiB │
+└─────────────────────────────────────────────────────────────────────┴──────┴─────────────┘
+✨ Compiled Worker successfully
+✨ Parsed 1 valid header rule.
+Your Worker has access to the following bindings:
+Binding                                                                             Resource                  Mode
+env.KV (KV)                                                                         KV Namespace              local
+env.DB (local-DB)                                                                   D1 Database               local
+env.CF_PAGES ("1")                                                                  Environment Variable      local
+env.CF_PAGES_BRANCH ("jules-8086837194482099386-a41a9dbc")                          Environment Variable      local
+env.CF_PAGES_COMMIT_SHA ("0fde7ed308a34c289198a9a448a1d9ed09f61...")                Environment Variable      local
+env.CF_PAGES_URL ("https://0fde7ed.expense-tracker.pages...")                       Environment Variable      local
+env.NEXT_PUBLIC_APP_URL ("https://spendwise-b3u.pages.dev")                         Environment Variable      local
+env.NEXT_PUBLIC_SUPABASE_URL ("https://ltxerejwklqpzprlkvlf.supabase...")           Environment Variable      local
+env.NEXT_PUBLIC_SUPABASE_ANON_KEY ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....")      Environment Variable      local
+env.JWT_SECRET ("spendwise_super_secure_jwt_key_2026_xyz")                          Environment Variable      local
+
+⎔ Starting local server...
+[wrangler:info] Ready on http://localhost:8788
+[wrangler:info] GET /transactions 307 Temporary Redirect (53ms)
+[wrangler:info] GET /login 200 OK (22ms)
+[wrangler:info] GET /_next/static/media/7b0b24f36b1a6d0b-s.p.woff2 200 OK (12ms)
+[wrangler:info] GET /_next/static/css/f6395479f3c4952b.css 200 OK (24ms)
+[wrangler:info] GET /_next/static/css/00a99473a15f09f9.css 200 OK (29ms)
+[wrangler:info] GET /_next/static/chunks/main-app-ecbd89cbdf2e3ed9.js 200 OK (138ms)
+[wrangler:info] GET /_next/static/chunks/8886-6012117f2d09f1b3.js 200 OK (138ms)
+[wrangler:info] GET /_next/static/media/e4af272ccee01ff0-s.p.woff2 200 OK (172ms)
+[wrangler:info] GET /_next/static/chunks/webpack-7faecd24a7bc4ba9.js 200 OK (143ms)
+[wrangler:info] GET /_next/static/chunks/cab9b927-6f2464d499d0ece7.js 200 OK (143ms)
+[wrangler:info] GET /_next/static/chunks/6876-49419d9f5756b6c5.js 200 OK (29ms)
+[wrangler:info] GET /_next/static/chunks/23512dcd-eeeb0bb50e38ebd0.js 200 OK (50ms)
+[wrangler:info] GET /_next/static/chunks/app/layout-9c6d51f70d98c29f.js 200 OK (54ms)
+[wrangler:info] GET /_next/static/chunks/1645-499bb5ba32de6cb5.js 200 OK (54ms)
+[wrangler:info] GET /_next/static/chunks/1802-34128671c5c62db2.js 200 OK (50ms)
+[wrangler:info] GET /_next/static/chunks/3446-f61a20fae0819aeb.js 200 OK (72ms)
+[wrangler:info] GET /_next/static/chunks/4211-0d8fef92ce474d2d.js 200 OK (52ms)
+[wrangler:info] GET /_next/static/chunks/app/(auth)/login/page-f9f57ad84a34ad2a.js 200 OK (80ms)
+[wrangler:info] GET /_next/static/chunks/5378-09ecdd7c024bc251.js 200 OK (81ms)
+[wrangler:info] GET /_next/static/chunks/4775-05a467f63b3fa11f.js 200 OK (81ms)
+[wrangler:info] GET /transactions 307 Temporary Redirect (4ms)
+[wrangler:info] GET /login 200 OK (12ms)
+[wrangler:info] GET /_next/static/media/7b0b24f36b1a6d0b-s.p.woff2 200 OK (9ms)
+[wrangler:info] GET /_next/static/css/f6395479f3c4952b.css 200 OK (21ms)
+[wrangler:info] GET /_next/static/chunks/webpack-7faecd24a7bc4ba9.js 200 OK (14ms)
+[wrangler:info] GET /_next/static/css/00a99473a15f09f9.css 200 OK (26ms)
+[wrangler:info] GET /_next/static/media/e4af272ccee01ff0-s.p.woff2 200 OK (27ms)
+[wrangler:info] GET /_next/static/chunks/cab9b927-6f2464d499d0ece7.js 200 OK (87ms)
+[wrangler:info] GET /_next/static/chunks/8886-6012117f2d09f1b3.js 200 OK (85ms)
+[wrangler:info] GET /_next/static/chunks/main-app-ecbd89cbdf2e3ed9.js 200 OK (79ms)
+[wrangler:info] GET /_next/static/chunks/6876-49419d9f5756b6c5.js 200 OK (15ms)
+[wrangler:info] GET /_next/static/chunks/1645-499bb5ba32de6cb5.js 200 OK (32ms)
+[wrangler:info] GET /_next/static/chunks/app/layout-9c6d51f70d98c29f.js 200 OK (37ms)
+[wrangler:info] GET /_next/static/chunks/23512dcd-eeeb0bb50e38ebd0.js 200 OK (21ms)
+[wrangler:info] GET /_next/static/chunks/1802-34128671c5c62db2.js 200 OK (30ms)
+[wrangler:info] GET /_next/static/chunks/4211-0d8fef92ce474d2d.js 200 OK (39ms)
+[wrangler:info] GET /_next/static/chunks/3446-f61a20fae0819aeb.js 200 OK (30ms)
+[wrangler:info] GET /_next/static/chunks/4775-05a467f63b3fa11f.js 200 OK (41ms)
+[wrangler:info] GET /_next/static/chunks/5378-09ecdd7c024bc251.js 200 OK (77ms)
+[wrangler:info] GET /_next/static/chunks/app/(auth)/login/page-f9f57ad84a34ad2a.js 200 OK (52ms)
+[wrangler:info] GET /transactions 200 OK (10ms)
+[wrangler:info] GET /_next/static/media/7b0b24f36b1a6d0b-s.p.woff2 200 OK (16ms)
+[wrangler:info] GET /_next/static/css/f6395479f3c4952b.css 200 OK (57ms)
+[wrangler:info] GET /_next/static/css/00a99473a15f09f9.css 200 OK (56ms)
+[wrangler:info] GET /_next/static/media/e4af272ccee01ff0-s.p.woff2 200 OK (69ms)
+[wrangler:info] GET /_next/static/chunks/webpack-7faecd24a7bc4ba9.js 200 OK (65ms)
+[wrangler:info] GET /_next/static/chunks/cab9b927-6f2464d499d0ece7.js 200 OK (65ms)
+[wrangler:info] GET /_next/static/chunks/8886-6012117f2d09f1b3.js 200 OK (31ms)
+[wrangler:info] GET /_next/static/chunks/6876-49419d9f5756b6c5.js 200 OK (37ms)
+[wrangler:info] GET /_next/static/chunks/main-app-ecbd89cbdf2e3ed9.js 200 OK (38ms)
+[wrangler:info] GET /_next/static/chunks/1645-499bb5ba32de6cb5.js 200 OK (37ms)
+[wrangler:info] GET /_next/static/chunks/app/layout-9c6d51f70d98c29f.js 200 OK (35ms)
+[wrangler:info] GET /_next/static/chunks/3446-f61a20fae0819aeb.js 200 OK (50ms)
+[wrangler:info] GET /_next/static/chunks/1802-34128671c5c62db2.js 200 OK (63ms)
+[wrangler:info] GET /_next/static/chunks/6089-f930f38d674f1429.js 200 OK (54ms)
+[wrangler:info] GET /_next/static/chunks/716-9ddbf2608d4de596.js 200 OK (55ms)
+[wrangler:info] GET /_next/static/chunks/3477-1083a93f7cf4d528.js 200 OK (91ms)
+[wrangler:info] GET /_next/static/chunks/app/(dashboard)/transactions/page-eddc87c2ad46449d.js 200 OK (58ms)
+[wrangler:info] GET /_next/static/chunks/app/(dashboard)/layout-0a6c421699de8f8b.js 200 OK (75ms)
+[wrangler:info] GET /_next/static/chunks/1955-aeeda9fb3c57ec60.js 200 OK (88ms)
+[wrangler:info] GET /dashboard 200 OK (63ms)
+[wrangler:info] GET /import 200 OK (94ms)
+[wrangler:info] GET /insights 200 OK (94ms)
+[wrangler:info] GET /budgets 404 Not Found (104ms)
+[wrangler:info] GET /auto-debits 404 Not Found (104ms)
+[wrangler:info] GET /settings 404 Not Found (32ms)
+[wrangler:info] GET /_next/static/chunks/8961-6c7b8d67745b7d0c.js 200 OK (28ms)
+[wrangler:info] GET /_next/static/chunks/app/(dashboard)/import/page-1570d933bf198d5f.js 200 OK (111ms)
+[wrangler:info] GET /_next/static/chunks/app/(dashboard)/dashboard/page-86f85f4bbc7d2275.js 200 OK (122ms)
+[wrangler:info] GET /_next/static/chunks/4463-93b6f6fd4c403027.js 200 OK (122ms)
+[wrangler:info] GET /_next/static/chunks/5378-09ecdd7c024bc251.js 200 OK (106ms)
+[wrangler:info] GET /_next/static/chunks/7938-bf5b52f290ee2f86.js 200 OK (97ms)
+[wrangler:info] GET /_next/static/chunks/app/(dashboard)/insights/page-e45da1d3716a6d0f.js 200 OK (94ms)
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mSupabase Error: {[0m
+
+    code: 'PGRST200',
+    details: "Searched for a foreign key relationship between 'transactions' and 'categories' in the schema 'public', but no matches were found.",
+    hint: null,
+    message: "Could not find a relationship between 'transactions' and 'categories' in the schema cache"
+  }
+
+
+[wrangler:info] GET /api/transactions 200 OK (1173ms)
+[wrangler:info] GET /transactions 304 Not Modified (7ms)
+[wrangler:info] GET /dashboard 304 Not Modified (23ms)
+[wrangler:info] GET /budgets 404 Not Found (31ms)
+[wrangler:info] GET /auto-debits 404 Not Found (31ms)
+[wrangler:info] GET /import 304 Not Modified (34ms)
+[wrangler:info] GET /insights 304 Not Modified (42ms)
+[wrangler:info] GET /settings 404 Not Found (11ms)
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mSupabase Error: {[0m
+
+    code: 'PGRST200',
+    details: "Searched for a foreign key relationship between 'transactions' and 'categories' in the schema 'public', but no matches were found.",
+    hint: null,
+    message: "Could not find a relationship between 'transactions' and 'categories' in the schema cache"
+  }
+
+
+[wrangler:info] GET /api/transactions 200 OK (204ms)

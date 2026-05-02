@@ -1,0 +1,24 @@
+
+ ⛅️ wrangler 4.87.0
+───────────────────
+✨ Compiled Worker successfully
+Your Worker has access to the following bindings:
+Binding                                                                             Resource                  Mode
+env.KV (a1a29e181da541d89af6c34bfafa79a0)                                           KV Namespace              local
+env.DB (local-DB)                                                                   D1 Database               local
+env.CF_PAGES ("1")                                                                  Environment Variable      local
+env.CF_PAGES_BRANCH ("jules-8086837194482099386-a41a9dbc")                          Environment Variable      local
+env.CF_PAGES_COMMIT_SHA ("0fde7ed308a34c289198a9a448a1d9ed09f61...")                Environment Variable      local
+env.CF_PAGES_URL ("https://0fde7ed.expense-tracker.pages...")                       Environment Variable      local
+env.NEXT_PUBLIC_APP_URL ("https://spendwise-b3u.pages.dev")                         Environment Variable      local
+env.NEXT_PUBLIC_SUPABASE_URL ("https://ltxerejwklqpzprlkvlf.supabase...")           Environment Variable      local
+env.NEXT_PUBLIC_SUPABASE_ANON_KEY ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....")      Environment Variable      local
+env.JWT_SECRET ("spendwise_super_secure_jwt_key_2026_xyz")                          Environment Variable      local
+
+⎔ Starting local server...
+[wrangler:info] Ready on http://localhost:8788
+[wrangler:info] GET /transactions 404 Not Found (15ms)
+✨ Compiled Worker successfully
+✨ Compiled Worker successfully
+⎔ Reloading local server...
+⎔ Local server updated and ready
