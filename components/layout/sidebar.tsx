@@ -111,8 +111,9 @@ export function Sidebar() {
           <button 
             onClick={handleLogout}
             className="flex items-center justify-center h-10 rounded-xl bg-white/[0.03] border border-white/5 text-white/40 hover:text-rose-400 hover:bg-rose-500/10 transition-all"
+            aria-label="Logout"
           >
-            <LogOut className="h-4 w-4" />
+            <LogOut className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       </div>
