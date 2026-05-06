@@ -159,6 +159,22 @@ export default function TransactionTable() {
     }
   };
 
+  const handleAceDelete = async () => {
+    if (!confirm("ACE DELETE INITIATED: Are you sure you want to permanently erase ALL transmissions? This cannot be undone.")) return;
+    
+    toast({ type: 'loading', title: 'Executing ACE Delete', description: 'Purging entire ledger...' });
+    try {
+      localStorage.removeItem("spendwise_transactions");
+      
+      const response = await fetch('/api/transactions/ace-delete', { method: 'DELETE' });
+      
+      setAllTransactions([]);
+      toast({ type: 'success', title: 'Ledger Expunged', description: 'ACE Delete successful. Terminal cleared.' });
+    } catch (err: any) {
+      toast({ type: 'error', title: 'ACE Delete Failed', description: err.message });
+    }
+  };
+
   if (loading) return <div className="h-[600px] w-full skeleton rounded-[40px]" />;
 
   return (
@@ -179,18 +195,25 @@ export default function TransactionTable() {
               />
             </div>
             
-            <div className="flex bg-white/[0.03] border border-white/5 p-1 rounded-2xl w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch gap-2 bg-white/[0.03] border border-white/5 p-1 rounded-2xl w-full lg:w-auto">
               {['all', 'expense', 'income'].map((type) => (
                 <button
                   key={type}
                   onClick={() => setFilterType(type)}
-                  className={`flex-1 lg:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+                  className={`flex-1 sm:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
                     filterType === type ? 'bg-white/10 text-white shadow-inner' : 'text-white/20 hover:text-white/40'
                   }`}
                 >
                   {type}
                 </button>
               ))}
+              <div className="w-px bg-white/5 mx-1 hidden sm:block"></div>
+              <button
+                onClick={handleAceDelete}
+                className="flex-1 sm:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-rose-500/50 hover:text-white hover:bg-rose-500/80 hover:shadow-[0_0_20px_rgba(244,63,94,0.4)] flex items-center justify-center gap-2"
+              >
+                <Trash2 size={12} /> ACE Delete
+              </button>
             </div>
           </div>
 
@@ -237,12 +260,20 @@ export default function TransactionTable() {
                     {activeFiltersCount} Active Filters Engaged
                  </div>
               </div>
-              <button 
-                onClick={clearFilters}
-                className="text-[9px] font-black uppercase tracking-widest text-white/20 hover:text-white transition-colors flex items-center gap-1.5"
-              >
-                Clear Terminal <X size={10} />
-              </button>
+              <div className="flex items-center gap-4">
+                <button 
+                  onClick={clearFilters}
+                  className="text-[9px] font-black uppercase tracking-widest text-white/20 hover:text-white transition-colors flex items-center gap-1.5"
+                >
+                  Clear Terminal <X size={10} />
+                </button>
+                <button 
+                  onClick={handleAceDelete}
+                  className="px-4 py-2 rounded-xl bg-rose-500/10 text-rose-500 font-black uppercase tracking-widest text-[9px] border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all flex items-center gap-2"
+                >
+                  <Trash2 size={12} /> ACE Delete
+                </button>
+              </div>
             </div>
           )}
         </div>
