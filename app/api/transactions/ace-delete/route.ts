@@ -10,14 +10,17 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ fallbackToLocal: true }, { status: 200 });
     }
 
-    // Delete all records (assuming no RLS or matching all)
-    // Note: Supabase requires a filter for deletes. .neq('id', '0') will match all UUIDs.
-    const { error } = await supabase.from('transactions').delete().neq('id', '0');
+    // Delete all records by filtering for non-null IDs (which effectively matches all records)
+    const { error } = await supabase.from('transactions').delete().not('id', 'is', null);
     
-    if (error) throw error;
+    if (error) {
+       console.error("Supabase ACE Delete Error:", error);
+       throw error;
+    }
     
     return NextResponse.json({ success: true });
   } catch (error: any) {
+    console.error("ACE Delete Exception:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
