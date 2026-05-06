@@ -170,8 +170,9 @@ export default function TransactionTable() {
           {/* Row 1: Search & Type */}
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="relative flex-1 group">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 h-4 w-4 transition-colors" />
+              <Search aria-hidden="true" className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 h-4 w-4 transition-colors" />
               <input 
+                aria-label="Search transactions"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Surveillance by entity, category or value..."
@@ -241,7 +242,7 @@ export default function TransactionTable() {
                 onClick={clearFilters}
                 className="text-[9px] font-black uppercase tracking-widest text-white/20 hover:text-white transition-colors flex items-center gap-1.5"
               >
-                Clear Terminal <X size={10} />
+                Clear Terminal <X aria-hidden="true" size={10} />
               </button>
             </div>
           )}
@@ -306,19 +307,21 @@ export default function TransactionTable() {
                     <td className="px-8 py-6 text-right">
                        <div className="flex items-center justify-end gap-2">
                           <button 
+                            aria-label={`Edit ${t.description || "transaction"}`}
                             onClick={() => {
                               setEditItem(t);
                               setIsEditOpen(true);
                             }}
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-blue-400 hover:border-blue-500/30 transition-all"
                           >
-                             <Pencil size={12} />
+                             <Pencil aria-hidden="true" size={12} />
                           </button>
                           <button 
+                            aria-label={`Delete ${t.description || "transaction"}`}
                             onClick={() => handleDelete(t.id)}
                             className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:border-rose-500/30 transition-all"
                           >
-                             <Trash2 size={12} />
+                             <Trash2 aria-hidden="true" size={12} />
                           </button>
                        </div>
                     </td>
