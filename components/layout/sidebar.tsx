@@ -46,8 +46,8 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="fixed left-0 top-0 bottom-0 w-[240px] bg-[#060910] border-r border-slate-900/5 flex flex-col z-50">
-      <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
+    <aside className="fixed left-0 top-0 bottom-0 w-[240px] bg-[#FFFFFF] border-r border-slate-900/5 flex flex-col z-50">
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/[0.02] to-transparent pointer-events-none" />
       
       {/* Brand */}
       <div className="p-8 flex items-center gap-3">
@@ -70,8 +70,8 @@ export function Sidebar() {
               href={item.href}
               className={`group flex items-center gap-3 py-3 px-4 transition-all duration-300 relative ${
                 isActive 
-                  ? 'text-emerald-400 bg-emerald-500/5 rounded-r-xl' 
-                  : 'text-slate-900/60 hover:text-white/80 hover:bg-slate-900/[0.03] rounded-xl'
+                  ? 'text-emerald-500 bg-emerald-500/5 rounded-r-xl' 
+                  : 'text-slate-900/60 hover:text-slate-900 hover:bg-slate-900/[0.03] rounded-xl'
               }`}
             >
               {isActive && (
@@ -88,7 +88,7 @@ export function Sidebar() {
       </nav>
 
       {/* User Footer */}
-      <div className="p-6 border-t border-slate-900/5 bg-black/20">
+      <div className="p-6 border-t border-slate-900/5 bg-slate-900/5">
         <div className="flex items-center gap-4 group cursor-default">
           <Avatar className="h-10 w-10 border border-slate-900/10">
             <AvatarImage src={user?.image} />
@@ -104,7 +104,7 @@ export function Sidebar() {
         <div className="grid grid-cols-2 gap-2 mt-6">
           <Link 
             href="/settings"
-            className="flex items-center justify-center h-10 rounded-xl bg-slate-900/[0.03] border border-slate-900/5 text-slate-900/60 hover:text-slate-900 hover:bg-white/[0.06] transition-all"
+            className="flex items-center justify-center h-10 rounded-xl bg-slate-900/[0.03] border border-slate-900/5 text-slate-900/60 hover:text-slate-900 hover:bg-slate-900/[0.06] transition-all"
           >
             <Settings className="h-4 w-4" />
           </Link>

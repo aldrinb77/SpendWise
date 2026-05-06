@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/shared/navbar";
 import MobileNav from "@/components/shared/mobile-nav";
 
-const inter = Inter({ 
+const jakarta = Plus_Jakarta_Sans({ 
   subsets: ["latin"], 
-  variable: "--font-inter" 
+  variable: "--font-ui" 
 });
 
 const outfit = Outfit({ 
   subsets: ["latin"], 
-  variable: "--font-outfit" 
+  variable: "--font-display" 
 });
 
 import { ToastProvider } from "@/components/ui/toast-provider";
@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full scroll-smooth">
-      <body className="min-h-full bg-[#F8F9FA] text-[#f1f5f9] antialiased selection:bg-emerald-500/20">
+      <body className={`min-h-full bg-[#F8F9FA] text-[#0f172a] antialiased selection:bg-emerald-500/20 ${jakarta.variable} ${outfit.variable}`}>
         <ToastProvider>
            <CustomCursor />
            {children}
