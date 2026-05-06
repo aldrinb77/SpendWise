@@ -11,7 +11,7 @@ import {
 import { useToast } from "@/components/ui/toast-provider";
 import { useRouter } from "next/navigation";
 
-const CATEGORIES = ["Food & Dining", "Transport", "Shopping", "Entertainment", "Utilities & Bills", "Health", "Education", "Transfers", "Cash", "Income", "Other"];
+const CATEGORIES = ["Food & Dining", "Shopping", "Transportation", "Bills & Utilities", "Entertainment", "Healthcare", "Education", "Investments", "Income", "Other"];
 
 interface ImportPreviewProps {
   data: any[];

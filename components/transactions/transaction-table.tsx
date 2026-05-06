@@ -17,7 +17,7 @@ import { useToast } from "@/components/ui/toast-provider";
 import TransactionForm from "./transaction-form";
 import { Badge } from "@/components/ui/badge";
 
-const CATEGORIES = ["Food & Dining", "Transport", "Shopping", "Entertainment", "Utilities & Bills", "Health", "Education", "Transfers", "Cash", "Income", "Other"];
+const CATEGORIES = ["Food & Dining", "Shopping", "Transportation", "Bills & Utilities", "Entertainment", "Healthcare", "Education", "Investments", "Income", "Other"];
 const PAYMENT_MODES = ["UPI (Paytm/GPay)", "Cash", "Credit/Debit Card", "Net Banking", "NEFT/IMPS", "Auto Debit"];
 
 export default function TransactionTable() {

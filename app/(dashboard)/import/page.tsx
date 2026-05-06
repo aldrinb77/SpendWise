@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/components/ui/toast-provider";
 import ImportPreview from "@/components/import/import-preview";
 import { parseBankPDF } from "@/lib/parsers/pdf-parser";
+import { parseExcel } from "@/lib/parsers/excel-parser";
 
 export default function ImportPage() {
   const { toast } = useToast();
@@ -42,7 +43,14 @@ export default function ImportPage() {
       setProgress(30);
       
       // Real Ingestion Attempt
-      const results = await parseBankPDF(selected);
+      let results: any[] = [];
+      if (selected.name.toLowerCase().endsWith('.pdf')) {
+         results = await parseBankPDF(selected);
+      } else if (selected.name.toLowerCase().endsWith('.xlsx') || selected.name.toLowerCase().endsWith('.csv')) {
+         results = await parseExcel(selected);
+      } else {
+         throw new Error("Unsupported file format.");
+      }
       
       setStatusText("Extracting Financial Matrix...");
       setProgress(60);
@@ -53,7 +61,7 @@ export default function ImportPage() {
       await sleep(600);
 
       if (results.length === 0) {
-        throw new Error("No readable transactions found. The PDF might be password protected or use an unsupported format.");
+        throw new Error("No readable transactions found. The file might be empty or in an unrecognized format.");
       }
       
       // Transform lib/parsers format to UI format

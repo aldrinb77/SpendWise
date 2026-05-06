@@ -33,19 +33,42 @@ export async function PUT(
     const supabase = getSupabase();
     
     if (!supabase) {
-      return NextResponse.json({ success: true, fallbackToLocal: true, mockData: { id, ...(data as any) } });
+      return NextResponse.json({ success: true, fallbackToLocal: true, mockData: { id, ...data } });
+    }
+
+    // Resolve category_name to category_id
+    let category_id = null;
+    if (data.category_name) {
+       const { data: catData } = await supabase
+         .from('categories')
+         .select('id')
+         .eq('name', data.category_name)
+         .limit(1)
+         .single();
+         
+       if (catData) category_id = catData.id;
+    }
+
+    // Strip category_name and prepare update data
+    const { category_name, ...updateData } = data;
+    if (category_id) {
+       (updateData as any).category_id = category_id;
     }
 
     const { data: result, error } = await supabase
       .from('transactions')
-      .update(data as any)
+      .update(updateData)
       .eq('id', id)
       .select()
       .single();
       
-    if (error) throw error;
+    if (error) {
+       console.error("Supabase Update Error:", error);
+       throw error;
+    }
     return NextResponse.json(result);
   } catch (error: any) {
+    console.error("PUT Exception:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

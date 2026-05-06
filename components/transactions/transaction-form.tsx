@@ -38,14 +38,13 @@ interface TransactionFormProps {
 
 const CATEGORIES = [
   { label: "Food & Dining", emoji: "🍕" },
-  { label: "Transport", emoji: "🚗" },
+  { label: "Transportation", emoji: "🚗" },
   { label: "Shopping", emoji: "🛍️" },
   { label: "Entertainment", emoji: "🎬" },
-  { label: "Utilities & Bills", emoji: "⚡" },
-  { label: "Health", emoji: "❤️" },
+  { label: "Bills & Utilities", emoji: "⚡" },
+  { label: "Healthcare", emoji: "❤️" },
   { label: "Education", emoji: "📚" },
-  { label: "Transfers", emoji: "💸" },
-  { label: "Cash", emoji: "💵" },
+  { label: "Investments", emoji: "💸" },
   { label: "Income", emoji: "💰" },
   { label: "Other", emoji: "📌" },
 ];
