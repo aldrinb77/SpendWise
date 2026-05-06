@@ -100,13 +100,16 @@ export default function TransactionTable() {
     if (filterType !== 'all') result = result.filter(t => t.type === filterType);
     if (filterMode !== 'all') result = result.filter(t => t.payment_method === filterMode);
     
-    if (dateFrom) result = result.filter(t => t.date * 1000 >= new Date(dateFrom).getTime());
-    if (dateTo) result = result.filter(t => t.date * 1000 <= new Date(dateTo).getTime());
+    if (dateFrom) result = result.filter(t => new Date(typeof t.date === 'number' ? t.date * 1000 : t.date).getTime() >= new Date(dateFrom).getTime());
+    if (dateTo) result = result.filter(t => new Date(typeof t.date === 'number' ? t.date * 1000 : t.date).getTime() <= new Date(dateTo).getTime());
     
     result.sort((a, b) => {
+      const timeA = new Date(typeof a.date === 'number' ? a.date * 1000 : a.date).getTime();
+      const timeB = new Date(typeof b.date === 'number' ? b.date * 1000 : b.date).getTime();
+      
       switch (sortBy) {
-        case 'date-desc':   return b.date - a.date;
-        case 'date-asc':    return a.date - b.date;
+        case 'date-desc':   return timeB - timeA;
+        case 'date-asc':    return timeA - timeB;
         case 'amount-desc': return Number(b.amount) - Number(a.amount);
         case 'amount-asc':  return Number(a.amount) - Number(b.amount);
         default:            return 0;
@@ -310,7 +313,7 @@ export default function TransactionTable() {
                   >
                     <td className="px-8 py-6">
                       <span className="text-xs font-black text-white/40 tabular-nums uppercase tracking-widest">
-                        {new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
+                        {new Date(typeof t.date === 'number' ? t.date * 1000 : t.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
                       </span>
                     </td>
                     <td className="px-8 py-6">

@@ -65,7 +65,7 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
       amount: initialData ? initialData.amount.toString() : "",
       description: initialData ? initialData.description : "",
       category: initialData ? initialData.category_name : "",
-      date: initialData ? new Date(initialData.date * 1000) : new Date(),
+      date: initialData ? new Date(typeof initialData.date === 'number' ? initialData.date * 1000 : initialData.date) : new Date(),
       type: initialData ? initialData.type : "expense",
       paymentMethod: initialData ? initialData.payment_method : "UPI (Paytm/GPay)",
       notes: initialData ? initialData.notes : "",
@@ -79,7 +79,7 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
           amount: initialData.amount.toString(),
           description: initialData.description,
           category: initialData.category_name,
-          date: new Date(initialData.date * 1000),
+          date: new Date(typeof initialData.date === 'number' ? initialData.date * 1000 : initialData.date),
           type: initialData.type,
           paymentMethod: initialData.payment_method,
           notes: initialData.notes || "",
@@ -106,7 +106,7 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
     
     try {
       const formattedData = {
-        date: Math.floor(data.date.getTime() / 1000),
+        date: data.date.toISOString(),
         amount: parseFloat(data.amount),
         type: data.type,
         category_name: data.category,

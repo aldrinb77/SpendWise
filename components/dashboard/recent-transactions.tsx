@@ -42,12 +42,24 @@ export default function RecentTransactions({ limit = 8 }: RecentTransactionsProp
           if (!apiIds.has(lt.id)) combined.push(lt);
         });
 
-        const sorted = combined.sort((a, b) => b.date - a.date);
+        const sorted = combined.sort((a, b) => {
+          const timeA = new Date(typeof a.date === 'number' ? a.date * 1000 : a.date).getTime();
+          const timeB = new Date(typeof b.date === 'number' ? b.date * 1000 : b.date).getTime();
+          return timeB - timeA;
+        });
         setTxns(sorted.slice(0, limit));
       } catch (err) {
         console.error("Dashboard trans retrieval error", err);
         const local = localStorage.getItem("spendwise_transactions");
-        if (local) setTxns(JSON.parse(local).sort((a:any,b:any)=>b.date-a.date).slice(0, limit));
+        if (local) {
+           const parsed = JSON.parse(local);
+           parsed.sort((a: any, b: any) => {
+              const timeA = new Date(typeof a.date === 'number' ? a.date * 1000 : a.date).getTime();
+              const timeB = new Date(typeof b.date === 'number' ? b.date * 1000 : b.date).getTime();
+              return timeB - timeA;
+           });
+           setTxns(parsed.slice(0, limit));
+        }
       } finally {
         setLoading(false);
       }
@@ -95,7 +107,7 @@ export default function RecentTransactions({ limit = 8 }: RecentTransactionsProp
                     <div className="flex flex-col">
                       <span className="text-sm font-bold text-white tracking-tight group-hover:text-emerald-400 transition-colors">{t.description}</span>
                       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mt-1">
-                        {new Date(t.date * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }).toUpperCase()} · {t.payment_method || 'UPI'}
+                        {new Date(typeof t.date === 'number' ? t.date * 1000 : t.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }).toUpperCase()} · {t.payment_method || 'UPI'}
                       </span>
                     </div>
                   </td>
