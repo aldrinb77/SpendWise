@@ -9,30 +9,38 @@ export async function GET(req: NextRequest) {
        return NextResponse.json({ fallbackToLocal: true, transactions: [] });
     }
 
-    const { data, error } = await supabase
+    // Fetch transactions without the broken relational join
+    const { data: txns, error: txnsError } = await supabase
       .from('transactions')
-      .select(`
-        *,
-        categories (
-          name,
-          icon,
-          color
-        )
-      `)
+      .select('*')
       .order('date', { ascending: false });
 
-    if (error) {
-      console.error("Supabase Error:", error);
-      return NextResponse.json([]); // Return empty array instead of mock data
+    if (txnsError) {
+      console.error("Supabase Transaction Fetch Error:", txnsError);
+      return NextResponse.json([]);
     }
 
-    return NextResponse.json(data.map((t: any) => ({
-      ...t,
-      category_name: t.categories?.name,
-      category_icon: t.categories?.icon,
-      category_color: t.categories?.color,
-    })));
+    // Fetch categories to manually join
+    const { data: cats } = await supabase.from('categories').select('*');
+    const catMap = new Map();
+    if (cats) {
+       cats.forEach(c => catMap.set(c.id, c));
+    }
+
+    // Map the category details manually
+    const enrichedData = txns.map((t: any) => {
+       const category = catMap.get(t.category_id);
+       return {
+         ...t,
+         category_name: category ? category.name : (t.category_name || "Uncategorized"),
+         category_icon: category ? category.icon : null,
+         category_color: category ? category.color : null,
+       };
+    });
+
+    return NextResponse.json(enrichedData);
   } catch (error: any) {
+    console.error("GET transactions Exception:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
