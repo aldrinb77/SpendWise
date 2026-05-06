@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full scroll-smooth">
-      <body className="min-h-full bg-[#04050a] text-[#f1f5f9] antialiased selection:bg-emerald-500/20">
+      <body className="min-h-full bg-[#F8F9FA] text-[#f1f5f9] antialiased selection:bg-emerald-500/20">
         <ToastProvider>
            <CustomCursor />
            {children}

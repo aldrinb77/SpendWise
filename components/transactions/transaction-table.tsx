@@ -184,36 +184,36 @@ export default function TransactionTable() {
     <div className="space-y-8">
       
       {/* FILTER TERMINAL */}
-      <div className="bg-[#0d1220] border border-white/5 rounded-[32px] overflow-hidden noise shadow-2xl">
+      <div className="bg-[#FFFFFF] border border-slate-900/5 rounded-[32px] overflow-hidden bg-noise shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
         <div className="p-6 md:p-8 space-y-6">
           {/* Row 1: Search & Type */}
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="relative flex-1 group">
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 h-4 w-4 transition-colors" />
+              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-900/40 group-focus-within:text-blue-500 h-4 w-4 transition-colors" />
               <input 
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Surveillance by entity, category or value..."
-                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl pl-12 pr-6 py-4 text-sm font-bold text-white focus:border-white/20 transition-all outline-none"
+                className="w-full bg-slate-900/[0.03] border border-slate-900/5 rounded-2xl pl-12 pr-6 py-4 text-sm font-bold text-slate-900 focus:border-slate-900/20 transition-all outline-none"
               />
             </div>
             
-            <div className="flex flex-col sm:flex-row items-stretch gap-2 bg-white/[0.03] border border-white/5 p-1 rounded-2xl w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row items-stretch gap-2 bg-slate-900/[0.03] border border-slate-900/5 p-1 rounded-2xl w-full lg:w-auto">
               {['all', 'expense', 'income'].map((type) => (
                 <button
                   key={type}
                   onClick={() => setFilterType(type)}
                   className={`flex-1 sm:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
-                    filterType === type ? 'bg-white/10 text-white shadow-inner' : 'text-white/20 hover:text-white/40'
+                    filterType === type ? 'bg-slate-900/10 text-slate-900 shadow-inner' : 'text-slate-900/40 hover:text-slate-900/60'
                   }`}
                 >
                   {type}
                 </button>
               ))}
-              <div className="w-px bg-white/5 mx-1 hidden sm:block"></div>
+              <div className="w-px bg-slate-900/5 mx-1 hidden sm:block"></div>
               <button
                 onClick={handleAceDelete}
-                className="flex-1 sm:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-rose-500/50 hover:text-white hover:bg-rose-500/80 hover:shadow-[0_0_20px_rgba(244,63,94,0.4)] flex items-center justify-center gap-2"
+                className="flex-1 sm:flex-none px-6 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-rose-500/50 hover:text-slate-900 hover:bg-rose-500/80 hover:shadow-[0_0_20px_rgba(244,63,94,0.4)] flex items-center justify-center gap-2"
               >
                 <Trash2 size={12} /> ACE Delete
               </button>
@@ -223,29 +223,29 @@ export default function TransactionTable() {
           {/* Row 2: Selects */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <div className="space-y-1.5">
-               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Category</label>
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900/40 pl-2">Category</label>
                <select value={filterCat} onChange={(e) => setFilterCat(e.target.value)} className="w-full">
                   <option value="all">ANY CLASSIFICATION</option>
                   {CATEGORIES.map(c => <option key={c} value={c}>{c.toUpperCase()}</option>)}
                </select>
             </div>
             <div className="space-y-1.5">
-               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Mode</label>
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900/40 pl-2">Mode</label>
                <select value={filterMode} onChange={(e) => setFilterMode(e.target.value)} className="w-full">
                   <option value="all">ANY TERMINAL</option>
                   {PAYMENT_MODES.map(m => <option key={m} value={m}>{m.toUpperCase()}</option>)}
                </select>
             </div>
             <div className="space-y-1.5">
-               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Start</label>
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900/40 pl-2">Start</label>
                <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="w-full" />
             </div>
             <div className="space-y-1.5">
-               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">End</label>
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900/40 pl-2">End</label>
                <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="w-full" />
             </div>
             <div className="space-y-1.5">
-               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20 pl-2">Sort</label>
+               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-900/40 pl-2">Sort</label>
                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full">
                   <option value="date-desc">LATEST RECORDS</option>
                   <option value="date-asc">OLDEST RECORDS</option>
@@ -257,7 +257,7 @@ export default function TransactionTable() {
 
           {/* Active Filter Pills */}
           {activeFiltersCount > 0 && (
-            <div className="flex items-center justify-between pt-4 border-t border-white/5">
+            <div className="flex items-center justify-between pt-4 border-t border-slate-900/5">
               <div className="flex items-center gap-2">
                  <div className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-[9px] font-black uppercase tracking-[0.1em] text-blue-500">
                     {activeFiltersCount} Active Filters Engaged
@@ -266,13 +266,13 @@ export default function TransactionTable() {
               <div className="flex items-center gap-4">
                 <button 
                   onClick={clearFilters}
-                  className="text-[9px] font-black uppercase tracking-widest text-white/20 hover:text-white transition-colors flex items-center gap-1.5"
+                  className="text-[9px] font-black uppercase tracking-widest text-slate-900/40 hover:text-slate-900 transition-colors flex items-center gap-1.5"
                 >
                   Clear Terminal <X size={10} />
                 </button>
                 <button 
                   onClick={handleAceDelete}
-                  className="px-4 py-2 rounded-xl bg-rose-500/10 text-rose-500 font-black uppercase tracking-widest text-[9px] border border-rose-500/20 hover:bg-rose-500 hover:text-white transition-all flex items-center gap-2"
+                  className="px-4 py-2 rounded-xl bg-rose-500/10 text-rose-500 font-black uppercase tracking-widest text-[9px] border border-rose-500/20 hover:bg-rose-500 hover:text-slate-900 transition-all flex items-center gap-2"
                 >
                   <Trash2 size={12} /> ACE Delete
                 </button>
@@ -283,16 +283,16 @@ export default function TransactionTable() {
       </div>
 
       {/* DATA LEDGER */}
-      <div className="bg-[#0d1220] border border-white/5 rounded-[40px] overflow-hidden noise shadow-2xl">
+      <div className="bg-[#FFFFFF] border border-slate-900/5 rounded-[40px] overflow-hidden bg-noise shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="border-b border-white/5 bg-white/[0.01]">
-                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Timeline</th>
-                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Entity</th>
-                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Classification</th>
-                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 text-right">Value</th>
-                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 text-right w-[100px]">Node</th>
+              <tr className="border-b border-slate-900/5 bg-slate-900/[0.01]">
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/40">Timeline</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/40">Entity</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/40">Classification</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/40 text-right">Value</th>
+                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/40 text-right w-[100px]">Node</th>
               </tr>
             </thead>
             <tbody>
@@ -309,30 +309,30 @@ export default function TransactionTable() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: Math.min(i * 0.02, 0.2) }}
-                    className="group border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors"
+                    className="group border-b border-slate-900/5 last:border-0 hover:bg-slate-900/[0.02] transition-colors"
                   >
                     <td className="px-8 py-6">
-                      <span className="text-xs font-black text-white/40 tabular-nums uppercase tracking-widest">
+                      <span className="text-xs font-black text-slate-900/60 tabular-nums uppercase tracking-widest">
                         {new Date(typeof t.date === 'number' ? t.date * 1000 : t.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
                       </span>
                     </td>
                     <td className="px-8 py-6">
                       <div className="flex flex-col">
-                         <span className="text-sm font-extrabold text-white tracking-tight group-hover:text-blue-400 transition-colors">
+                         <span className="text-sm font-extrabold text-slate-900 tracking-tight group-hover:text-blue-400 transition-colors">
                            {t.description || "Vendor"}
                          </span>
-                         <span className="text-[10px] text-white/20 font-black uppercase tracking-[0.2em] mt-1">
+                         <span className="text-[10px] text-slate-900/40 font-black uppercase tracking-[0.2em] mt-1">
                            Channel: {t.payment_method || "UPI"}
                          </span>
                       </div>
                     </td>
                     <td className="px-8 py-6">
-                      <Badge className="bg-white/5 border border-white/10 text-[9px] font-black uppercase tracking-wider text-white/50 px-3 py-1 rounded-full">
+                      <Badge className="bg-slate-900/5 border border-slate-900/10 text-[9px] font-black uppercase tracking-wider text-slate-900/70 px-3 py-1 rounded-full">
                         {t.category_name}
                       </Badge>
                     </td>
                     <td className="px-8 py-6 text-right">
-                       <span className={`text-md font-black tabular-nums tracking-tighter ${t.type === 'income' ? 'text-emerald-500' : 'text-white'}`}>
+                       <span className={`text-md font-black tabular-nums tracking-tighter ${t.type === 'income' ? 'text-emerald-500' : 'text-slate-900'}`}>
                          {t.type === 'income' ? <ArrowDownLeft className="inline mr-1 h-3 w-3" /> : <ArrowUpRight className="inline mr-1 h-3 w-3" />}
                          {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(t.amount)}
                        </span>
@@ -344,13 +344,13 @@ export default function TransactionTable() {
                               setEditItem(t);
                               setIsEditOpen(true);
                             }}
-                            className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-blue-400 hover:border-blue-500/30 transition-all"
+                            className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-blue-400 hover:border-blue-500/30 transition-all"
                           >
                              <Pencil size={12} />
                           </button>
                           <button 
                             onClick={() => handleDelete(t.id)}
-                            className="h-8 w-8 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 hover:text-rose-500 hover:border-rose-500/30 transition-all"
+                            className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-rose-500 hover:border-rose-500/30 transition-all"
                           >
                              <Trash2 size={12} />
                           </button>

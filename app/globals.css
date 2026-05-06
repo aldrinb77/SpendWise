@@ -9,26 +9,26 @@
   --font-mono: "Geist Mono", monospace;
 
   /* Backgrounds */
-  --bg-base: #04050a;
-  --bg-surface: #080c14;
-  --bg-card: #0d1220;
-  --bg-elevated: #111826;
-  --bg-hover: #161e2e;
+  --bg-base: #F8F9FA;
+  --bg-surface: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-hover: #F1F5F9;
 
   /* Borders */
-  --border: rgba(255,255,255,0.06);
-  --border-md: rgba(255,255,255,0.10);
-  --border-bright: rgba(255,255,255,0.16);
+  --border: rgba(15,23,42,0.06);
+  --border-md: rgba(15,23,42,0.10);
+  --border-bright: rgba(15,23,42,0.16);
 
   /* Accent — Emerald */
   --accent: #10b981;
-  --accent-light: #34d399;
+  --accent-light: #059669;
   --accent-dim: rgba(16,185,129,0.12);
-  --accent-glow: rgba(16,185,129,0.25);
+  --accent-glow: rgba(16,185,129,0.15);
 
   /* Semantic */
-  --red: #f43f5e;
-  --red-dim: rgba(244,63,94,0.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.12);
   --yellow: #f59e0b;
   --yellow-dim: rgba(245,158,11,0.12);
   --blue: #3b82f6;
@@ -39,15 +39,16 @@
   --orange-dim: rgba(249,115,22,0.12);
 
   /* Text */
-  --text-primary: #f1f5f9;
-  --text-secondary: #64748b;
-  --text-tertiary: #334155;
-  --text-muted: #1e293b;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-muted: #94a3b8;
 
   /* Shadows */
-  --shadow-card: 0 0 0 1px rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.5);
-  --shadow-elevated: 0 20px 80px rgba(0,0,0,0.7);
-  --shadow-glow-emerald: 0 0 40px rgba(16,185,129,0.2);
+  /* Shadows */
+  --shadow-card: 0 0 0 1px rgba(15,23,42,0.05), 0 10px 30px rgba(15,23,42,0.03);
+  --shadow-elevated: 0 20px 40px rgba(15,23,42,0.06);
+  --shadow-glow-emerald: 0 0 40px rgba(16,185,129,0.1);
 }
 
 @layer base {
@@ -92,10 +93,10 @@
 }
 
 /* Noise grain overlay utility */
-.noise {
+.bg-noise {
   position: relative;
 }
-.noise::after {
+.bg-noise::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -107,7 +108,7 @@
 
 /* Glass surface */
 .glass {
-  background: rgba(13,18,32,0.85);
+  background: rgba(255,255,255,0.75);
   backdrop-filter: blur(28px) saturate(180%);
   -webkit-backdrop-filter: blur(28px) saturate(180%);
   border: 1px solid var(--border);
@@ -189,9 +190,9 @@
 /* Form Control Globals */
 select {
   appearance: none;
-  background-color: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: #f1f5f9;
+  background-color: rgba(15,23,42,0.02);
+  border: 1px solid rgba(15,23,42,0.08);
+  color: #0f172a;
   border-radius: 12px;
   padding: 10px 40px 10px 14px;
   font-family: var(--font-ui);
@@ -207,8 +208,8 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(16,185,129,0.08);
 }
 select option {
-  background-color: #0d1220;
-  color: #f1f5f9;
+  background-color: #FFFFFF;
+  color: #0f172a;
   padding: 8px;
 }
 
@@ -218,9 +219,9 @@ input[type="date"],
 input[type="email"],
 input[type="password"],
 textarea {
-  background-color: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  color: #f1f5f9;
+  background-color: rgba(15,23,42,0.02);
+  border: 1px solid rgba(15,23,42,0.08);
+  color: #0f172a;
   border-radius: 12px;
   padding: 10px 14px;
   font-family: var(--font-ui);
@@ -234,10 +235,10 @@ input:focus, textarea:focus {
   box-shadow: 0 0 0 3px rgba(16,185,129,0.08);
 }
 input::placeholder, textarea::placeholder {
-  color: rgba(255,255,255,0.2);
+  color: rgba(15,23,42,0.3);
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.5);
+  filter: none;
   cursor: pointer;
 }

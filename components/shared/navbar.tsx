@@ -37,16 +37,16 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-white/50 dark:bg-slate-950/50 backdrop-blur-2xl">
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-900/10 bg-slate-900/50 dark:bg-slate-950/50 backdrop-blur-2xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-xl shadow-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-slate-900 shadow-xl shadow-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
             <LucideWallet className="h-6 w-6 font-black" />
           </div>
           <span className="text-2xl font-black tracking-tighter hidden sm:block bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-500 dark:from-white dark:to-slate-400">SpendWise</span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-1 bg-muted/20 p-1 rounded-2xl border border-white/5 shadow-inner">
+        <div className="hidden md:flex items-center gap-1 bg-muted/20 p-1 rounded-2xl border border-slate-900/5 shadow-inner">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -71,9 +71,9 @@ export default function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger render={
               <Button variant="ghost" className="relative h-12 w-12 rounded-full p-0 overflow-hidden hover:scale-105 active:scale-95 transition-all">
-                <Avatar className="h-10 w-10 border-2 border-white/10 shadow-lg">
+                <Avatar className="h-10 w-10 border-2 border-slate-900/10 shadow-lg">
                   <AvatarImage src="" alt="User" />
-                  <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-white font-black text-xs">JD</AvatarFallback>
+                  <AvatarFallback className="bg-gradient-to-br from-primary to-blue-600 text-slate-900 font-black text-xs">JD</AvatarFallback>
                 </Avatar>
               </Button>
             } />

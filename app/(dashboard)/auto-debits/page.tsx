@@ -15,11 +15,11 @@ export default function AutoDebitsPage() {
               Recurring Pipeline · Active
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-display italic text-white leading-tight">
+          <h1 className="text-4xl md:text-6xl font-display italic text-slate-900 leading-tight">
             Auto-Debits
           </h1>
-          <p className="text-white/30 font-medium text-lg tracking-tight px-1">
-            Predictive modeling of your <span className="text-white/50 underline decoration-white/10 underline-offset-4">recurring outflows</span>
+          <p className="text-slate-900/50 font-medium text-lg tracking-tight px-1">
+            Predictive modeling of your <span className="text-slate-900/70 underline decoration-white/10 underline-offset-4">recurring outflows</span>
           </p>
         </div>
         
@@ -35,22 +35,22 @@ export default function AutoDebitsPage() {
            <AutoDebitsList hideTitle />
         </div>
         <div className="space-y-8">
-           <div className="bg-[#0d1220] border border-white/5 rounded-[32px] p-8 noise shadow-2xl">
-             <h3 className="text-white font-bold text-lg mb-2">Pipeline Integrity</h3>
-             <p className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-6">Status: Nominal</p>
+           <div className="bg-[#FFFFFF] border border-slate-900/5 rounded-[32px] p-8 bg-noise shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+             <h3 className="text-slate-900 font-bold text-lg mb-2">Pipeline Integrity</h3>
+             <p className="text-[10px] font-black uppercase tracking-widest text-slate-900/50 mb-6">Status: Nominal</p>
              <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                   <span className="text-xs font-black uppercase tracking-widest text-white/40">Total Next 30D</span>
+                <div className="flex justify-between items-center p-4 rounded-2xl bg-slate-900/[0.02] border border-slate-900/5">
+                   <span className="text-xs font-black uppercase tracking-widest text-slate-900/60">Total Next 30D</span>
                    <span className="text-lg font-black text-amber-500 tabular-nums">₹0.00</span>
                 </div>
-                <div className="flex justify-between items-center p-4 rounded-2xl bg-white/[0.02] border border-white/5">
-                   <span className="text-xs font-black uppercase tracking-widest text-white/40">Active Pipelines</span>
-                   <span className="text-lg font-black text-white tabular-nums">0</span>
+                <div className="flex justify-between items-center p-4 rounded-2xl bg-slate-900/[0.02] border border-slate-900/5">
+                   <span className="text-xs font-black uppercase tracking-widest text-slate-900/60">Active Pipelines</span>
+                   <span className="text-lg font-black text-slate-900 tabular-nums">0</span>
                 </div>
              </div>
              
-             <div className="mt-8 pt-8 border-t border-white/5">
-               <p className="text-[10px] text-white/20 font-medium leading-relaxed">
+             <div className="mt-8 pt-8 border-t border-slate-900/5">
+               <p className="text-[10px] text-slate-900/40 font-medium leading-relaxed">
                   Terminal continuously monitors known merchants and subscription providers to automatically detect recurring outflows based on your transaction history.
                </p>
              </div>

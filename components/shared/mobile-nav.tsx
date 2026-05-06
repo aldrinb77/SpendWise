@@ -27,7 +27,7 @@ export default function MobileNav() {
   return (
     <>
       <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-full max-w-[340px] px-4">
-        <div className="flex items-center bg-[#080c14]/90 backdrop-blur-2xl border border-white/10 rounded-[28px] h-20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] px-2 noise overflow-hidden relative">
+        <div className="flex items-center bg-[#FFFFFF]/90 backdrop-blur-2xl border border-slate-900/10 rounded-[28px] h-20 shadow-[0_20px_50px_rgba(0,0,0,0.8)] px-2 bg-noise overflow-hidden relative">
           <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-30" />
           
           <div className="flex-1 flex justify-around">
@@ -39,7 +39,7 @@ export default function MobileNav() {
                   href={item.href}
                   className={cn(
                     "flex flex-col items-center justify-center gap-1.5 transition-all duration-300",
-                    isActive ? "text-emerald-400" : "text-white/30 hover:text-white/60"
+                    isActive ? "text-emerald-400" : "text-slate-900/50 hover:text-slate-900/80"
                   )}
                 >
                   <item.icon className={cn("h-5 w-5", isActive && "drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]")} />
@@ -67,7 +67,7 @@ export default function MobileNav() {
                   href={item.href}
                   className={cn(
                     "flex flex-col items-center justify-center gap-1.5 transition-all duration-300",
-                    isActive ? "text-emerald-400" : "text-white/30 hover:text-white/60"
+                    isActive ? "text-emerald-400" : "text-slate-900/50 hover:text-slate-900/80"
                   )}
                 >
                   <item.icon className={cn("h-5 w-5", isActive && "drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]")} />

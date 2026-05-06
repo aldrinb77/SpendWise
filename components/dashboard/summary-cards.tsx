@@ -105,13 +105,13 @@ export default function SummaryCards() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: i * 0.1 }}
           className={cn(
-            "bg-[#0d1220] border-t-2 border-x border-b border-white/5 rounded-[28px] p-6 relative noise overflow-hidden",
+            "bg-[#FFFFFF] border-t-2 border-x border-b border-slate-900/5 rounded-[28px] p-6 relative bg-noise overflow-hidden",
             stat.border
           )}
         >
           <div className="flex justify-between items-start mb-4">
             <div className="space-y-1">
-              <p className="text-[10px] font-black uppercase tracking-wider text-white/30">{stat.title}</p>
+              <p className="text-[10px] font-black uppercase tracking-wider text-slate-900/50">{stat.title}</p>
               <h4 className={cn("text-3xl font-black tracking-tight", stat.color)}>
                 {stat.value}
               </h4>

@@ -80,7 +80,7 @@ export default function InsightsPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Card className="border-none shadow-2xl glass-card rounded-[32px] overflow-hidden bg-white/40 dark:bg-slate-900/40 backdrop-blur-3xl h-[450px]">
+          <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] glass-card rounded-[32px] overflow-hidden bg-white/40 dark:bg-slate-900/40 backdrop-blur-3xl h-[450px]">
             <CardHeader className="pb-0">
               <div className="flex items-center gap-3">
                 <div className="bg-emerald-500/10 p-3 rounded-2xl">
@@ -127,7 +127,7 @@ export default function InsightsPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Card className="border-none shadow-2xl glass-card rounded-[32px] overflow-hidden bg-white/40 dark:bg-slate-900/40 backdrop-blur-3xl h-[450px]">
+          <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] glass-card rounded-[32px] overflow-hidden bg-white/40 dark:bg-slate-900/40 backdrop-blur-3xl h-[450px]">
             <CardHeader className="pb-0">
               <div className="flex items-center gap-3">
                 <div className="bg-blue-500/10 p-3 rounded-2xl">

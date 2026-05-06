@@ -77,20 +77,20 @@ export default function RecentTransactions({ limit = 8 }: RecentTransactionsProp
   );
 
   return (
-    <div className="bg-[#0d1220] border border-white/5 rounded-[32px] overflow-hidden noise shadow-2xl">
+    <div className="bg-[#FFFFFF] border border-slate-900/5 rounded-[32px] overflow-hidden bg-noise shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-white/5 bg-white/[0.01]">
-              <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Entity</th>
-              <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Classification</th>
-              <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-white/20 text-right">Value</th>
+            <tr className="border-b border-slate-900/5 bg-slate-900/[0.01]">
+              <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-900/40">Entity</th>
+              <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-900/40">Classification</th>
+              <th className="px-6 py-5 text-[10px] font-black uppercase tracking-[0.2em] text-slate-900/40 text-right">Value</th>
             </tr>
           </thead>
           <tbody>
             {txns.length === 0 ? (
               <tr>
-                <td colSpan={3} className="px-6 py-12 text-center text-white/20 font-bold uppercase tracking-widest text-[10px]">
+                <td colSpan={3} className="px-6 py-12 text-center text-slate-900/40 font-bold uppercase tracking-widest text-[10px]">
                    No Recent Transmissions
                 </td>
               </tr>
@@ -101,23 +101,23 @@ export default function RecentTransactions({ limit = 8 }: RecentTransactionsProp
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="group border-b border-white/5 last:border-0 hover:bg-white/[0.03] transition-colors"
+                  className="group border-b border-slate-900/5 last:border-0 hover:bg-slate-900/[0.03] transition-colors"
                 >
                   <td className="px-6 py-4">
                     <div className="flex flex-col">
-                      <span className="text-sm font-bold text-white tracking-tight group-hover:text-emerald-400 transition-colors">{t.description}</span>
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 mt-1">
+                      <span className="text-sm font-bold text-slate-900 tracking-tight group-hover:text-emerald-400 transition-colors">{t.description}</span>
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-900/40 mt-1">
                         {new Date(typeof t.date === 'number' ? t.date * 1000 : t.date).toLocaleDateString('en-IN', { day: '2-digit', month: 'short' }).toUpperCase()} · {t.payment_method || 'UPI'}
                       </span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5 shadow-inner">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-white/50">{t.category_name}</span>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/5 border border-slate-900/5 shadow-inner">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-900/70">{t.category_name}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <span className={`text-sm font-black tabular-nums tracking-tighter ${t.type === 'income' ? 'text-emerald-400' : 'text-white'}`}>
+                    <span className={`text-sm font-black tabular-nums tracking-tighter ${t.type === 'income' ? 'text-emerald-400' : 'text-slate-900'}`}>
                       {t.type === 'income' ? '+' : ''}{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(t.amount)}
                     </span>
                   </td>

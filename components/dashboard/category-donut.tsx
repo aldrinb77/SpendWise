@@ -49,8 +49,8 @@ export default function CategoryDonut() {
     <div className="flex flex-col items-center gap-8">
       <div className="h-[240px] w-full relative">
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Burn Rate</span>
-          <span className="text-3xl font-black text-white mt-1">₹{(total / 1000).toFixed(1)}k</span>
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/50">Burn Rate</span>
+          <span className="text-3xl font-black text-slate-900 mt-1">₹{(total / 1000).toFixed(1)}k</span>
         </div>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -72,11 +72,11 @@ export default function CategoryDonut() {
               content={({ active, payload }) => {
                 if (active && payload?.length) {
                   return (
-                    <div className="bg-[#111826] border border-white/10 p-3 rounded-xl shadow-2xl backdrop-blur-xl">
-                      <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-1">
+                    <div className="bg-[#111826] border border-slate-900/10 p-3 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-900/60 mb-1">
                         {payload[0].name}
                       </p>
-                      <p className="text-sm font-black text-white">
+                      <p className="text-sm font-black text-slate-900">
                         ₹{payload[0].value?.toLocaleString()}
                       </p>
                     </div>
@@ -97,11 +97,11 @@ export default function CategoryDonut() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                  <span className="text-[11px] font-bold text-white/60 group-hover:text-white transition-colors uppercase tracking-tight">{item.name}</span>
+                  <span className="text-[11px] font-bold text-slate-900/80 group-hover:text-slate-900 transition-colors uppercase tracking-tight">{item.name}</span>
                 </div>
-                <span className="text-[11px] font-black text-white/40">{percent}%</span>
+                <span className="text-[11px] font-black text-slate-900/60">{percent}%</span>
               </div>
-              <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+              <div className="h-1 w-full bg-slate-900/5 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${percent}%` }}

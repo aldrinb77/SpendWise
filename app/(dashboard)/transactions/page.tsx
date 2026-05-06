@@ -22,17 +22,17 @@ export default function TransactionsPage() {
               Ledger Terminal · Active
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-display italic text-white leading-tight">
+          <h1 className="text-4xl md:text-6xl font-display italic text-slate-900 leading-tight">
             Transmissions
           </h1>
-          <p className="text-white/30 font-medium text-lg tracking-tight px-1">
-            Surveillance of your complete <span className="text-white/50 underline decoration-white/10 underline-offset-4">financial footprint</span>
+          <p className="text-slate-900/50 font-medium text-lg tracking-tight px-1">
+            Surveillance of your complete <span className="text-slate-900/70 underline decoration-white/10 underline-offset-4">financial footprint</span>
           </p>
         </div>
         
         <div className="flex items-center gap-3">
           <Link href="/import">
-            <button className="h-12 px-6 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 hover:scale-[1.05] active:scale-95">
+            <button className="h-12 px-6 rounded-xl bg-slate-900/5 hover:bg-slate-900/10 border border-slate-900/10 text-slate-900 font-black uppercase tracking-widest text-[11px] transition-all flex items-center gap-2 hover:scale-[1.05] active:scale-95">
               <Upload size={16} /> Import Data
             </button>
           </Link>
@@ -50,16 +50,16 @@ export default function TransactionsPage() {
         <TransactionTable />
       </div>
 
-      <footer className="pt-20 pb-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 opacity-30">
+      <footer className="pt-20 pb-12 border-t border-slate-900/5 flex flex-col md:flex-row items-center justify-between gap-6 opacity-30">
         <div className="flex items-center gap-6">
            <span className="text-[10px] font-black uppercase tracking-widest">Surveillance Node: ACTIVE</span>
            <span className="text-[10px] font-black uppercase tracking-widest">Last Integrity Check: Just Now</span>
         </div>
         <div className="flex items-center gap-8">
-          <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:text-white transition-colors">
+          <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:text-slate-900 transition-colors">
             <FileText size={12} /> Export CSV
           </button>
-          <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:text-white transition-colors">
+          <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 hover:text-slate-900 transition-colors">
             <FileText size={12} /> Export PDF
           </button>
         </div>

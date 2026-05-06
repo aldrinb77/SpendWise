@@ -53,7 +53,7 @@ export default function SignupPage() {
   return (
     <div className="flex flex-col gap-8 max-w-sm mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="flex flex-col items-center gap-4 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-[24px] bg-emerald-500 text-white shadow-2xl shadow-emerald-500/40">
+        <div className="flex h-16 w-16 items-center justify-center rounded-[24px] bg-emerald-500 text-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.05)] shadow-emerald-500/40">
           <LucideUserPlus className="h-8 w-8 font-black" />
         </div>
         <div className="space-y-1">
@@ -62,8 +62,8 @@ export default function SignupPage() {
         </div>
       </div>
 
-      <Card className="border-none shadow-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-3xl rounded-[32px] overflow-hidden">
-        <CardHeader className="text-center pt-10 pb-6 border-b border-black/5 dark:border-white/5">
+      <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] bg-white/70 dark:bg-slate-900/70 backdrop-blur-3xl rounded-[32px] overflow-hidden">
+        <CardHeader className="text-center pt-10 pb-6 border-b border-black/5 dark:border-slate-900/5">
           <CardTitle className="text-2xl font-black tracking-tight">One-Tap Enrollment</CardTitle>
           <CardDescription className="text-sm font-bold opacity-70 mt-2 italic">
             Zero password management. Total security.

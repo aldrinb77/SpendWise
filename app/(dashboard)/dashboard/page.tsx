@@ -40,20 +40,20 @@ export default function DashboardPage() {
               System Active · Node 01
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-display italic text-white leading-tight">
+          <h1 className="text-4xl md:text-6xl font-display italic text-slate-900 leading-tight">
             Good morning, {user?.name?.split(' ')[0] || 'Member'}
           </h1>
-          <p className="text-white/30 font-medium text-lg tracking-tight">
-            April 2026 · <span className="text-white/50 underline decoration-white/10 underline-offset-4">Your financial overview</span>
+          <p className="text-slate-900/50 font-medium text-lg tracking-tight">
+            April 2026 · <span className="text-slate-900/70 underline decoration-white/10 underline-offset-4">Your financial overview</span>
           </p>
         </div>
         
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-white/[0.03] border border-white/5 p-1 rounded-2xl">
-            <button className="px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white transition-all bg-white/5 shadow-inner">
+          <div className="flex items-center bg-slate-900/[0.03] border border-slate-900/5 p-1 rounded-2xl">
+            <button className="px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-900/60 hover:text-slate-900 transition-all bg-slate-900/5 shadow-inner">
                This Month
             </button>
-            <button className="px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest text-white/20 hover:text-white transition-all">
+            <button className="px-4 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-widest text-slate-900/40 hover:text-slate-900 transition-all">
                Last 30 Days
             </button>
           </div>
@@ -71,11 +71,11 @@ export default function DashboardPage() {
 
       {/* ROW 3: CHARTS */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-8 bg-[#0d1220] border border-white/5 rounded-[32px] overflow-hidden noise shadow-2xl">
-          <div className="p-8 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
+        <div className="lg:col-span-8 bg-[#FFFFFF] border border-slate-900/5 rounded-[32px] overflow-hidden bg-noise shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+          <div className="p-8 border-b border-slate-900/5 flex items-center justify-between bg-slate-900/[0.01]">
             <div>
-              <h3 className="text-white font-bold text-lg tracking-tight">Spending Trend</h3>
-              <p className="text-[10px] text-white/30 uppercase font-black tracking-widest">30-Day Liquidity Flow</p>
+              <h3 className="text-slate-900 font-bold text-lg tracking-tight">Spending Trend</h3>
+              <p className="text-[10px] text-slate-900/50 uppercase font-black tracking-widest">30-Day Liquidity Flow</p>
             </div>
           </div>
           <div className="p-4 md:p-8">
@@ -83,10 +83,10 @@ export default function DashboardPage() {
           </div>
         </div>
         
-        <div className="lg:col-span-4 bg-[#0d1220] border border-white/5 rounded-[32px] overflow-hidden noise shadow-2xl">
-          <div className="p-8 border-b border-white/5 bg-white/[0.01]">
-            <h3 className="text-white font-bold text-lg tracking-tight">Structure</h3>
-            <p className="text-[10px] text-white/30 uppercase font-black tracking-widest">Category Distribution</p>
+        <div className="lg:col-span-4 bg-[#FFFFFF] border border-slate-900/5 rounded-[32px] overflow-hidden bg-noise shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+          <div className="p-8 border-b border-slate-900/5 bg-slate-900/[0.01]">
+            <h3 className="text-slate-900 font-bold text-lg tracking-tight">Structure</h3>
+            <p className="text-[10px] text-slate-900/50 uppercase font-black tracking-widest">Category Distribution</p>
           </div>
           <div className="p-8">
             <CategoryDonut />
@@ -98,7 +98,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <div className="lg:col-span-7 space-y-6">
           <div className="flex items-center justify-between mb-2 px-2">
-            <h3 className="text-white font-black uppercase tracking-[0.2em] text-[11px]">Recent Transmissions</h3>
+            <h3 className="text-slate-900 font-black uppercase tracking-[0.2em] text-[11px]">Recent Transmissions</h3>
             <button className="text-[10px] font-black uppercase tracking-widest text-emerald-500 hover:text-emerald-400 transition-colors">
               View all history →
             </button>
@@ -107,7 +107,7 @@ export default function DashboardPage() {
         </div>
         
         <div className="lg:col-span-5 space-y-6">
-          <h3 className="text-white font-black uppercase tracking-[0.2em] text-[11px] px-2">Upcoming Auto-Debits</h3>
+          <h3 className="text-slate-900 font-black uppercase tracking-[0.2em] text-[11px] px-2">Upcoming Auto-Debits</h3>
           <AutoDebitsList hideTitle />
         </div>
       </div>
@@ -115,16 +115,16 @@ export default function DashboardPage() {
       {/* ROW 5: AI INSIGHT */}
       <AIInsightBanner />
 
-      <footer className="pt-20 pb-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
+      <footer className="pt-20 pb-12 border-t border-slate-900/5 flex flex-col md:flex-row items-center justify-between gap-6 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
         <div className="flex items-center gap-6">
            <span className="text-[10px] font-black uppercase tracking-widest">SpendWise v1.0.4</span>
            <span className="text-[10px] font-black uppercase tracking-widest">Local-First Persistence</span>
         </div>
         <div className="flex items-center gap-8">
-          <button className="text-[10px] font-black uppercase tracking-widest hover:text-white">API</button>
-          <button className="text-[10px] font-black uppercase tracking-widest hover:text-white">GitHub</button>
-          <button className="text-[10px] font-black uppercase tracking-widest hover:text-white">Privacy</button>
-          <button className="text-[10px] font-black uppercase tracking-widest hover:text-white">Terms</button>
+          <button className="text-[10px] font-black uppercase tracking-widest hover:text-slate-900">API</button>
+          <button className="text-[10px] font-black uppercase tracking-widest hover:text-slate-900">GitHub</button>
+          <button className="text-[10px] font-black uppercase tracking-widest hover:text-slate-900">Privacy</button>
+          <button className="text-[10px] font-black uppercase tracking-widest hover:text-slate-900">Terms</button>
         </div>
       </footer>
 

@@ -97,17 +97,17 @@ export default function SpendingChart() {
             content={({ active, payload }) => {
               if (active && payload?.length) {
                 return (
-                  <div className="bg-[#111826] border border-white/10 p-4 rounded-2xl shadow-2xl backdrop-blur-xl">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-white/40 mb-3">
+                  <div className="bg-[#111826] border border-slate-900/10 p-4 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] backdrop-blur-xl">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-900/60 mb-3">
                       {payload[0].payload.date}
                     </p>
                     <div className="space-y-2">
                        <div className="flex items-center gap-6 justify-between">
-                          <span className="text-[10px] font-bold text-white/60">Income</span>
+                          <span className="text-[10px] font-bold text-slate-900/80">Income</span>
                           <span className="text-xs font-black text-emerald-400">₹{payload[0].value?.toLocaleString()}</span>
                        </div>
                        <div className="flex items-center gap-6 justify-between">
-                          <span className="text-[10px] font-bold text-white/60">Expense</span>
+                          <span className="text-[10px] font-bold text-slate-900/80">Expense</span>
                           <span className="text-xs font-black text-rose-400">₹{payload[1]?.value?.toLocaleString() || 0}</span>
                        </div>
                     </div>

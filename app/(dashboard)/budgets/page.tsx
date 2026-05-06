@@ -14,11 +14,11 @@ export default function BudgetsPage() {
               Capital Allocation · Active
             </span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-display italic text-white leading-tight">
+          <h1 className="text-4xl md:text-6xl font-display italic text-slate-900 leading-tight">
             Budgets
           </h1>
-          <p className="text-white/30 font-medium text-lg tracking-tight px-1">
-            Tactical distribution of <span className="text-white/50 underline decoration-white/10 underline-offset-4">financial resources</span>
+          <p className="text-slate-900/50 font-medium text-lg tracking-tight px-1">
+            Tactical distribution of <span className="text-slate-900/70 underline decoration-white/10 underline-offset-4">financial resources</span>
           </p>
         </div>
         
@@ -31,15 +31,15 @@ export default function BudgetsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
          {/* Empty State */}
-         <div className="col-span-full py-24 flex flex-col items-center justify-center text-center bg-[#0d1220] border border-white/5 rounded-[40px] noise shadow-2xl">
-            <div className="h-24 w-24 rounded-full bg-white/5 flex items-center justify-center mb-6 border border-white/10">
-               <PieChart className="h-10 w-10 text-white/20" />
+         <div className="col-span-full py-24 flex flex-col items-center justify-center text-center bg-[#FFFFFF] border border-slate-900/5 rounded-[40px] bg-noise shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
+            <div className="h-24 w-24 rounded-full bg-slate-900/5 flex items-center justify-center mb-6 border border-slate-900/10">
+               <PieChart className="h-10 w-10 text-slate-900/40" />
             </div>
-            <h3 className="text-2xl font-bold text-white tracking-tight mb-2">No Allocations Active</h3>
-            <p className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30 max-w-md mx-auto leading-relaxed">
+            <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">No Allocations Active</h3>
+            <p className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-900/50 max-w-md mx-auto leading-relaxed">
                Establish limits across categories to initiate financial surveillance and anomaly detection.
             </p>
-            <button className="mt-8 px-8 py-4 rounded-xl border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-white hover:bg-white/5 transition-all">
+            <button className="mt-8 px-8 py-4 rounded-xl border border-slate-900/10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-900/60 hover:text-slate-900 hover:bg-slate-900/5 transition-all">
                Initialize Matrix +
             </button>
          </div>

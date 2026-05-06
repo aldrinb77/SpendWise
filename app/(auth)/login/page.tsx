@@ -78,7 +78,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col gap-8 max-w-sm mx-auto">
       <div className="flex flex-col items-center gap-4 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-[24px] bg-primary text-white shadow-2xl shadow-primary/40 group-hover:scale-110 transition-transform">
+        <div className="flex h-16 w-16 items-center justify-center rounded-[24px] bg-primary text-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.05)] shadow-primary/40 group-hover:scale-110 transition-transform">
           <LucideWallet className="h-8 w-8 font-black" />
         </div>
         <div className="space-y-1">
@@ -87,7 +87,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <Card className="border-none shadow-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-3xl rounded-[32px] overflow-hidden">
+      <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] bg-white/70 dark:bg-slate-900/70 backdrop-blur-3xl rounded-[32px] overflow-hidden">
         <CardHeader className="text-center pt-10 pb-6">
           <CardTitle className="text-3xl font-black tracking-tight">Welcome Back</CardTitle>
           <CardDescription className="text-sm font-bold opacity-70 mt-2">
@@ -128,7 +128,7 @@ export default function LoginPage() {
             <span className="text-primary hover:underline cursor-pointer">Terms of Service</span> and <span className="text-primary hover:underline cursor-pointer">Privacy Policy</span>
           </p>
         </CardContent>
-        <CardFooter className="bg-slate-50/50 dark:bg-slate-800/50 p-6 flex justify-center border-t border-slate-100 dark:border-white/5">
+        <CardFooter className="bg-slate-50/50 dark:bg-slate-800/50 p-6 flex justify-center border-t border-slate-100 dark:border-slate-900/5">
            <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
              <div className="h-1 w-1 rounded-full bg-emerald-500 shadow-pulse" />
              Bank-Grade Encryption Active
