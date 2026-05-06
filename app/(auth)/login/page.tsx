@@ -18,6 +18,7 @@ import { getSupabase } from "@/lib/db/supabase";
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const supabase = getSupabase();
@@ -38,6 +39,16 @@ export default function LoginPage() {
     
     return () => subscription.unsubscribe();
   }, [router]);
+
+  const handleGuestLogin = () => {
+    if (!userName.trim()) {
+      toast.error("Alias Required", { description: "Please enter your name to initialize the terminal." });
+      return;
+    }
+    localStorage.setItem("user", JSON.stringify({ name: userName.trim(), email: "alias@spendwise.app" }));
+    toast.success(`Welcome, ${userName.trim()}!`);
+    router.push("/dashboard");
+  };
 
   async function handleGoogleLogin() {
     setIsLoading(true);
@@ -87,20 +98,52 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] bg-white/70 dark:bg-slate-900/70 backdrop-blur-3xl rounded-[32px] overflow-hidden">
+      <Card className="border-none shadow-[0_20px_50px_rgba(0,0,0,0.05)] bg-white/70 backdrop-blur-3xl rounded-[32px] overflow-hidden">
         <CardHeader className="text-center pt-10 pb-6">
-          <CardTitle className="text-3xl font-black tracking-tight">Welcome Back</CardTitle>
-          <CardDescription className="text-sm font-bold opacity-70 mt-2">
-            Secure access via your Google account
+          <CardTitle className="text-3xl font-black tracking-tight text-slate-900">Welcome</CardTitle>
+          <CardDescription className="text-sm font-bold opacity-70 mt-2 text-slate-500">
+            Secure access to your wealth terminal
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6 p-8">
+          
+          <div className="space-y-3">
+             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 pl-1">
+               Enter Terminal Alias (Name)
+             </label>
+             <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="e.g. John Doe"
+                  onKeyDown={(e) => e.key === 'Enter' && handleGuestLogin()}
+                  className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 font-bold focus:border-emerald-500 focus:ring-emerald-500 outline-none transition-all"
+                />
+                <Button 
+                  onClick={handleGuestLogin}
+                  className="rounded-xl px-6 bg-emerald-500 hover:bg-emerald-600 text-white font-black"
+                >
+                  <LucideArrowRight size={20} />
+                </Button>
+             </div>
+          </div>
+
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-200"></div>
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-white px-2 text-slate-400 font-black tracking-widest">Or</span>
+            </div>
+          </div>
+
           <Button 
             onClick={handleGoogleLogin} 
             disabled={isLoading}
-            className="w-full h-16 rounded-2xl bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 shadow-xl flex items-center justify-center gap-4 transition-all active:scale-95 group"
+            className="w-full h-14 rounded-2xl bg-white hover:bg-slate-50 text-slate-900 border border-slate-200 shadow-sm flex items-center justify-center gap-4 transition-all active:scale-95 group"
           >
-            <div className="bg-slate-100 p-2 rounded-lg group-hover:bg-primary/5 transition-colors">
+            <div className="bg-slate-100 p-1.5 rounded-lg group-hover:bg-emerald-500/5 transition-colors">
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -120,17 +163,17 @@ export default function LoginPage() {
                 />
               </svg>
             </div>
-            <span className="text-lg font-black tracking-tight">{isLoading ? "Authenticating..." : "Continue with Google"}</span>
+            <span className="text-sm font-black tracking-tight">{isLoading ? "Authenticating..." : "Continue with Google"}</span>
           </Button>
 
-          <p className="text-[10px] text-muted-foreground/60 text-center font-black uppercase tracking-widest leading-relaxed">
+          <p className="text-[10px] text-slate-400 text-center font-black uppercase tracking-widest leading-relaxed">
             By continuing, you agree to our <br />
-            <span className="text-primary hover:underline cursor-pointer">Terms of Service</span> and <span className="text-primary hover:underline cursor-pointer">Privacy Policy</span>
+            <span className="text-emerald-500 hover:underline cursor-pointer">Terms of Service</span> and <span className="text-emerald-500 hover:underline cursor-pointer">Privacy Policy</span>
           </p>
         </CardContent>
-        <CardFooter className="bg-slate-50/50 dark:bg-slate-800/50 p-6 flex justify-center border-t border-slate-100 dark:border-slate-900/5">
-           <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-             <div className="h-1 w-1 rounded-full bg-emerald-500 shadow-pulse" />
+        <CardFooter className="bg-slate-50 p-6 flex justify-center border-t border-slate-100">
+           <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] animate-pulse" />
              Bank-Grade Encryption Active
            </div>
         </CardFooter>
