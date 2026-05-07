@@ -1,0 +1,3 @@
+## 2026-05-07 - Contextual ARIA Labels in Data Tables
+**Learning:** Icon-only action buttons (like Edit/Delete) within repeating elements like data tables require context-aware ARIA labels. A static `aria-label="Edit"` or `aria-label="Delete"` results in repetitive, indistinguishable announcements for screen reader users traversing the list.
+**Action:** Always inject contextual row data (e.g., entity name, ID, or description) into the `aria-label` of icon-only buttons in lists or tables (e.g., `aria-label={"Edit " + item.name}`). Hide the decorative icons with `aria-hidden="true"` to prevent redundant reading.
