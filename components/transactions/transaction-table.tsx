@@ -344,15 +344,17 @@ export default function TransactionTable() {
                               setEditItem(t);
                               setIsEditOpen(true);
                             }}
+                            aria-label={`Edit transaction ${t.description || "Vendor"}`}
                             className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-blue-400 hover:border-blue-500/30 transition-all"
                           >
-                             <Pencil size={12} />
+                             <Pencil size={12} aria-hidden="true" />
                           </button>
                           <button 
                             onClick={() => handleDelete(t.id)}
+                            aria-label={`Delete transaction ${t.description || "Vendor"}`}
                             className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-rose-500 hover:border-rose-500/30 transition-all"
                           >
-                             <Trash2 size={12} />
+                             <Trash2 size={12} aria-hidden="true" />
                           </button>
                        </div>
                     </td>
