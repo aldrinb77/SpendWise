@@ -169,10 +169,12 @@ export default function TransactionForm({ open, onOpenChange, initialData }: Tra
                 </p>
               </div>
               <button 
+                aria-label="Close transaction form"
+                title="Close transaction form"
                 onClick={() => onOpenChange(false)}
-                className="h-10 w-10 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/60 hover:text-slate-900 transition-colors"
+                className="h-10 w-10 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/60 hover:text-slate-900 transition-colors focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
               >
-                <X size={20} />
+                <X size={20} aria-hidden="true" />
               </button>
             </div>
 

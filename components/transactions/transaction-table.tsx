@@ -340,19 +340,23 @@ export default function TransactionTable() {
                     <td className="px-8 py-6 text-right">
                        <div className="flex items-center justify-end gap-2">
                           <button 
+                            aria-label={`Edit ${t.description || "Vendor"}`}
+                            title={`Edit ${t.description || "Vendor"}`}
                             onClick={() => {
                               setEditItem(t);
                               setIsEditOpen(true);
                             }}
-                            className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-blue-400 hover:border-blue-500/30 transition-all"
+                            className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-blue-400 hover:border-blue-500/30 transition-all focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
                           >
-                             <Pencil size={12} />
+                             <Pencil size={12} aria-hidden="true" />
                           </button>
                           <button 
+                            aria-label={`Delete ${t.description || "Vendor"}`}
+                            title={`Delete ${t.description || "Vendor"}`}
                             onClick={() => handleDelete(t.id)}
-                            className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-rose-500 hover:border-rose-500/30 transition-all"
+                            className="h-8 w-8 rounded-xl bg-slate-900/5 border border-slate-900/5 flex items-center justify-center text-slate-900/40 hover:text-rose-500 hover:border-rose-500/30 transition-all focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:outline-none"
                           >
-                             <Trash2 size={12} />
+                             <Trash2 size={12} aria-hidden="true" />
                           </button>
                        </div>
                     </td>
