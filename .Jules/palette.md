@@ -1,0 +1,3 @@
+## 2024-05-17 - Contextual ARIA labels for icon-only buttons in lists/tables
+**Learning:** Screen reader users face significant usability issues when navigating repeating UI patterns (like lists or tables) that contain generic icon-only actions (e.g., Edit/Delete buttons). If all edit buttons simply read "Edit", it's impossible to know *which* item is being edited.
+**Action:** When adding ARIA labels or titles to icon-only buttons inside iterating elements, always inject contextually relevant row data (such as the item's name or ID) into the label string (e.g., `aria-label={\`Edit \${item.name}\`}`).
